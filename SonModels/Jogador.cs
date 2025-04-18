@@ -1,8 +1,6 @@
-using DadModels;
+using Associacao;
 
-namespace DadModels;
-
-namespace SonModels;
+namespace Players;
 
 public class Jogador : Associacao
 {
