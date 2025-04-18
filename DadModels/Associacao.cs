@@ -1,9 +1,6 @@
 namespace Associacao;
 
-
-public class Participantes {
+public class Participantes
+{
     Participantes participantes = new participantes();
-
-    
-
 }
