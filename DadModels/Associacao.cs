@@ -1,6 +1,6 @@
-namespace Associacao;
+namespace Participantes;
 
-public class Participantes
+public abstrata class Associacao 
 {
-    Participantes participantes = new participantes();
+    
 }

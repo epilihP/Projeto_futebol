@@ -1,4 +1,4 @@
-using Associacao;
+using Participan;
 
 namespace Players;
 
@@ -9,4 +9,5 @@ public class Jogador : Associacao
     private string Ala { get; set; }
 
     private string Goleiro { get; set; }
+
 }

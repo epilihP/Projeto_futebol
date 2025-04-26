@@ -26,3 +26,32 @@
 // {
 //    2 ala para cada time, 2 fixos para cada            time, goleiro
 // }
+
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=--=-=-=--=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+//the first thing to do:
+
+//make the class players, im think add CRUD sistem
+//- when add player he need: years old, name and position
+
+//port pro alisson :>
+// fazer com que os jogadores estejam no banco de dados salvos em associação e  tambem com RA
+
+// sistema de crud pode ficar fora da classe jogadores
+
+// Gestão de Jogos:
+// CRUD dos Jogos;
+// Os atributos principais são: a data do jogo, o local, o tipo de campo e quantos jogadores por time incluindo o goleiro;
+// Adicionar um atributo opcional que limita a quantidade de times e/ou de jogadores;
+// A quantidade mínima para confirmar a partida são pelo menos dois times completos.
+// Lista de Interessados para registrar quem pretende ir ao próximo jogo
+
+
+
+
+
+
+
+
+
