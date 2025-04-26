@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\philipe_goncalves\\Desktop\\Projeto_futebol\\Projeto_futebol.csproj": {}
+    "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj": {}
   },
   "projects": {
-    "c:\\Users\\philipe_goncalves\\Desktop\\Projeto_futebol\\Projeto_futebol.csproj": {
+    "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\philipe_goncalves\\Desktop\\Projeto_futebol\\Projeto_futebol.csproj",
+        "projectUniqueName": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj",
         "projectName": "Projeto_futebol",
-        "projectPath": "c:\\Users\\philipe_goncalves\\Desktop\\Projeto_futebol\\Projeto_futebol.csproj",
-        "packagesPath": "C:\\Users\\philipe_goncalves\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\philipe_goncalves\\Desktop\\Projeto_futebol\\obj\\",
+        "projectPath": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj",
+        "packagesPath": "C:\\Users\\aliss\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\philipe_goncalves\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\aliss\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
