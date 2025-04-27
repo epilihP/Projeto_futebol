@@ -1,13 +1,23 @@
-using Associacao;
-
 namespace Players;
+using Associacao;
 
 public class Jogador : Associados
 {
-    private string Fixo { get; set; }
+    // Atributos encapsulados
+    private int Codigo;
+    public int codigo { get => Codigo; set => Codigo = value; }
 
-    private string Ala { get; set; }
+    // Método contrutor
+    public Jogador(string nome, int idade, Posicao posicao){
+        Codigo = GerarCodigoUnico();
+        Nome = nome;
+        Idade = idade;
+        Posicao = posicao;
+    }
 
-    private string Goleiro { get; set; }
-
+    // usando override em um metodo padrão C#
+    public override string ToString()
+    {
+        return $"Código: {Codigo}, Nome: {Nome}, Idade: {Idade}, Posição: {Posicao}";
+    }
 }

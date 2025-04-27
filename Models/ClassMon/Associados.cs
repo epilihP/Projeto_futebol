@@ -1,8 +1,6 @@
-using System.Diagnostics.Contracts;
-
 namespace Associacao;
 
-// enumeração de futsal
+// Enumeração de futsal
 public enum Posicao
 {
     AtacanteDireito = 1,
@@ -14,7 +12,7 @@ public enum Posicao
 
 public abstract class Associados
 {
-    // Encapsulamento
+    // Atributs encapsulados
      protected string Nome;
      protected int Idade;
      protected Posicao Posicao;
@@ -22,4 +20,13 @@ public abstract class Associados
      public string nome { get => Nome; set => Nome = value; }
      public int idade { get => Idade; set => Idade = value; }
      public Posicao posicao { get => Posicao; set => Posicao = value; }
+
+    // Atributo global
+    private static int ContadorCodigo = 1;
+
+    // Métodos
+    public static int GerarCodigoUnico()
+    {
+        return ContadorCodigo++;
+    }
 }
