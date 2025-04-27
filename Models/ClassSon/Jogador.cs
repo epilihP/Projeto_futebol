@@ -1,8 +1,8 @@
-using Participantes;
+using Associacao;
 
 namespace Players;
 
-public class Jogador : Associacao
+public class Jogador : Associados
 {
     private string Fixo { get; set; }
 
