@@ -1,0 +1,16 @@
+feito em 27/04:
+
+classe abstrata da associação
+classe de jogador herdeira
+atributos principais
+enumeração
+
+utilizado: classe abstrata, encapsulamento
+
+proximos passos:
+
+1 = salvar jogador em .json
+2 = aplicar os principior do CRUD
+3 = testar no program
+
+ideias = criar um menu no util
