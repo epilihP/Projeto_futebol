@@ -51,6 +51,13 @@
 
 
 
+//=-=-=-=-=-=-=--==-=-=-=-=-=-=-=-=-=-=-==-=--=-=-=-=-==-==-==-=-=-=-===-==-
+
+//ainda to estudando json.net pra finalizar e implementar, ainda sem ajuste.
+
+
+
+
 
 
 
