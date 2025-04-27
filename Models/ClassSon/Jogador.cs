@@ -1,4 +1,4 @@
-using Participante;
+using Participantes;
 
 namespace Players;
 

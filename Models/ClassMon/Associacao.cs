@@ -1,6 +1,6 @@
 namespace Participantes;
 
-public abstrata class Associacao 
+public abstract class Associacao 
 {
     
 }
