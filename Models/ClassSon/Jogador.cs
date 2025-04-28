@@ -10,9 +10,9 @@ public class Jogador : Associados
     // Método contrutor
     public Jogador(string nome, int idade, Posicao posicao){
         Codigo = GerarCodigoUnico();
-        Nome = nome;
-        Idade = idade;
-        Posicao = posicao;
+        this.Nome = nome;
+        this.Idade = idade;
+        this.Posicao = posicao;
     }
 
     // usando override em um metodo padrão C#

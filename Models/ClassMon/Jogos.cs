@@ -3,9 +3,9 @@ namespace Jogos;
 public abstract class Jogos
 {
     private DateTime PastDate;
-    public DateTime Data 
-    { 
-        get{ return PastDate; } 
+    public DateTime Data
+    {
+        get { return PastDate; }
         set
         {
             if (value < DateTime.Now)
@@ -18,7 +18,7 @@ public abstract class Jogos
                 PastDate = value;
             }
         }
-    } 
+    }
 
 
     public string Local { get; set; }
@@ -29,11 +29,11 @@ public abstract class Jogos
 
     public int? LimiteTimes { get; set; }
 
-    public int? LimiteJogadores { get; set; } 
+    public int? LimiteJogadores { get; set; }
 
     public List<string> Interessados { get; private set; }
 
-    public Jogos(DateTime data, string local, string TipoCampo, int JogadoresPorTime, int? LimiteTimes = null, int? LimiteJogadores = null)
+    public Jogos(DateTime data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = null)
     {
         Data = data;
         Local = local;
@@ -43,7 +43,7 @@ public abstract class Jogos
         LimiteJogadores = limiteJogadores;
         Interessados = new List<string>();
     }
-    
+
     public void AdicionarInteressados(string nome)
     {
         if (LimiteJogadores.HasValue && Interessados.Count < LimiteJogadores.Value)
@@ -56,6 +56,4 @@ public abstract class Jogos
         }
 
     }
-
-    public abstrac bool PartidaConfirmada();
 }
