@@ -1,0 +1,15 @@
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.AssemblyInfoInputs.cache
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.AssemblyInfo.cs
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.csproj.CoreCompileInputs.cache
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.sourcelink.json
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.exe
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.deps.json
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.runtimeconfig.json
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.dll
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.pdb
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.dll
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\refint\Projeto_futebol.dll
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.pdb
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.genruntimeconfig.cache
+C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\ref\Projeto_futebol.dll
