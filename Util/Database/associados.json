@@ -1,26 +1,8 @@
 [
   {
     "codigo": 1,
-    "nome": "Carlos",
-    "idade": 25,
-    "posicao": 1
-  },
-  {
-    "codigo": 1,
-    "nome": "Carlos",
-    "idade": 25,
-    "posicao": 1
-  },
-  {
-    "codigo": 3,
-    "nome": "Alishow",
-    "idade": 22,
+    "nome": "Carlos Silva",
+    "idade": 26,
     "posicao": 5
-  },
-  {
-    "codigo": 1,
-    "nome": "Phili\u00E9",
-    "idade": 18,
-    "posicao": 3
   }
 ]
