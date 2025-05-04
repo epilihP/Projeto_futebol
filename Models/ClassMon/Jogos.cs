@@ -1,6 +1,6 @@
 namespace Jogos;
 
-public abstract class Jogos
+public class Jogos
 {
     private DateTime PastDate;
     public DateTime Data
@@ -55,5 +55,14 @@ public abstract class Jogos
             Console.WriteLine("Limite de jogadores atingidos!");
         }
 
+    }
+    public bool PodeConfirmarPartida()
+    {
+        if (LimiteTimes.HasValue && LimiteTimes.Value >= 2)
+        {
+            // Verifica se existem pelo menos 2 times completos
+            return Interessados.Count >= 2 * JogadoresPorTime;
+        }
+        return false;
     }
 }
