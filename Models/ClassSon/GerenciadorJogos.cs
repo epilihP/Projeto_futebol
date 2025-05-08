@@ -44,7 +44,7 @@ public class GerenciadorDeJogos : Jogos
             .ToList();
     }
 
-    
+
     public void Atualizar(Jogos jogo)
     {
         var caminho = Caminho(jogo.GetHashCode());
