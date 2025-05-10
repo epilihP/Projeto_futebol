@@ -1,6 +1,5 @@
 namespace Players;
 using Associacao;
-using Players;
 using System;
 
 public class Jogador : Associados
