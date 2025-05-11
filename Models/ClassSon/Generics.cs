@@ -1,13 +1,43 @@
 namespace Generics;
-using IPartidaGenerica; //pegando a interface
+using IGenerica; //pegando a interface
 using Players;
 using Associacao;
+
+//{tarefa 1.1}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//{tarefa 1.2}
 //ideia central é usar a primeira parte da tarefa para implementar em partidas, aqui estamos usando o generico para adicionar os nomes dos associados interessados,
+
+
+
 //da para implemantar outras coisas caso queira testar isso tambem porem com outro tipo ja que esse foi feito com string, é só herdar a Interface
 // vou comentar em ingles e port algumas coisas para treino tambem e facil compreensão
 //I found out that it's possible to inherit(herdar) one class and multiple interfaces//descobri que é possivel herdar 1 classe e multiplas interface
 
-public class GenericPlayer : Associados, ICaixaObjeto<string?> 
+
+public class GenericPlayer : Associados, ICaixa<string?> 
 {
     public List<string> ListaDeNomes {get; set;} = new List<string>(); //list for names of "associados" // lista para os nomes de associados
     
@@ -35,3 +65,7 @@ public class GenericPlayer : Associados, ICaixaObjeto<string?>
    
 }
 
+// tarefa 1.2 fim
+
+
+//tarefa 2
