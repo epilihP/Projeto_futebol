@@ -37,27 +37,4 @@ using generics;
         //     Console.WriteLine(jogador.ToString());
         // }
 
-        // Testando com um valor inteiro
-        CaixaObjeto caixaInt = new CaixaObjeto();
-        caixaInt.Valor = 42;
-        Console.WriteLine($"Valor inteiro: {caixaInt.Valor}");
-
-        // Testando com uma string
-        CaixaObjeto caixaString = new CaixaObjeto();
-        caixaString.Valor = "Olá, mundo!";
-        Console.WriteLine($"Valor string: {caixaString.Valor}");
-
-        // Tentando acessar sem cast
-        try
-        {
-            int valorSemCast = (int)caixaInt.Valor; // Funciona
-            Console.WriteLine($"Valor sem cast (int): {valorSemCast}");
-
-            string erroSemCast = (string)caixaInt.Valor; // Gera InvalidCastException
-            Console.WriteLine($"Valor sem cast (string): {erroSemCast}");
-        }
-        catch (InvalidCastException ex)
-        {
-            Console.WriteLine($"Erro de cast: {ex.Message}");
-        }
-        
+    

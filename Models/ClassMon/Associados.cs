@@ -18,6 +18,7 @@ public abstract class Associados
      protected Posicao Posicao;
 
      public string nome { get => Nome; set => Nome = value; }
+     
      public int idade { get => Idade; set => Idade = value; }
      public Posicao posicao { get => Posicao; set => Posicao = value; }
 
