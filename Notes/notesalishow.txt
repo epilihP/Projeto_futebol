@@ -14,3 +14,18 @@ proximos passos:
 3 = testar no program
 
 ideias = criar um menu no util
+
+11/05:
+
+se tiver dois goleiros, eles jogam todos os jogos
+
+min de pessoas: 10
+
+
+fala comigo
+
+para apartir de 12/05:
+
+linkar interessados
+criar banco de dados para teste, e so agendar jogo se tiver 10 players
+

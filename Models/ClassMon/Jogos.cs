@@ -2,6 +2,15 @@ namespace Jogos;
 
 public class Jogos
 {
+    public long Codigo { get; set; } // Identificador único do jogo (ex: data.Ticks)
+    public List<int> Interessados { get; set; } = new List<int>(); // Códigos dos jogadores interessados
+    // atributos
+    public string Local { get; set; }
+    public string TipoCampo { get; set; }
+    public int JogadoresPorTime { get; set; }
+    public int? LimiteTimes { get; set; }
+    public int? LimiteJogadores { get; set; }
+
     private DateTime PastDate;
     public DateTime Data
     {
@@ -21,49 +30,6 @@ public class Jogos
     }
 
 
-    public string Local { get; set; }
-
-    public string TipoCampo { get; set; }
-
-    public int JogadoresPorTime { get; set; }
-
-    public int? LimiteTimes { get; set; }
-
-    public int? LimiteJogadores { get; set; }
-
-    public List<string> Interessados { get; private set; }
-
-    public Jogos(DateTime data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = null)
-    {
-        Data = data;
-        Local = local;
-        TipoCampo = tipoCampo;
-        JogadoresPorTime = jogadoresPorTime;
-        LimiteTimes = limiteTimes;
-        LimiteJogadores = limiteJogadores;
-        Interessados = new List<string>();
-    }
-
-    public void AdicionarInteressados(string nome)
-    {
-        if (LimiteJogadores.HasValue && Interessados.Count < LimiteJogadores.Value)
-        {
-            Interessados.Add(nome);
-        }
-        else
-        {
-            Console.WriteLine("Limite de jogadores atingidos!");
-        }
-
-    }
-    public bool PodeConfirmarPartida()
-    {
-        if (LimiteTimes.HasValue && LimiteTimes.Value >= 2)
-        {
-            // Verifica se existem pelo menos 2 times completos
-            return Interessados.Count >= 2 * JogadoresPorTime;
-        }
-        return false;
-    }
+    
     
 }
