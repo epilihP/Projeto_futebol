@@ -11,25 +11,13 @@ public class Jogos
     public int? LimiteTimes { get; set; }
     public int? LimiteJogadores { get; set; }
 
-    private DateTime PastDate;
+    private DateTime data;
     public DateTime Data
     {
-        get { return PastDate; }
+        get { return data; }
         set
         {
-            if (value < DateTime.Now)
-            {
-                //por precaução pra não travar
-                throw new ArgumentException("A data não pode ser no passado.");
-            }
-            else
-            {
-                PastDate = value;
-            }
+            data = value; // Remova a validação aqui!
         }
     }
-
-
-    
-    
 }

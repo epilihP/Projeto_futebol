@@ -100,4 +100,13 @@ private static readonly string HistoricoFilePath = @"c:\Users\aliss\Documents\Fa
         var json = JsonSerializer.Serialize(historico, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(HistoricoFilePath, json);
     }
+
+public static List<HistoricoRodada> LerHistorico()
+{
+    if (!File.Exists(HistoricoFilePath))
+        return new List<HistoricoRodada>();
+
+    var json = File.ReadAllText(HistoricoFilePath);
+    return string.IsNullOrWhiteSpace(json) ? new List<HistoricoRodada>() : JsonSerializer.Deserialize<List<HistoricoRodada>>(json);
+}
 }

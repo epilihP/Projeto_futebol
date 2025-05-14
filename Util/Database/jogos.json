@@ -8,5 +8,15 @@
     "LimiteTimes": 2,
     "LimiteJogadores": 10,
     "Data": "2025-05-14T00:18:39.4297633-03:00"
+  },
+  {
+    "Codigo": 638830197352977703,
+    "Interessados": [],
+    "Local": "Quadra Central",
+    "TipoCampo": "Society",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": 2,
+    "LimiteJogadores": 10,
+    "Data": "2025-05-16T19:15:35.2977703-03:00"
   }
 ]

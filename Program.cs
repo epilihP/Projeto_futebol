@@ -1,6 +1,7 @@
 ﻿using Players;
 using Associacao;
 using GerenciadorJogos;
+using Partidas;
 
         
 Console.WriteLine("Teste 1: Adicionar jogador");
@@ -58,4 +59,31 @@ Console.WriteLine("\nJogos cadastrados:");
 foreach (var j in jogos)
 {
     Console.WriteLine($"Código: {j.Codigo}, Data: {j.Data}, Local: {j.Local}, Tipo: {j.TipoCampo}, Jogadores/time: {j.JogadoresPorTime}");
+}
+
+// Exemplo de times (códigos dos times)
+Partida.contagemTimes = new List<int> { 101, 202, 303, 404 };
+
+// Cria e executa a partida
+Partida partida = new Partida();
+partida.ComecoFim = true;
+partida.GerenciarPartidas();
+
+// Mostra o histórico gerado
+Console.WriteLine("Histórico das rodadas:");
+foreach (var rodada in partida.historico)
+{
+    Console.WriteLine($"Rodada {rodada.rodada}: Rei {rodada.reiAntes} x Desafiante {rodada.desafiante} => Vencedor: {rodada.vencedor}");
+}
+
+// Salva o histórico em JSON
+Database.SalvarHistorico(partida.historico);
+Console.WriteLine("\nHistórico salvo em JSON!");
+
+// Lê o histórico salvo e mostra novamente
+var historicoSalvo = Database.LerHistorico();
+Console.WriteLine("\nHistórico lido do JSON:");
+foreach (var rodada in historicoSalvo)
+{
+    Console.WriteLine($"Rodada {rodada.rodada}: Rei {rodada.reiAntes} x Desafiante {rodada.desafiante} => Vencedor: {rodada.vencedor}");
 }
