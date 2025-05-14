@@ -18,7 +18,7 @@
 // Ala,
 // Fixo,
 // Goleiro)
-// Partida (atributos:
+// Partida atributos:
 //  time1,
 // time2,
 // time3,

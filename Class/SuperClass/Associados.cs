@@ -13,14 +13,14 @@ public enum Posicao
 public abstract class Associados
 {
     // Atributs encapsulados
-     protected string Nome;
-     protected int Idade;
-     protected Posicao Posicao;
+    protected string Nome;
+    protected int Idade;
+    protected Posicao Posicao;
 
-     public string nome { get => Nome; set => Nome = value; }
-     
-     public int idade { get => Idade; set => Idade = value; }
-     public Posicao posicao { get => Posicao; set => Posicao = value; }
+    public string nome { get => Nome; set => Nome = value; }
+
+    public int idade { get => Idade; set => Idade = value; }
+    public Posicao posicao { get => Posicao; set => Posicao = value; }
 
     // Atributo global
     private static int ContadorCodigo = 1;

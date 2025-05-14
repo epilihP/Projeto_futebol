@@ -17,12 +17,12 @@ public class GerenciadorDeJogos : Jogos
     }
 
     public void AdicionarInteressado(int idJogador)
-{
-    if (LimiteJogadores.HasValue && Interessados.Count < LimiteJogadores.Value)
-        Interessados.Add(idJogador);
-    else
-        Console.WriteLine("Limite de jogadores atingido!");
-}
+    {
+        if (LimiteJogadores.HasValue && Interessados.Count < LimiteJogadores.Value)
+            Interessados.Add(idJogador);
+        else
+            Console.WriteLine("Limite de jogadores atingido!");
+    }
 
     public void ExibirInteressados(List<Jogador> jogadores)
     {
