@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Players;
 using GerenciadorJogos;
-
+using Partidas;
 
 // SalvarJogo (Create)
 // ListarJogos (Read)
@@ -92,4 +92,12 @@ public static bool RemoverJogo(int codigo)
     return true;
 }
 
+
+private static readonly string HistoricoFilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\historico_partidas.json";
+
+    public static void SalvarHistorico(List<HistoricoRodada> historico)
+    {
+        var json = JsonSerializer.Serialize(historico, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(HistoricoFilePath, json);
+    }
 }
