@@ -1,13 +1,11 @@
 namespace Associacao;
 
-// Enumeração de futsal
+// Enumeração de Futsal
 public enum Posicao
 {
-    AtacanteDireito = 1,
-    AtacanteEsquerdo = 2,
-    DefesaDireita = 3,
-    DefesaEsquerda = 4,
-    Goleiro = 5
+    Atacante = 1,
+    Defesa = 2,
+    Goleiro = 3,
 }
 
 public abstract class Associados
@@ -22,12 +20,15 @@ public abstract class Associados
     public int idade { get => Idade; set => Idade = value; }
     public Posicao posicao { get => Posicao; set => Posicao = value; }
 
-    // Atributo global
-    private static int ContadorCodigo = 1;
-
     // Métodos
-    public static int GerarCodigoUnico()
+    public static int GerarCodigoUnico(HashSet<int> codigosExistentes) // HashSet cria uma instancia na memória
     {
-        return ContadorCodigo++;
+        Random rand = new Random(); // cria objeto para para gerar numero aleatorio
+        int RA;
+        do
+        {
+            RA = rand.Next(100000, 1000000); // 6 dígitos
+        } while (codigosExistentes.Contains(RA)); // para sae código não existir
+        return RA; // RA = Registro de Associado
     }
 }

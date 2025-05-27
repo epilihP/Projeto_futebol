@@ -11,7 +11,7 @@ using Partidas;
 public class Database
 {
     internal static readonly string FilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\associados.json";
-    
+
     public static void SalvarJogador(Jogador jogador)
     {
         List<Jogador> jogadores;
@@ -44,56 +44,56 @@ public class Database
 
     internal static readonly string JogosFilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\jogos.json";
 
-// CREATE
-public static void SalvarJogo(GerenciadorDeJogos jogo)
-{
-    List<GerenciadorDeJogos> jogos;
-    if (File.Exists(JogosFilePath))
+    // CREATE
+    public static void SalvarJogo(GerenciadorDeJogos jogo)
     {
+        List<GerenciadorDeJogos> jogos;
+        if (File.Exists(JogosFilePath))
+        {
+            string json = File.ReadAllText(JogosFilePath);
+            jogos = string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
+        }
+        else
+        {
+            jogos = new List<GerenciadorDeJogos>();
+        }
+        jogos.Add(jogo);
+        string novoJson = JsonSerializer.Serialize(jogos, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(JogosFilePath, novoJson);
+    }
+
+    // READ
+    public static List<GerenciadorDeJogos> ListarJogos()
+    {
+        if (!File.Exists(JogosFilePath)) return new List<GerenciadorDeJogos>();
         string json = File.ReadAllText(JogosFilePath);
-        jogos = string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
+        return string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
     }
-    else
+
+    // UPDATE
+    public static bool AtualizarJogo(int codigo, GerenciadorDeJogos jogoAtualizado)
     {
-        jogos = new List<GerenciadorDeJogos>();
+        var jogos = ListarJogos();
+        var index = jogos.FindIndex(j => j.Codigo == codigo);
+        if (index == -1) return false;
+        jogos[index] = jogoAtualizado;
+        File.WriteAllText(JogosFilePath, JsonSerializer.Serialize(jogos, new JsonSerializerOptions { WriteIndented = true }));
+        return true;
     }
-    jogos.Add(jogo);
-    string novoJson = JsonSerializer.Serialize(jogos, new JsonSerializerOptions { WriteIndented = true });
-    File.WriteAllText(JogosFilePath, novoJson);
-}
 
-// READ
-public static List<GerenciadorDeJogos> ListarJogos()
-{
-    if (!File.Exists(JogosFilePath)) return new List<GerenciadorDeJogos>();
-    string json = File.ReadAllText(JogosFilePath);
-    return string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
-}
-
-// UPDATE
-public static bool AtualizarJogo(int codigo, GerenciadorDeJogos jogoAtualizado)
-{
-    var jogos = ListarJogos();
-    var index = jogos.FindIndex(j => j.Codigo == codigo);
-    if (index == -1) return false;
-    jogos[index] = jogoAtualizado;
-    File.WriteAllText(JogosFilePath, JsonSerializer.Serialize(jogos, new JsonSerializerOptions { WriteIndented = true }));
-    return true;
-}
-
-// DELETE
-public static bool RemoverJogo(int codigo)
-{
-    var jogos = ListarJogos();
-    var jogo = jogos.FirstOrDefault(j => j.Codigo == codigo);
-    if (jogo == null) return false;
-    jogos.Remove(jogo);
-    File.WriteAllText(JogosFilePath, JsonSerializer.Serialize(jogos, new JsonSerializerOptions { WriteIndented = true }));
-    return true;
-}
+    // DELETE
+    public static bool RemoverJogo(int codigo)
+    {
+        var jogos = ListarJogos();
+        var jogo = jogos.FirstOrDefault(j => j.Codigo == codigo);
+        if (jogo == null) return false;
+        jogos.Remove(jogo);
+        File.WriteAllText(JogosFilePath, JsonSerializer.Serialize(jogos, new JsonSerializerOptions { WriteIndented = true }));
+        return true;
+    }
 
 
-private static readonly string HistoricoFilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\historico_partidas.json";
+    private static readonly string HistoricoFilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\historico_partidas.json";
 
     public static void SalvarHistorico(List<HistoricoRodada> historico)
     {
@@ -101,12 +101,12 @@ private static readonly string HistoricoFilePath = @"c:\Users\aliss\Documents\Fa
         File.WriteAllText(HistoricoFilePath, json);
     }
 
-public static List<HistoricoRodada> LerHistorico()
-{
-    if (!File.Exists(HistoricoFilePath))
-        return new List<HistoricoRodada>();
+    public static List<HistoricoRodada> LerHistorico()
+    {
+        if (!File.Exists(HistoricoFilePath))
+            return new List<HistoricoRodada>();
 
-    var json = File.ReadAllText(HistoricoFilePath);
-    return string.IsNullOrWhiteSpace(json) ? new List<HistoricoRodada>() : JsonSerializer.Deserialize<List<HistoricoRodada>>(json);
-}
+        var json = File.ReadAllText(HistoricoFilePath);
+        return string.IsNullOrWhiteSpace(json) ? new List<HistoricoRodada>() : JsonSerializer.Deserialize<List<HistoricoRodada>>(json);
+    }
 }

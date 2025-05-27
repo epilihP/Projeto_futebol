@@ -5,7 +5,7 @@ using Partidas;
 
         
 Console.WriteLine("Teste 1: Adicionar jogador");
-Jogador.AdicionarJogador(new Jogador("Philipe", 25, Posicao.AtacanteDireito));
+Jogador.AdicionarJogador(new Jogador("Philipe", 25, Posicao.Atacante));
 Jogador.AdicionarJogador(new Jogador("Alisson", 22, Posicao.Goleiro));
 Console.WriteLine("Jogadores adicionados com sucesso!");
 
