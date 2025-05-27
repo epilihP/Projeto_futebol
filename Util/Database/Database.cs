@@ -16,9 +16,9 @@ public class Database
     {
         List<Jogador> jogadores;
 
-        if (File.Exists(FilePath))  // rquivo existe?
+        if (File.Exists(FilePath))  // Arquivo existe?
         {
-            // Le o arquivo
+            // Lê o arquivo
             string json = File.ReadAllText(FilePath);
             jogadores = string.IsNullOrWhiteSpace(json) ? new List<Jogador>() : JsonSerializer.Deserialize<List<Jogador>>(json);
         }
@@ -31,11 +31,12 @@ public class Database
         // Adc o jogador
         jogadores.Add(jogador);
 
-        // devolve a lista de volta para o JSON
+        // Devolve a lista de volta para o JSON
         string novoJson = JsonSerializer.Serialize(jogadores, new JsonSerializerOptions { WriteIndented = true });
 
-        File.WriteAllText(FilePath, novoJson); // pra salvar no aqrquivo
+        File.WriteAllText(FilePath, novoJson); // Para salvar no aqrquivo
     }
+    
     public static void AtualizarArquivo(List<Jogador> jogadores)
     {
         string novoJson = JsonSerializer.Serialize(jogadores, new JsonSerializerOptions { WriteIndented = true });

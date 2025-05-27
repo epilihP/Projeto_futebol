@@ -4,29 +4,28 @@ using Associacao;
 public class Jogador : Associados
 {
     // Atributos encapsulados
-    private int Codigo;
-    public int codigo { get => Codigo; set => Codigo = value; }
+    public int RA { get; private set; }
+    private static List<Jogador> jogadores = new List<Jogador>();
 
     // Método contrutor
     public Jogador(string nome, int idade, Posicao posicao)
     {
-        Codigo = GerarCodigoUnico();
+        // Carrega todos os jogadores do JSON
+        var jogadoresExistentes = Jogador.ListarJogadores();
+        var codigosExistentes = new HashSet<int>(jogadoresExistentes.Select(j => j.RA));
+
+        RA = GerarCodigoUnico(codigosExistentes);
         this.Nome = nome;
         this.Idade = idade;
         this.Posicao = posicao;
     }
 
-    // usando override em um metodo padrão C#
     public override string ToString()
     {
-        return $"Código: {Codigo}, Nome: {Nome}, Idade: {Idade}, Posição: {Posicao}";
+        return $"Código: {RA}, Nome: {Nome}, Idade: {Idade}, Posição: {Posicao}";
     }
 
-    // Lista para armazenar jogadores em memória
-    private static List<Jogador> jogadores = new List<Jogador>();
-
-    // implementação do método CRUD
-
+    // --------------- CRUD ---------------
     // Create: Adicionar jogador
     public static void AdicionarJogador(Jogador jogador)
     {
@@ -39,11 +38,12 @@ public class Jogador : Associados
     {
         return jogadores;
     }
+
     // Update: Atualizar jogador por código
-    public static bool AtualizarJogador(int codigo, string novoNome, int novaIdade, Posicao novaPosicao)
+    public static bool AtualizarJogador(int RA, string novoNome, int novaIdade, Posicao novaPosicao)
     {
-        var jogador = jogadores.FirstOrDefault(j => j.codigo == codigo);
-        if (jogador != null)
+        var jogador = jogadores.FirstOrDefault(j => j.RA == RA);
+        if (jogador != null) // Se esse jogador existir
         {
             jogador.Nome = novoNome;
             jogador.Idade = novaIdade;
@@ -57,9 +57,9 @@ public class Jogador : Associados
     }
 
     // Delete: Remover jogador por código
-    public static bool RemoverJogador(int codigo)
+    public static bool RemoverJogador(int RA)
     {
-        var jogador = jogadores.FirstOrDefault(j => j.codigo == codigo);
+        var jogador = jogadores.FirstOrDefault(j => j.RA == RA);
         if (jogador != null)
         {
             jogadores.Remove(jogador);

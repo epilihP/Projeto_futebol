@@ -1,4 +1,5 @@
 namespace Associacao;
+using ICodigos;
 
 // Enumeração de Futsal
 public enum Posicao
@@ -8,7 +9,7 @@ public enum Posicao
     Goleiro = 3,
 }
 
-public abstract class Associados
+public abstract class Associados : ICodigos<int>
 {
     // Atributs encapsulados
     protected string Nome;
@@ -21,7 +22,7 @@ public abstract class Associados
     public Posicao posicao { get => Posicao; set => Posicao = value; }
 
     // Métodos
-    public static int GerarCodigoUnico(HashSet<int> codigosExistentes) // HashSet cria uma instancia na memória
+    public int GerarCodigoUnico(HashSet<int> codigosExistentes) // HashSet cria uma instancia na memória
     {
         Random rand = new Random(); // cria objeto para para gerar numero aleatorio
         int RA;

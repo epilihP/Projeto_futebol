@@ -29,9 +29,9 @@ public class GerenciadorDeJogos : Jogos
         Console.WriteLine("Interessados:");
         foreach (var codigo in Interessados)
         {
-            var jogador = jogadores.FirstOrDefault(j => j.codigo == codigo);
+            var jogador = jogadores.FirstOrDefault(j => j.RA == codigo);
             if (jogador != null)
-                Console.WriteLine($"{jogador.nome} (Código: {jogador.codigo})");
+                Console.WriteLine($"{jogador.nome} (Código: {jogador.RA})");
         }
     }
     public bool PodeConfirmarPartida()

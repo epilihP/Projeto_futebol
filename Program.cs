@@ -20,7 +20,7 @@ Console.WriteLine("\nTeste 3: Atualizar jogador");
 if (jogadores.Count > 0)        
 {
     var primeiroJogador = jogadores[0];
-    bool atualizado = Jogador.AtualizarJogador(primeiroJogador.codigo, "Carlos Silva", 26, Posicao.Goleiro);
+    bool atualizado = Jogador.AtualizarJogador(primeiroJogador.RA, "Carlos Silva", 26, Posicao.Goleiro);
     Console.WriteLine(atualizado ? "Jogador atualizado com sucesso!" : "Falha ao atualizar jogador.");
 }
 
@@ -28,7 +28,7 @@ Console.WriteLine("\nTeste 4: Remover jogador");
 if (jogadores.Count > 1)
 {
     var segundoJogador = jogadores[1];
-    bool removido = Jogador.RemoverJogador(segundoJogador.codigo);
+    bool removido = Jogador.RemoverJogador(segundoJogador.RA);
     Console.WriteLine(removido ? "Jogador removido com sucesso!" : "Falha ao remover jogador.");
 }
 
