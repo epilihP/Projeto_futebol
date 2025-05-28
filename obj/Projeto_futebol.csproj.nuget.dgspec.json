@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj": {}
+    "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto_futebol-review\\Projeto_futebol-phi\\Projeto_futebol.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj": {
+    "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto_futebol-review\\Projeto_futebol-phi\\Projeto_futebol.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj",
+        "projectUniqueName": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto_futebol-review\\Projeto_futebol-phi\\Projeto_futebol.csproj",
         "projectName": "Projeto_futebol",
-        "projectPath": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj",
+        "projectPath": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto_futebol-review\\Projeto_futebol-phi\\Projeto_futebol.csproj",
         "packagesPath": "C:\\Users\\aliss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\obj\\",
+        "outputPath": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto_futebol-review\\Projeto_futebol-phi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
