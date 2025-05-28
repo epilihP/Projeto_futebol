@@ -1,9 +1,10 @@
 namespace Jogos;
+using System.Collections.Generic;
 
 public abstract class Jogos
 {
     public long Codigo { get; set; } // Identificador único do jogo (ex: data.Ticks)
-    public List<int> Interessados { get; set; } = new List<int>(); // Códigos dos jogadores interessados
+    public List<int> Interessados { get; set; } = new  List<int>(); // Códigos dos jogadores interessados
 
     // Atributos Encapsulados
     public string Local { get; set; }

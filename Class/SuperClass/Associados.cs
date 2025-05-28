@@ -1,5 +1,6 @@
 namespace Associacao;
 using ICodigos;
+using System.Collections.Generic;
 
 // Enumeração de Futsal
 public enum Posicao

@@ -51,14 +51,32 @@
 
 
 
-//=-=-=-=-=-=-=--==-=-=-=-=-=-=-=-=-=-=-==-=--=-=-=-=-==-==-==-=-=-=-===-==-
-
-//ainda to estudando json.net pra finalizar e implementar, ainda sem ajuste.
 
 
 
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-//=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=//
 
+27/5
+to com duvida pra finalizar times, fiquei incomodao com o foreach finalizar amanhã
 
+- o sistema de justiça vai priorizar quem for o primeiro interessado, e goleiros
+tendo isso em mente quero limitar 2 goleiros por jogo ou 3 por time, penso em fechar os times com 4 jogadores, e depois verificar e adicionar goleiro(se necessario) caso não tiver os ultimos da lista jogarão nessa posição
 
+segue a baixo algumas implementação para times:
 
+para os goleiros pensei em algo tipo 
+var goleiro = jogadores.FirstOrDefault(j => j.Posicao == "Goleiro" && Interessados.Contains(j.RA));
+if (goleiro != null)
+{
+    PrimeiroTime.Add(goleiro.nome);
+    Interessados.Remove(goleiro.RA); +--------+> Remove o goleiro da lista de interessados
+}
 
+de inicio e ia implementar isso aqui mas achei que ficou ruim, vou deixar anotado aqi para caso eu ter ideia mais tarde
+
+if (limitador == 0){
+            PrimeiroTime?.Add(jogador.nome);
+ *       else if (timeAtual == 1)
+ *           SegundoTime?.Add(jogador.nome);
+  *      else
+  *          TerceiroTime?.Add(jogador.nome);}

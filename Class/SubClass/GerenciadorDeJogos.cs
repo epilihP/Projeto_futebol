@@ -1,6 +1,7 @@
 namespace GerenciadorJogos;
 using Jogos;
 using Players;
+using System.Collections.Generic;
 
 public class GerenciadorDeJogos : Jogos
 {
@@ -42,6 +43,11 @@ public class GerenciadorDeJogos : Jogos
             return Interessados.Count >= 2 * JogadoresPorTime;
         }
         return false;
+    }
+
+    public void ClearInteressados()
+    {
+        Interessados.Clear();
     }
 }
 

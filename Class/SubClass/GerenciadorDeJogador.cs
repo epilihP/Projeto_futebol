@@ -1,5 +1,7 @@
 namespace Players;
+using System.Collections.Generic;
 using Associacao;
+
 
 public class Jogador : Associados
 {

@@ -1,6 +1,7 @@
 namespace Partidas;
 using Time;
 using System;
+using System.Collections.Generic;
 // Classe para registrar o histórico de cada rodada
 public class HistoricoRodada
 {
