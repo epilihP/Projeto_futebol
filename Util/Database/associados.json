@@ -1,8 +1,62 @@
 [
   {
-    "RA": 556589,
+    "RA": 744784,
     "nome": "Carlos Silva",
     "idade": 26,
     "posicao": 3
+  },
+  {
+    "RA": 810323,
+    "nome": "Luisa",
+    "idade": 18,
+    "posicao": 3
+  },
+  {
+    "RA": 888843,
+    "nome": "Leo",
+    "idade": 20,
+    "posicao": 2
+  },
+  {
+    "RA": 516643,
+    "nome": "Gigi",
+    "idade": 19,
+    "posicao": 1
+  },
+  {
+    "RA": 632585,
+    "nome": "Lucas",
+    "idade": 19,
+    "posicao": 3
+  },
+  {
+    "RA": 970084,
+    "nome": "Pedro",
+    "idade": 18,
+    "posicao": 1
+  },
+  {
+    "RA": 841826,
+    "nome": "Duda",
+    "idade": 40,
+    "posicao": 1
+  },
+  {
+    "RA": 122308,
+    "nome": "Ilicio",
+    "idade": 42,
+    "posicao": 2
+  },
+  {
+    "RA": 879366,
+    "nome": "Renan",
+    "idade": 20,
+    "posicao": 2
+  },
+  {
+    "RA": 661620,
+    "nome": "Alisson",
+    "idade": 22,
+    "posicao": 2
   }
 ]

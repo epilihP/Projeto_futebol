@@ -9,30 +9,30 @@
     "rodada": 2,
     "reiAntes": 101,
     "desafiante": 303,
-    "vencedor": 101
+    "vencedor": 303
   },
   {
     "rodada": 3,
-    "reiAntes": 101,
+    "reiAntes": 303,
     "desafiante": 404,
-    "vencedor": 101
+    "vencedor": 404
   },
   {
     "rodada": 4,
-    "reiAntes": 101,
+    "reiAntes": 404,
     "desafiante": 202,
-    "vencedor": 101
+    "vencedor": 404
   },
   {
     "rodada": 5,
-    "reiAntes": 101,
+    "reiAntes": 404,
     "desafiante": 303,
-    "vencedor": 101
+    "vencedor": 303
   },
   {
     "rodada": 6,
-    "reiAntes": 101,
+    "reiAntes": 303,
     "desafiante": 404,
-    "vencedor": 404
+    "vencedor": 303
   }
 ]

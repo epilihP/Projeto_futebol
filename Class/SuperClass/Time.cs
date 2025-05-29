@@ -4,6 +4,7 @@ using System;
 using Jogos;
 using Partidas;
 using Players;
+using Associacao;
 using GerenciadorJogos;
 
 public class Times : GerenciadorDeJogos
@@ -12,30 +13,60 @@ public class Times : GerenciadorDeJogos
     public static List<string>? SegundoTime { get; set; } = new List<string>();
     public static List<string>? TerceiroTime { get; set; } = new List<string>();
 
-    public Times()
+    public Times(DateTime data, string nomeJogo, string local, int rodada, int? id1, int? id2)
+    : base(data, nomeJogo, local, rodada, id1, id2)
     {
-        PrimeiroTime = new List<string>() = 5;
-        SegundoTime = new List<string>() = 5;
-        TerceiroTime = new List<string>() = 5;
-        
+        PrimeiroTime = new List<string>();
+        SegundoTime = new List<string>();
+        TerceiroTime = new List<string>();
     }
 
+    // Monta dois times por ordem de chegada, priorizando goleiros
     public void StartToPlay(List<Jogador> jogadores)
-    {
-        // a ideia é que isso ajude controlar o limite de pessoas por time alterando entre 0 e 1
-        int limitador = 0;
+{
+    PrimeiroTime?.Clear();
+    SegundoTime?.Clear();
 
-        foreach (var jogadorInteressado in Interessados)
-        {
-            // var jogador = todosJogadores.FirstOrDefault(j => j.RA == jogadorInteressado);
-            // var goleiro = jogadores.FirstOrDefault(j => j.Posicao == "Goleiro" && Interessados.Contains(j.RA));
-            // if (PrimeiroTime <= 5)
-            // {
-            //     if()
-            // }
-        }
+    var interessadosFila = new List<int>(Interessados);
+
+    // Separa goleiros e jogadores de linha
+    var goleiros = jogadores
+        .Where(j => j.posicao == Posicao.Goleiro && interessadosFila.Contains(j.RA))
+        .ToList();
+
+    var jogadoresLinha = jogadores
+        .Where(j => j.posicao != Posicao.Goleiro && interessadosFila.Contains(j.RA))
+        .ToList();
+
+    // Adiciona goleiros aos times
+    if (goleiros.Count > 0)
+    {
+        PrimeiroTime.Add(goleiros[0].nome);
+        interessadosFila.Remove(goleiros[0].RA);
+    }
+    if (goleiros.Count > 1)
+    {
+        SegundoTime.Add(goleiros[1].nome);
+        interessadosFila.Remove(goleiros[1].RA);
     }
 
+    // Remove goleiros já adicionados da lista de linha (caso estejam lá)
+    jogadoresLinha.RemoveAll(j => goleiros.Take(2).Any(g => g.RA == j.RA));
 
+    // Junta o restante dos jogadores (inclusive goleiros extras, se houver)
+    var resto = jogadores
+        .Where(j => interessadosFila.Contains(j.RA))
+        .ToList();
 
+    // Alterna a distribuição
+    bool paraPrimeiro = PrimeiroTime.Count <= SegundoTime.Count;
+    foreach (var jogador in resto)
+    {
+        if (paraPrimeiro)
+            PrimeiroTime.Add(jogador.nome);
+        else
+            SegundoTime.Add(jogador.nome);
+        paraPrimeiro = !paraPrimeiro;
+    }
+}
 }
