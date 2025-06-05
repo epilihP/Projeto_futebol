@@ -26,6 +26,7 @@ public class Times : GerenciadorDeJogos
 {
     PrimeiroTime?.Clear();
     SegundoTime?.Clear();
+    TerceiroTime?.Clear();
 
     var interessadosFila = new List<int>(Interessados);
 

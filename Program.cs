@@ -19,6 +19,11 @@ Jogador.AdicionarJogador(new Jogador("Duda", 40, Posicao.Atacante));
 Jogador.AdicionarJogador(new Jogador("Ilicio", 42, Posicao.Defesa));
 Jogador.AdicionarJogador(new Jogador("Renan", 20, Posicao.Defesa));
 Jogador.AdicionarJogador(new Jogador("Alisson", 22, Posicao.Defesa));
+Jogador.AdicionarJogador(new Jogador("Pedro", 18, Posicao.Atacante));
+Jogador.AdicionarJogador(new Jogador("Duda", 40, Posicao.Atacante));
+Jogador.AdicionarJogador(new Jogador("Ilicio", 42, Posicao.Defesa));
+Jogador.AdicionarJogador(new Jogador("Renan", 20, Posicao.Defesa));
+Jogador.AdicionarJogador(new Jogador("Alisson", 22, Posicao.Defesa));
 Console.WriteLine("Jogadores adicionados com sucesso!");
 
 Console.WriteLine("\nTeste 2: Listar jogadores");

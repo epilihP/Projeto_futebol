@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 public class GerenciadorDeJogos : Jogos
 {
-    public GerenciadorDeJogos(DateTime data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = null)
+    public GerenciadorDeJogos(DayOfWeek data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = 20)
     {
-        Codigo = data.Ticks;
         Data = data;
         Local = local;
         TipoCampo = tipoCampo;
@@ -48,6 +47,14 @@ public class GerenciadorDeJogos : Jogos
     public void ClearInteressados()
     {
         Interessados.Clear();
+    }
+
+    public void ListaDeInteressadosAberta()
+    {
+        if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
+        {
+            
+        }
     }
 }
 

@@ -1,60 +1,90 @@
 [
   {
-    "RA": 744784,
+    "RA": 126535,
     "nome": "Carlos Silva",
     "idade": 26,
     "posicao": 3
   },
   {
-    "RA": 810323,
+    "RA": 227352,
     "nome": "Luisa",
     "idade": 18,
     "posicao": 3
   },
   {
-    "RA": 888843,
+    "RA": 646274,
     "nome": "Leo",
     "idade": 20,
     "posicao": 2
   },
   {
-    "RA": 516643,
+    "RA": 120221,
     "nome": "Gigi",
     "idade": 19,
     "posicao": 1
   },
   {
-    "RA": 632585,
+    "RA": 537603,
     "nome": "Lucas",
     "idade": 19,
     "posicao": 3
   },
   {
-    "RA": 970084,
+    "RA": 252229,
     "nome": "Pedro",
     "idade": 18,
     "posicao": 1
   },
   {
-    "RA": 841826,
+    "RA": 652039,
     "nome": "Duda",
     "idade": 40,
     "posicao": 1
   },
   {
-    "RA": 122308,
+    "RA": 444895,
     "nome": "Ilicio",
     "idade": 42,
     "posicao": 2
   },
   {
-    "RA": 879366,
+    "RA": 273133,
     "nome": "Renan",
     "idade": 20,
     "posicao": 2
   },
   {
-    "RA": 661620,
+    "RA": 797866,
+    "nome": "Alisson",
+    "idade": 22,
+    "posicao": 2
+  },
+  {
+    "RA": 641159,
+    "nome": "Pedro",
+    "idade": 18,
+    "posicao": 1
+  },
+  {
+    "RA": 751212,
+    "nome": "Duda",
+    "idade": 40,
+    "posicao": 1
+  },
+  {
+    "RA": 424401,
+    "nome": "Ilicio",
+    "idade": 42,
+    "posicao": 2
+  },
+  {
+    "RA": 213814,
+    "nome": "Renan",
+    "idade": 20,
+    "posicao": 2
+  },
+  {
+    "RA": 798393,
     "nome": "Alisson",
     "idade": 22,
     "posicao": 2

@@ -13,13 +13,13 @@ public abstract class Jogos
     public int? LimiteTimes { get; set; }
     public int? LimiteJogadores { get; set; }
 
-    private DateTime data;
-    public DateTime Data
+    private DayOfWeek data;
+    public DayOfWeek Data
     {
         get { return data; }
         set
         {
-            data = value; // Remova a validação aqui!
+            data = DayOfWeek.Thursday; // Remova a validação aqui!
         }
     }
 }
