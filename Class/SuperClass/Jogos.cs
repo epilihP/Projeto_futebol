@@ -8,18 +8,25 @@ public abstract class Jogos
 
     // Atributos Encapsulados
     public string Local { get; set; }
-    public string TipoCampo { get; set; }
+    public string TipoCampo
+    {
+        get{ return TipoCampo; }
+        set
+        {
+            TipoCampo = "Quadra Poliuretano (PU)";
+        }
+    }
     public int JogadoresPorTime { get; set; }
     public int? LimiteTimes { get; set; }
     public int? LimiteJogadores { get; set; }
 
-    private DayOfWeek data;
+    public DayOfWeek data;
     public DayOfWeek Data
     {
         get { return data; }
         set
         {
-            data = DayOfWeek.Thursday; // Remova a validação aqui!
+            data = DayOfWeek.Thursday;
         }
     }
 }

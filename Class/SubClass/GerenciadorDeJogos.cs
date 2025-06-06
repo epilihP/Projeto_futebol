@@ -48,19 +48,13 @@ public class GerenciadorDeJogos : Jogos
     {
         Interessados.Clear();
     }
-
-    public void ListaDeInteressadosAberta()
+    public void ListaDeInteressadosDisponivel()       //use isso para conferir se há jogo, logo se n for dia de jogo pode adicionar pessoas a lista, então use ela pa
     {
-        if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
-        {
-            
-        }
+        if (DateTime.Now.DayOfWeek != data)
+            Console.WriteLine("Aberta!");
+
+        else
+            Console.WriteLine("Fechado");
     }
 }
 
-
-
-
-//talves n precise ser em json porque não precisa de banco de dados.
-// nos jogos o que da ja temos função para criar
-// 
