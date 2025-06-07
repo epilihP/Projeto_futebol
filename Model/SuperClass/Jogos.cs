@@ -7,15 +7,11 @@ public abstract class Jogos
     public List<int> Interessados { get; set; } = new  List<int>(); // Códigos dos jogadores interessados
 
     // Atributos Encapsulados
-    public string Local { get; set; }
-    public string TipoCampo
-    {
-        get{ return TipoCampo; }
-        set
-        {
-            TipoCampo = "Quadra Poliuretano (PU)";
-        }
-    }
+    
+    public string Local {get;} = "Quadra Poliesportiva Mario Covas";
+
+    public string TipoCampo { get; } = "Quadra Poliuretano (PU)";
+ 
     public int JogadoresPorTime { get; set; }
     public int? LimiteTimes { get; set; }
     public int? LimiteJogadores { get; set; }

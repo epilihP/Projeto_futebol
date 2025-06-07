@@ -36,7 +36,7 @@ public class GerenciadorDeJogos : Jogos
     }
     public bool PodeConfirmarPartida()
     {
-        if (LimiteTimes.HasValue && LimiteTimes.Value >= 2)
+        if (!ListaDeInteressadosDisponivel())
         {
             // Verifica se existem pelo menos 2 times completos
             return Interessados.Count >= 2 * JogadoresPorTime;
@@ -48,13 +48,21 @@ public class GerenciadorDeJogos : Jogos
     {
         Interessados.Clear();
     }
-    public void ListaDeInteressadosDisponivel()       //use isso para conferir se há jogo, logo se n for dia de jogo pode adicionar pessoas a lista, então use ela pa
+    public bool ListaDeInteressadosDisponivel()       //use isso para conferir se há jogo, logo se n for dia de jogo pode adicionar pessoas a lista, então use ela pa
     {
-        if (DateTime.Now.DayOfWeek != data)
+        if (DateTime.Now.DayOfWeek != Data)
+        {
             Console.WriteLine("Aberta!");
-
+            return true;
+        }
+        
         else
+        {
             Console.WriteLine("Fechado");
+            return false;
+
+        }
+
     }
 }
 
