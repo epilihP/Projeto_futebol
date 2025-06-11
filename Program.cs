@@ -1,6 +1,5 @@
-﻿using PROJETO_FUTEBOL.Util;
+﻿namespace PROJETO_FUTEBOL
 
-namespace PROJETO_FUTEBOL
 {
     class Program
     {

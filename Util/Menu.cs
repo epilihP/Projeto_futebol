@@ -1,138 +1,195 @@
 using PROJETO_FUTEBOL.controller;
-
-namespace PROJETO_FUTEBOL.Util 
+public class Menu
 {
-    public class Menu
+    private JogadorController jogadorController = new JogadorController();
+    private JogoController jogoController = new JogoController();
+    //private TimeController timeController = new TimeController();
+    //private PartidaController partidaController = new PartidaController();
+
+    public void ExibirMenuPrincipal()
     {
-        private JogadorController jogadorController;
-
-
-        public Menu()
+        while (true)
         {
-       
-            jogadorController = new JogadorController();
-        }
+            Console.Clear();
+            Console.WriteLine("===== SISTEMA DE ORGANIZAÇÃO DE JOGOS DE FUTEBOL =====");
+            Console.WriteLine("1 - Gestão de Jogadores");
+            Console.WriteLine("2 - Gestão de Jogos");
+            Console.WriteLine("3 - Gestão de Times");
+            Console.WriteLine("4 - Gestão de Partidas");
+            Console.WriteLine("0 - Sair");
+            Console.Write("Escolha uma opção: ");
+            string opcao = Console.ReadLine();
 
-        public void ExibirMenuPrincipal()
-{
-    while (true)
-    {
-        Console.Clear();
-        Console.WriteLine("--- Sistema de Gestão de Futebol ---");
-        Console.WriteLine("=====================================");
-        Console.WriteLine("1 - Gestão de Jogadores");
-        Console.WriteLine("2 - Gestão de Jogos");
-        Console.WriteLine("3 - Gestão de Times");
-        Console.WriteLine("0 - Sair do Sistema");
-        Console.WriteLine("=====================================");
-        Console.Write("Escolha uma opção: ");
-
-        string opcao = Console.ReadLine();
-
-        switch (opcao)
-        {
-            case "1":
-                ExibirMenuJogadores();
-                break;
-            case "2":
-                ExibirMenuJogos(); // Chame o novo submenu
-                break;
-            case "3":
-                // ExibirMenuTimes(); // Implemente depois
-                Console.WriteLine("\nGestão de Times ainda não implementada.");
-                Console.ReadKey();
-                break;
-            case "0":
-                Console.WriteLine("\nObrigado por usar o sistema!");
-                return;
-            default:
-                Console.WriteLine("\nOpção inválida!");
-                Console.ReadKey();
-                break;
-        }
-    }
-}
-
-        private JogoController jogoController = new JogoController(); // Adicione isso no início da classe Menu
-
-// jogos
-        private void ExibirMenuJogos()
-        {
-            while (true)
+            switch (opcao)
             {
-                Console.Clear();
-                Console.WriteLine("--- Gestão de Jogos ---");
-                Console.WriteLine("1 - Cadastrar Jogo");
-                Console.WriteLine("2 - Listar Jogos");
-                Console.WriteLine("3 - Atualizar Jogo");
-                Console.WriteLine("4 - Excluir Jogo");
-                Console.WriteLine("0 - Voltar ao Menu Principal");
-                Console.Write("Escolha uma opção: ");
-
-                string opcao = Console.ReadLine();
-
-                switch (opcao)
-                {
-                    case "1":
-                        jogoController.CadastrarJogo();
-                        break;
-                    case "2":
-                        jogoController.ListarJogos();
-                        break;
-                    case "3":
-                        jogoController.AtualizarJogo();
-                        break;
-                    case "4":
-                        jogoController.ExcluirJogo();
-                        break;
-                    case "0":
-                        return;
-                    default:
-                        Console.WriteLine("\nOpção inválida!");
-                        Console.ReadKey();
-                        break;
-                }
+                case "1":
+                    ExibirMenuJogadores();
+                    break;
+                case "2":
+                    ExibirMenuJogos();
+                    break;
+                case "3":
+                    //ExibirMenuTimes();
+                    break;
+                case "4":
+                    //ExibirMenuPartidas();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    Console.ReadKey();
+                    break;
             }
         }
+    }
 
-        // jogadores
-        private void ExibirMenuJogadores()
+    private void ExibirMenuJogadores()
+    {
+        while (true)
         {
-            while (true)
+            Console.Clear();
+            Console.WriteLine("--- Gestão de Jogadores ---");
+            Console.WriteLine("1 - Cadastrar Jogador");
+            Console.WriteLine("2 - Listar Jogadores");
+            Console.WriteLine("3 - Atualizar Jogador");
+            Console.WriteLine("4 - Excluir Jogador");
+            Console.WriteLine("0 - Voltar");
+            Console.Write("Escolha uma opção: ");
+            string opcao = Console.ReadLine();
+
+            switch (opcao)
             {
-                Console.Clear();
-                Console.WriteLine("--- Gestão de Jogadores ---");
-                Console.WriteLine("1 - Cadastrar Jogador");
-                Console.WriteLine("2 - Listar Jogadores");
-                Console.WriteLine("3 - Atualizar Jogador");
-                Console.WriteLine("4 - Excluir Jogador");
-                Console.WriteLine("0 - Voltar ao Menu Principal");
-                Console.Write("Escolha uma opção: ");
+                case "1":
+                    jogadorController.CadastrarJogador();
+                    break;
+                case "2":
+                    jogadorController.ListarJogadores();
+                    break;
+                case "3":
+                    jogadorController.AtualizarJogador();
+                    break;
+                case "4":
+                    jogadorController.ExcluirJogador();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
 
-                string opcao = Console.ReadLine();
+    private void ExibirMenuJogos()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("--- Gestão de Jogos ---");
+            Console.WriteLine("1 - Agendar Jogo");
+            Console.WriteLine("2 - Listar Jogos");
+            Console.WriteLine("3 - Atualizar Jogo");
+            Console.WriteLine("4 - Excluir Jogo");
+            Console.WriteLine("5 - Gerenciar Interessados");
+            Console.WriteLine("0 - Voltar");
+            Console.Write("Escolha uma opção: ");
+            string opcao = Console.ReadLine();
 
-                switch (opcao)
-                {
-                    case "1":
-                        jogadorController.CadastrarJogador();
-                        break;
-                    case "2":
-                        jogadorController.ListarJogadores();
-                        break;
-                    case "3":
-                        jogadorController.AtualizarJogador();
-                        break;
-                    case "4":
-                        jogadorController.ExcluirJogador();
-                        break;
-                    case "0":
-                        return;
-                    default:
-                        Console.WriteLine("\nOpção inválida!");
-                        Console.ReadKey();
-                        break;
-                }
+            switch (opcao)
+            {
+                case "1":
+                    jogoController.AgendarJogo();
+                    break;
+                case "2":
+                    jogoController.ListarJogos();
+                    break;
+                case "3":
+                    jogoController.AtualizarJogo();
+                    break;
+                case "4":
+                    jogoController.ExcluirJogo();
+                    break;
+                case "5":
+                    jogoController.GerenciarInteressados();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    Console.ReadKey();
+                    break;
             }
         }
     }
 }
+
+    // private void ExibirMenuTimes()
+    // {
+    //     while (true)
+    //     {
+    //         Console.Clear();
+    //         Console.WriteLine("--- Gestão de Times ---");
+    //         Console.WriteLine("1 - Gerar Times por Ordem de Chegada");
+    //         Console.WriteLine("2 - Gerar Times por Posição Equilibrada");
+    //         Console.WriteLine("3 - Gerar Times pelo Critério do Grupo");
+    //         Console.WriteLine("0 - Voltar");
+    //         Console.Write("Escolha uma opção: ");
+    //         string opcao = Console.ReadLine();
+
+    //         switch (opcao)
+    //         {
+    //             case "1":
+    //                 timeController.GerarTimesPorChegada();
+    //                 break;
+    //             case "2":
+    //                 timeController.GerarTimesPorPosicao();
+    //                 break;
+    //             case "3":
+    //                 timeController.GerarTimesPersonalizado();
+    //                 break;
+    //             case "0":
+    //                 return;
+    //             default:
+    //                 Console.WriteLine("Opção inválida!");
+    //                 Console.ReadKey();
+    //                 break;
+    //         }
+    //     }
+    // }
+
+//     private void ExibirMenuPartidas()
+//     {
+//         while (true)
+//         {
+//             Console.Clear();
+//             Console.WriteLine("--- Gestão de Partidas ---");
+//             Console.WriteLine("1 - Registrar Nova Partida");
+//             Console.WriteLine("2 - Listar Partidas");
+//             Console.WriteLine("3 - Registrar Resultado");
+//             Console.WriteLine("0 - Voltar");
+//             Console.Write("Escolha uma opção: ");
+//             string opcao = Console.ReadLine();
+
+//             switch (opcao)
+//             {
+//                 case "1":
+//                     partidaController.RegistrarPartida();
+//                     break;
+//                 case "2":
+//                     partidaController.ListarPartidas();
+//                     break;
+//                 case "3":
+//                     partidaController.RegistrarResultado();
+//                     break;
+//                 case "0":
+//                     return;
+//                 default:
+//                     Console.WriteLine("Opção inválida!");
+//                     Console.ReadKey();
+//                     break;
+//             }
+//         }
+//     }
+// }
