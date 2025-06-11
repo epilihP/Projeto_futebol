@@ -17,9 +17,9 @@ public class Jogos
     public int? LimiteTimes { get; set; }
     public int? LimiteJogadores { get; set; }
 
-    public DayOfWeek data = DayOfWeek.Thursday; // Valor padrão
+    private DateTime data = DateTime.Now; // Valor padrão
 
-    public DayOfWeek Data
+    public DateTime Data
     {
         get { return data; }
         set { data = value; }

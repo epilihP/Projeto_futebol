@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using PROJETO_FUTEBOL.controller;
 using Players;
 
-
 public class GerenciadorDeJogos : Jogos
 {
-    public GerenciadorDeJogos(DayOfWeek data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = 20)
+    public GerenciadorDeJogos(DateTime data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = 20)
     {
         Data = data;
         Local = local;
@@ -15,7 +14,7 @@ public class GerenciadorDeJogos : Jogos
         JogadoresPorTime = jogadoresPorTime;
         LimiteTimes = limiteTimes;
         LimiteJogadores = limiteJogadores;
-        Interessados = new List<int>(); // linkar com os jogadores
+        Interessados = new List<int>();
     }
 
     public void AdicionarInteressado(int idJogador)
@@ -36,6 +35,7 @@ public class GerenciadorDeJogos : Jogos
                 Console.WriteLine($"{jogador.nome} (Código: {jogador.RA})");
         }
     }
+
     public bool PodeConfirmarPartida()
     {
         if (!ListaDeInteressadosDisponivel())
@@ -50,21 +50,19 @@ public class GerenciadorDeJogos : Jogos
     {
         Interessados.Clear();
     }
-    public bool ListaDeInteressadosDisponivel()       //use isso para conferir se há jogo, logo se n for dia de jogo pode adicionar pessoas a lista, então use ela pa
+
+    public bool ListaDeInteressadosDisponivel()
     {
-        if (DateTime.Now.DayOfWeek != Data)
+        // Agora compara apenas o dia da semana
+        if (DateTime.Now.DayOfWeek != Data.DayOfWeek)
         {
             Console.WriteLine("Aberta!");
             return true;
         }
-        
         else
         {
             Console.WriteLine("Fechado");
             return false;
-
         }
-
     }
 }
-

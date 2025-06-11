@@ -7,7 +7,7 @@ using Jogoss;
 public class JogoController
 {
     private List<Jogos> listaDeJogos = new List<Jogos>();
-    private readonly string caminhoArquivo = "Database/jogos.json";
+    private readonly string caminhoArquivo = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\jogos.json";
 
     public JogoController()
     {
@@ -20,7 +20,9 @@ public class JogoController
         Console.WriteLine("--- Agendar Novo Jogo ---");
         Jogos novoJogo = new Jogos();
         novoJogo.Codigo = DateTime.Now.Ticks;
-        novoJogo.Data = DayOfWeek.Thursday; // Sempre quinta-feira
+        int daysUntilThursday = ((int)DayOfWeek.Thursday - (int)DateTime.Now.DayOfWeek + 7) % 7;
+        if (daysUntilThursday == 0) daysUntilThursday = 7; // Se hoje já é quinta, usar próxima quinta
+        novoJogo.Data = DateTime.Now.Date.AddDays(daysUntilThursday);
 
         Console.WriteLine("(Deixe em branco para usar o valor padrão)");
 
@@ -65,7 +67,7 @@ public class JogoController
         {
             foreach (var jogo in listaDeJogos)
             {
-                Console.WriteLine($"ID: {jogo.Codigo} | Dia: {DiaDaSemanaEmPortugues(jogo.Data)} | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {jogo.JogadoresPorTime} por time");
+                Console.WriteLine($"ID: {jogo.Codigo} | Dia: {DiaDaSemanaEmPortugues(jogo.Data.DayOfWeek)} | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {jogo.JogadoresPorTime} por time");
             }
         }
         Console.ReadKey();
@@ -176,11 +178,11 @@ public class JogoController
             default: return dia.ToString();
         }
     }
-
     private void SalvarNoArquivo()
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string json = JsonSerializer.Serialize(listaDeJogos, options);
+        Directory.CreateDirectory(Path.GetDirectoryName(caminhoArquivo));
         File.WriteAllText(caminhoArquivo, json);
     }
 
