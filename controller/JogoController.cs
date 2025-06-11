@@ -9,10 +9,24 @@ public class JogoController
 {
     private List<GerenciadorDeJogos> listaDeJogos = new List<GerenciadorDeJogos>();
     private readonly string caminhoArquivo = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\jogos.json";
-
     public JogoController()
     {
         CarregarDoArquivo();
+    }
+
+    public static string DiaDaSemanaEmPortugues(DayOfWeek dia)
+    {
+        switch (dia)
+        {
+            case DayOfWeek.Monday: return "Segunda-feira";
+            case DayOfWeek.Tuesday: return "Terça-feira";
+            case DayOfWeek.Wednesday: return "Quarta-feira";
+            case DayOfWeek.Thursday: return "Quinta-feira";
+            case DayOfWeek.Friday: return "Sexta-feira";
+            case DayOfWeek.Saturday: return "Sábado";
+            case DayOfWeek.Sunday: return "Domingo";
+            default: return dia.ToString();
+        }
     }
 
     public void AgendarJogo()
@@ -150,49 +164,49 @@ public class JogoController
     }
 
     public void GerenciarInteressados()
+{
+    Console.Clear();
+    Console.WriteLine("--- Gerenciar Interessados no Jogo ---");
+    Console.Write("Digite o código do jogo: ");
+    long.TryParse(Console.ReadLine(), out long codigo);
+
+    var jogo = listaDeJogos.Find(j => j.Codigo == codigo);
+    if (jogo == null)
     {
-        Console.Clear();
-        Console.WriteLine("--- Gerenciar Interessados no Jogo ---");
-        Console.Write("Digite o código do jogo: ");
-        long.TryParse(Console.ReadLine(), out long codigo);
-
-        var jogo = listaDeJogos.Find(j => j.Codigo == codigo);
-        if (jogo == null)
-        {
-            Console.WriteLine("Jogo não encontrado!");
-            Console.ReadKey();
-            return;
-        }
-
-        Console.WriteLine("Digite o código do jogador interessado (ou 0 para sair):");
-        while (true)
-        {
-            long.TryParse(Console.ReadLine(), out long jogadorId);
-            if (jogadorId == 0) break;
-            if (!jogo.Interessados.Contains((int)jogadorId))
-                jogo.Interessados.Add((int)jogadorId);
-            Console.WriteLine("Adicionado! Próximo código ou 0 para sair:");
-        }
-
-        SalvarNoArquivo();
-        Console.WriteLine("Interessados atualizados!");
+        Console.WriteLine("Jogo não encontrado!");
         Console.ReadKey();
+        return;
     }
 
-    public static string DiaDaSemanaEmPortugues(DayOfWeek dia)
+    // verifica se existe o RA
+    string caminhoAssociados = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\associados.json";
+    List<int> raValidos = new List<int>();
+    if (File.Exists(caminhoAssociados))
     {
-        switch (dia)
-        {
-            case DayOfWeek.Monday: return "Segunda-feira";
-            case DayOfWeek.Tuesday: return "Terça-feira";
-            case DayOfWeek.Wednesday: return "Quarta-feira";
-            case DayOfWeek.Thursday: return "Quinta-feira";
-            case DayOfWeek.Friday: return "Sexta-feira";
-            case DayOfWeek.Saturday: return "Sábado";
-            case DayOfWeek.Sunday: return "Domingo";
-            default: return dia.ToString();
-        }
+        string jsonAssociados = File.ReadAllText(caminhoAssociados);
+        var associados = JsonSerializer.Deserialize<List<Associacao.Associados>>(jsonAssociados);
+        raValidos = associados.Select(a => a.Id).ToList();
     }
+
+    Console.WriteLine("Digite o código do jogador interessado (ou 0 para sair):");
+    while (true)
+    {
+        long.TryParse(Console.ReadLine(), out long jogadorId);
+        if (jogadorId == 0) break;
+        if (!raValidos.Contains((int)jogadorId))
+        {
+            Console.WriteLine("RA não encontrado nos associados. Tente novamente.");
+            continue;
+        }
+        if (!jogo.Interessados.Contains((int)jogadorId))
+            jogo.Interessados.Add((int)jogadorId);
+        Console.WriteLine("Adicionado! Próximo código ou 0 para sair:");
+    }
+
+    SalvarNoArquivo();
+    Console.WriteLine("Interessados atualizados!");
+    Console.ReadKey();
+}
     private void SalvarNoArquivo()
     {
         var options = new JsonSerializerOptions { WriteIndented = true };

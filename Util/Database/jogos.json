@@ -41,7 +41,19 @@
   },
   {
     "Codigo": 638852031762781208,
-    "Interessados": [],
+    "Interessados": [
+      822645,
+      675418,
+      675401,
+      675402,
+      675403,
+      675404,
+      675405,
+      675406,
+      675407,
+      675409,
+      675410
+    ],
     "Local": "Quadra Poliesportiva Mario Covas",
     "TipoCampo": "Quadra Poliuretano (PU)",
     "JogadoresPorTime": 5,
