@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "mu4u2I6v+RU=",
+  "dgSpecHash": "KnHlRDmG+q0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\philipe_goncalves\\Desktop\\Projeto_futebol\\Projeto_futebol.csproj",
+  "projectFilePath": "C:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Projeto_futebol.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\philipe_goncalves\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\aliss\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }
