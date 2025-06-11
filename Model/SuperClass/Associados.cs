@@ -10,12 +10,13 @@ public enum Posicao
     Goleiro = 3,
 }
 
-public abstract class Associados : ICodigos<int>
+public class Associados : ICodigos<int>
 {
     // Atributs encapsulados
     protected string Nome;
     protected int Idade;
     protected Posicao Posicao;
+    public int Id { get; set; }
 
     public string nome { get => Nome; set => Nome = value; }
 

@@ -1,7 +1,9 @@
 namespace GerenciadorJogos;
 using Jogos;
-using Players;
 using System.Collections.Generic;
+using PROJETO_FUTEBOL.controller;
+using Players;
+
 
 public class GerenciadorDeJogos : Jogos
 {

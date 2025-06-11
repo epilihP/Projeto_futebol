@@ -8,9 +8,9 @@ public abstract class Jogos
 
     // Atributos Encapsulados
     
-    public string Local {get;} = "Quadra Poliesportiva Mario Covas";
+    public string Local { get; set; } = "Quadra Poliesportiva Mario Covas"; // <-- Corrigido: agora tem set
 
-    public string TipoCampo { get; } = "Quadra Poliuretano (PU)";
+    public string TipoCampo { get; set; } = "Quadra Poliuretano (PU)"; // <-- Corrigido: agora tem set
  
     public int JogadoresPorTime { get; set; }
     public int? LimiteTimes { get; set; }

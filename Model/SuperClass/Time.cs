@@ -14,7 +14,7 @@ public class Times : GerenciadorDeJogos
     public static List<string>? TerceiroTime { get; set; } = new List<string>();
 
     public Times(DateTime data, string nomeJogo, string local, int rodada, int? id1, int? id2)
-    : base(data, nomeJogo, local, rodada, id1, id2)
+    : base(data.DayOfWeek, nomeJogo, local, rodada, id1, id2)
     {
         PrimeiroTime = new List<string>();
         SegundoTime = new List<string>();
