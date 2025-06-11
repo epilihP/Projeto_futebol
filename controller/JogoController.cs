@@ -1,137 +1,106 @@
 using System;
-using GerenciadorJogos;
+using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
+using Jogoss;
 
-public class JogoController
+namespace PROJETO_FUTEBOL.controller
 {
-    public void CadastrarJogo()
+    public class JogoController
     {
-        Console.Clear();
-        Console.WriteLine("--- Cadastro de Novo Jogo ---");
+        private List<Jogos> listaDeJogos;
+        private readonly string caminhoArquivoJson = "jogos.json";
 
-        Console.Write("Local: ");
-        string local = Console.ReadLine();
-
-        Console.Write("Tipo de Campo: ");
-        string tipoCampo = Console.ReadLine();
-
-        Console.Write("Jogadores por Time: ");
-        int.TryParse(Console.ReadLine(), out int jogadoresPorTime);
-
-        Console.Write("Limite de Times: ");
-        int.TryParse(Console.ReadLine(), out int limiteTimes);
-
-        Console.Write("Limite de Jogadores: ");
-        int.TryParse(Console.ReadLine(), out int limiteJogadores);
-
-        Console.Write("Dia da Semana (ex: Monday): ");
-        string diaSemana = Console.ReadLine();
-        DayOfWeek data;
-        Enum.TryParse(diaSemana, true, out data);
-
-        var jogo = new GerenciadorDeJogos(data, local, tipoCampo, jogadoresPorTime, limiteTimes, limiteJogadores)
+        public JogoController()
         {
-            Codigo = DateTime.Now.Ticks
-        };
-
-        Database.SalvarJogo(jogo);
-
-        Console.WriteLine("\nJogo cadastrado com sucesso!");
-        Console.ReadKey();
-    }
-
-    public void ListarJogos()
-    {
-        Console.Clear();
-        Console.WriteLine("--- Lista de Jogos ---");
-        var jogos = Database.ListarJogos();
-        if (jogos.Count == 0)
-        {
-            Console.WriteLine("Nenhum jogo cadastrado.");
+            listaDeJogos = CarregarDoArquivo();
         }
-        else
+
+        public void AgendarJogo()
         {
-            foreach (var jogo in jogos)
+            Console.Clear();
+            Console.WriteLine("--- Agendar Novo Jogo ---");
+            
+            // 1. Criamos o objeto ANTES de pedir os dados.
+            //    Agora, ele já nasce com os valores padrão definidos na classe.
+            Jogos novoJogo = new Jogos();
+            novoJogo.Id = (int)DateTime.Now.Ticks;
+            
+            Console.WriteLine("(Deixe em branco e aperte Enter para usar o valor padrão)");
+
+            // 2. Mostramos o valor padrão e só alteramos se o usuário digitar algo.
+            Console.Write($"Local do jogo (Padrão: {novoJogo.Local}): ");
+            string localInput = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(localInput))
             {
-                Console.WriteLine($"Código: {jogo.Codigo} | Local: {jogo.Local} | Tipo: {jogo.TipoCampo} | Jogadores/Time: {jogo.JogadoresPorTime} | Limite Times: {jogo.LimiteTimes} | Limite Jogadores: {jogo.LimiteJogadores} | Dia: {jogo.Data}");
+                novoJogo.Local = localInput;
             }
-        }
-        Console.WriteLine("\nPressione qualquer tecla para voltar...");
-        Console.ReadKey();
-    }
 
-    public void AtualizarJogo()
-    {
-        Console.Clear();
-        Console.WriteLine("--- Atualizar Jogo ---");
-        ListarJogos();
-        Console.Write("\nDigite o código do jogo que deseja atualizar: ");
-        if (!long.TryParse(Console.ReadLine(), out long codigo))
-        {
-            Console.WriteLine("Código inválido.");
+            // 3. Fazemos o mesmo para o Tipo de Campo.
+            Console.Write($"Tipo de campo (Padrão: {novoJogo.TipoCampo}): ");
+            string tipoCampoInput = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(tipoCampoInput))
+            {
+                novoJogo.TipoCampo = tipoCampoInput;
+            }
+
+            // Os outros dados continuam sendo pedidos normalmente
+            Console.Write("Data do jogo (dd/MM/yyyy): ");
+            DateTime.TryParse(Console.ReadLine(), out novoJogo.Data);
+
+            Console.Write("Jogadores por time: ");
+            int.TryParse(Console.ReadLine(), out int jogadoresPorTime);
+            novoJogo.JogadoresPorTime = jogadoresPorTime;
+
+            Console.Write("Limite total de jogadores (0 se não houver limite): ");
+            int.TryParse(Console.ReadLine(), out int limiteTotalJogadores);
+            novoJogo.LimiteTotalJogadores = limiteTotalJogadores;
+            
+            listaDeJogos.Add(novoJogo);
+            SalvarNoArquivo();
+
+            Console.WriteLine("\nJogo agendado com sucesso!");
             Console.ReadKey();
-            return;
         }
 
-        var jogos = Database.ListarJogos();
-        var jogo = jogos.Find(j => j.Codigo == codigo);
-        if (jogo == null)
+        public void ListarJogos()
         {
-            Console.WriteLine("Jogo não encontrado.");
+            Console.Clear();
+            Console.WriteLine("--- Lista de Jogos Agendados ---");
+
+            if (listaDeJogos.Count == 0)
+            {
+                Console.WriteLine("Nenhum jogo agendado.");
+            }
+            else
+            {
+                foreach (var jogo in listaDeJogos)
+                {
+                    Console.WriteLine($"ID: {jogo.Id} | Data: {jogo.Data.ToShortDateString()} | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {jogo.JogadoresPorTime} por time");
+                }
+            }
+            Console.WriteLine("\nPressione qualquer tecla para voltar...");
             Console.ReadKey();
-            return;
         }
 
-        Console.WriteLine("\nDeixe em branco para não alterar.");
-        Console.Write($"Novo Local (Atual: {jogo.Local}): ");
-        string local = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(local)) jogo.Local = local;
-
-        Console.Write($"Novo Tipo de Campo (Atual: {jogo.TipoCampo}): ");
-        string tipoCampo = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(tipoCampo)) jogo.TipoCampo = tipoCampo;
-
-        Console.Write($"Novo Jogadores por Time (Atual: {jogo.JogadoresPorTime}): ");
-        string jogadoresPorTimeStr = Console.ReadLine();
-        if (int.TryParse(jogadoresPorTimeStr, out int jogadoresPorTime)) jogo.JogadoresPorTime = jogadoresPorTime;
-
-        Console.Write($"Novo Limite de Times (Atual: {jogo.LimiteTimes}): ");
-        string limiteTimesStr = Console.ReadLine();
-        if (int.TryParse(limiteTimesStr, out int limiteTimes)) jogo.LimiteTimes = limiteTimes;
-
-        Console.Write($"Novo Limite de Jogadores (Atual: {jogo.LimiteJogadores}): ");
-        string limiteJogadoresStr = Console.ReadLine();
-        if (int.TryParse(limiteJogadoresStr, out int limiteJogadores)) jogo.LimiteJogadores = limiteJogadores;
-
-        Console.Write($"Novo Dia da Semana (Atual: {jogo.Data}): ");
-        string diaSemana = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(diaSemana) && Enum.TryParse(diaSemana, true, out DayOfWeek data)) jogo.Data = data;
-
-        // Atualiza no arquivo
-        Database.AtualizarJogo((int)codigo, jogo);
-
-        Console.WriteLine("\nJogo atualizado com sucesso!");
-        Console.ReadKey();
-    }
-
-    public void ExcluirJogo()
-    {
-        Console.Clear();
-        Console.WriteLine("--- Excluir Jogo ---");
-        ListarJogos();
-        Console.Write("\nDigite o código do jogo que deseja excluir: ");
-        if (!long.TryParse(Console.ReadLine(), out long codigo))
+        private void SalvarNoArquivo()
         {
-            Console.WriteLine("Código inválido.");
-            Console.ReadKey();
-            return;
+            var options = new JsonSerializerOptions { 
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+            };
+            string jsonString = JsonSerializer.Serialize(listaDeJogos, options);
+            File.WriteAllText(caminhoArquivoJson, jsonString);
         }
 
-        bool removido = Database.RemoverJogo((int)codigo);
-        if (removido)
-            Console.WriteLine("Jogo excluído com sucesso!");
-        else
-            Console.WriteLine("Jogo não encontrado.");
-
-        Console.ReadKey();
+        private List<Jogos> CarregarDoArquivo()
+        {
+            if (!File.Exists(caminhoArquivoJson) || string.IsNullOrEmpty(File.ReadAllText(caminhoArquivoJson)))
+            {
+                return new List<Jogos>();
+            }
+            string jsonString = File.ReadAllText(caminhoArquivoJson);
+            return JsonSerializer.Deserialize<List<Jogos>>(jsonString);
+        }
     }
 }

@@ -1,7 +1,7 @@
 namespace Time;
 using System.Collections.Generic;
 using System;
-using Jogos;
+using Jogoss;
 using Partidas;
 using Players;
 using Associacao;
