@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Jogoss;
+using GerenciadorJogos;
 
 public class JogoController
 {
-    private List<Jogos> listaDeJogos = new List<Jogos>();
+    private List<GerenciadorDeJogos> listaDeJogos = new List<GerenciadorDeJogos>();
     private readonly string caminhoArquivo = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\jogos.json";
 
     public JogoController()
@@ -18,35 +19,49 @@ public class JogoController
     {
         Console.Clear();
         Console.WriteLine("--- Agendar Novo Jogo ---");
-        Jogos novoJogo = new Jogos();
-        novoJogo.Codigo = DateTime.Now.Ticks;
+
+        DateTime data;
+        string local;
+        string tipoCampo;
+        int jogadoresPorTime;
+        int? limiteTimes;
+        int? limiteJogadores;
+
         int daysUntilThursday = ((int)DayOfWeek.Thursday - (int)DateTime.Now.DayOfWeek + 7) % 7;
         if (daysUntilThursday == 0) daysUntilThursday = 7; // Se hoje já é quinta, usar próxima quinta
-        novoJogo.Data = DateTime.Now.Date.AddDays(daysUntilThursday);
+        data = DateTime.Now.Date.AddDays(daysUntilThursday);
 
         Console.WriteLine("(Deixe em branco para usar o valor padrão)");
 
-        Console.Write($"Local do jogo (Padrão: {novoJogo.Local}): ");
-        string localInput = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(localInput))
-            novoJogo.Local = localInput;
+        Console.Write("Local do jogo: ");
+        local = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(local)) local = "Quadra Poliesportiva"; // valor padrão
 
-        Console.Write($"Tipo de campo (Padrão: {novoJogo.TipoCampo}): ");
-        string tipoCampoInput = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(tipoCampoInput))
-            novoJogo.TipoCampo = tipoCampoInput;
+        Console.Write("Tipo de campo: ");
+        tipoCampo = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(tipoCampo)) tipoCampo = "Quadra Polietano (PU)"; // valor padrão
 
         Console.Write("Jogadores por time: ");
-        int.TryParse(Console.ReadLine(), out int jogadoresPorTime);
-        novoJogo.JogadoresPorTime = jogadoresPorTime;
+        int.TryParse(Console.ReadLine(), out jogadoresPorTime);
 
         Console.Write("Limite de times (opcional): ");
-        int.TryParse(Console.ReadLine(), out int limiteTimes);
-        novoJogo.LimiteTimes = limiteTimes;
+        string inputTimes = Console.ReadLine();
+        limiteTimes = string.IsNullOrWhiteSpace(inputTimes) ? null : int.Parse(inputTimes);
 
         Console.Write("Limite de jogadores (opcional): ");
-        int.TryParse(Console.ReadLine(), out int limiteJogadores);
-        novoJogo.LimiteJogadores = limiteJogadores;
+        string inputJogadores = Console.ReadLine();
+        limiteJogadores = string.IsNullOrWhiteSpace(inputJogadores) ? null : int.Parse(inputJogadores);
+
+        GerenciadorDeJogos novoJogo = new GerenciadorDeJogos(
+            data,
+            local,
+            tipoCampo,
+            jogadoresPorTime,
+            limiteTimes,
+            limiteJogadores
+        );
+
+        novoJogo.Codigo = DateTime.Now.Ticks;
 
         listaDeJogos.Add(novoJogo);
         SalvarNoArquivo();
@@ -192,7 +207,13 @@ public class JogoController
         {
             string json = File.ReadAllText(caminhoArquivo);
             if (!string.IsNullOrWhiteSpace(json))
-                listaDeJogos = JsonSerializer.Deserialize<List<Jogos>>(json);
+                listaDeJogos = JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
+            else
+                listaDeJogos = new List<GerenciadorDeJogos>();
+        }
+        else
+        {
+            listaDeJogos = new List<GerenciadorDeJogos>();
         }
     }
 }

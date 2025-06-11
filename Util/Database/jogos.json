@@ -32,21 +32,21 @@
   {
     "Codigo": 638842391635764111,
     "Interessados": [],
-    "Local": "Quadra Central",
-    "TipoCampo": "Society",
+    "Local": "Unasp",
+    "TipoCampo": "Quadra",
     "JogadoresPorTime": 5,
-    "LimiteTimes": 2,
-    "LimiteJogadores": 10,
+    "LimiteTimes": 5,
+    "LimiteJogadores": 25,
     "Data": "2025-05-30T21:59:23.5764111-03:00"
   },
   {
-    "Codigo": 638852029848406272,
+    "Codigo": 638852031762781208,
     "Interessados": [],
     "Local": "Quadra Poliesportiva Mario Covas",
     "TipoCampo": "Quadra Poliuretano (PU)",
-    "JogadoresPorTime": 50,
-    "LimiteTimes": 4,
-    "LimiteJogadores": 20,
+    "JogadoresPorTime": 5,
+    "LimiteTimes": 2,
+    "LimiteJogadores": 10,
     "Data": "2025-06-12T00:00:00-03:00"
   }
 ]
