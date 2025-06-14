@@ -1,4 +1,4 @@
-namespace Time;
+namespace TimeFutebol;
 using System.Collections.Generic;
 using System;
 using Jogoss;
@@ -12,6 +12,8 @@ public class Times : GerenciadorDeJogos
     public static List<string>? PrimeiroTime { get; set; } = new List<string>();
     public static List<string>? SegundoTime { get; set; } = new List<string>();
     public static List<string>? TerceiroTime { get; set; } = new List<string>();
+    public List<Associados> Jogadores { get; set; } = new List<Associados>();
+    public string Nome { get; set; }
 
     // Ajuste os parâmetros para casar com o construtor base corrigido!
     public Times(DateTime data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = 20)

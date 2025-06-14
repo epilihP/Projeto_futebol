@@ -1,4 +1,5 @@
 using PROJETO_FUTEBOL.controller;
+
 public class Menu
 {
     private JogadorController jogadorController = new JogadorController();
@@ -29,15 +30,16 @@ public class Menu
                     ExibirMenuJogos();
                     break;
                 case "3":
-                    //ExibirMenuTimes();
+                    ExibirMenuTimes();
                     break;
                 case "4":
                     //ExibirMenuPartidas();
                     break;
                 case "0":
+                    Console.WriteLine("\nObrigado por usar o sistema!");
                     return;
                 default:
-                    Console.WriteLine("Opção inválida!");
+                    Console.WriteLine("Opção inválida! Pressione qualquer tecla para tentar novamente.");
                     Console.ReadKey();
                     break;
             }
@@ -75,7 +77,7 @@ public class Menu
                 case "0":
                     return;
                 default:
-                    Console.WriteLine("Opção inválida!");
+                    Console.WriteLine("Opção inválida! Pressione qualquer tecla para tentar novamente");
                     Console.ReadKey();
                     break;
             }
@@ -117,47 +119,66 @@ public class Menu
                 case "0":
                     return;
                 default:
-                    Console.WriteLine("Opção inválida!");
+                    Console.WriteLine("Opção inválida! Pressione qualquer tecla para tentar novamente");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
+
+    private bool MetodoExiste(object obj, string nomeMetodo)
+    {
+        return obj.GetType().GetMethod(nomeMetodo) != null;
+    }
+
+    private void ExibirMenuTimes()
+    {
+        var timeController = new TimeController(); // Instancia o controlador de times
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("--- Gestão de Times ---");
+            Console.WriteLine("1 - Gerar Times por Ordem de Chegada");
+            Console.WriteLine("2 - Gerar Times por Posição Equilibrada");
+            Console.WriteLine("3 - Gerar Times pelo Critério do Grupo");
+            Console.WriteLine("0 - Voltar");
+            Console.Write("Escolha uma opção: ");
+            string opcao = Console.ReadLine();
+
+            switch (opcao)
+            {
+                case "1":
+                    timeController.GerarTimesPorOrdemDeChegada();
+                    break;
+                case "2":
+                    if (MetodoExiste(timeController, "GerarTimesPorPosicaoEquilibrada"))
+                        timeController.GerarTimesPorPosicaoEquilibrada();
+                    else
+                    {
+                        Console.WriteLine("Função ainda não implementada!");
+                        Console.ReadKey();
+                    }
+                    break;
+                case "3":
+                    if (MetodoExiste(timeController, "GerarTimesPeloCriterioDoGrupo"))
+                        timeController.GerarTimesPeloCriterioDoGrupo();
+                    else
+                    {
+                        Console.WriteLine("Função ainda não implementada!");
+                        Console.ReadKey();
+                    }
+                    break;
+                case "0":
+                    return; // Sai do menu
+                default:
+                    Console.WriteLine("Opção inválida! Pressione qualquer tecla para tentar novamente.");
                     Console.ReadKey();
                     break;
             }
         }
     }
 }
-
-    // private void ExibirMenuTimes()
-    // {
-    //     while (true)
-    //     {
-    //         Console.Clear();
-    //         Console.WriteLine("--- Gestão de Times ---");
-    //         Console.WriteLine("1 - Gerar Times por Ordem de Chegada");
-    //         Console.WriteLine("2 - Gerar Times por Posição Equilibrada");
-    //         Console.WriteLine("3 - Gerar Times pelo Critério do Grupo");
-    //         Console.WriteLine("0 - Voltar");
-    //         Console.Write("Escolha uma opção: ");
-    //         string opcao = Console.ReadLine();
-
-    //         switch (opcao)
-    //         {
-    //             case "1":
-    //                 timeController.GerarTimesPorChegada();
-    //                 break;
-    //             case "2":
-    //                 timeController.GerarTimesPorPosicao();
-    //                 break;
-    //             case "3":
-    //                 timeController.GerarTimesPersonalizado();
-    //                 break;
-    //             case "0":
-    //                 return;
-    //             default:
-    //                 Console.WriteLine("Opção inválida!");
-    //                 Console.ReadKey();
-    //                 break;
-    //         }
-    //     }
-    // }
 
 //     private void ExibirMenuPartidas()
 //     {
