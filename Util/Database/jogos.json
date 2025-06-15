@@ -10,16 +10,6 @@
     "Data": "2025-06-19T19:00:00-03:00"
   },
   {
-    "Codigo": 26062025,
-    "Interessados": [],
-    "Local": "Quadra Poliesportiva",
-    "TipoCampo": "Quadra Polietano (PU)",
-    "JogadoresPorTime": 5,
-    "LimiteTimes": 6,
-    "LimiteJogadores": 30,
-    "Data": "2025-06-26T19:00:00-03:00"
-  },
-  {
     "Codigo": 3072025,
     "Interessados": [],
     "Local": "Campo Unasp",
@@ -28,5 +18,46 @@
     "LimiteTimes": 5,
     "LimiteJogadores": 30,
     "Data": "2025-07-03T19:00:00-03:00"
+  },
+  {
+    "Codigo": 10072025,
+    "Interessados": [],
+    "Local": "Quadra Central de Artur Nogueira",
+    "TipoCampo": "Areia",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": 6,
+    "LimiteJogadores": 30,
+    "Data": "2025-07-10T19:00:00-03:00"
+  },
+  {
+    "Codigo": 26062025,
+    "Interessados": [
+      990655,
+      727132,
+      472488,
+      221851,
+      822645,
+      675418,
+      675414,
+      675415,
+      675416,
+      675410,
+      675411,
+      675412,
+      675401,
+      675402,
+      675403,
+      675404,
+      675405,
+      675406,
+      675407,
+      675409
+    ],
+    "Local": "Quadra Cosm\u00F3polis",
+    "TipoCampo": "Grama Sint\u00E9tica",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": 4,
+    "LimiteJogadores": 20,
+    "Data": "2025-06-26T19:00:00-03:00"
   }
 ]
