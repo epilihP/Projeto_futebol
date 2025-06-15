@@ -19,7 +19,7 @@ public class Menu
             Console.WriteLine("4 - Gestão de Partidas");
             Console.WriteLine("0 - Sair");
             Console.Write("Escolha uma opção: ");
-            string opcao = Console.ReadLine();
+            string? opcao = Console.ReadLine();
 
             switch (opcao)
             {
@@ -43,6 +43,8 @@ public class Menu
                     Console.ReadKey();
                     break;
             }
+            // Adicionado para limpar a tela após cada operação
+            Console.Clear();
         }
     }
 

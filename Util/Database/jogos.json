@@ -1,74 +1,32 @@
 [
   {
-    "Codigo": 638827787194297633,
-    "Interessados": [],
-    "Local": "Quadra Central",
-    "TipoCampo": "Society",
-    "JogadoresPorTime": 5,
-    "LimiteTimes": 2,
-    "LimiteJogadores": 10,
-    "Data": "2025-05-14T00:18:39.4297633-03:00"
-  },
-  {
-    "Codigo": 638830197352977703,
-    "Interessados": [],
-    "Local": "Quadra Central",
-    "TipoCampo": "Society",
-    "JogadoresPorTime": 5,
-    "LimiteTimes": 2,
-    "LimiteJogadores": 10,
-    "Data": "2025-05-16T19:15:35.2977703-03:00"
-  },
-  {
-    "Codigo": 638840679245838275,
-    "Interessados": [],
-    "Local": "Quadra Central",
-    "TipoCampo": "Society",
-    "JogadoresPorTime": 5,
-    "LimiteTimes": 2,
-    "LimiteJogadores": 10,
-    "Data": "2025-05-28T22:25:24.5838275-03:00"
-  },
-  {
-    "Codigo": 638842391635764111,
-    "Interessados": [],
-    "Local": "Unasp",
-    "TipoCampo": "Quadra",
-    "JogadoresPorTime": 5,
-    "LimiteTimes": 5,
-    "LimiteJogadores": 25,
-    "Data": "2025-05-30T21:59:23.5764111-03:00"
-  },
-  {
-    "Codigo": 638852031762781208,
-    "Interessados": [
-      822645,
-      675418,
-      675401,
-      675402,
-      675403,
-      675404,
-      675405,
-      675406,
-      675407,
-      675409,
-      675410
-    ],
-    "Local": "Quadra Poliesportiva Mario Covas",
-    "TipoCampo": "Quadra Poliuretano (PU)",
-    "JogadoresPorTime": 5,
-    "LimiteTimes": 2,
-    "LimiteJogadores": 10,
-    "Data": "2025-06-12T00:00:00-03:00"
-  },
-  {
-    "Codigo": 638855920752985588,
+    "Codigo": 19062025,
     "Interessados": [],
     "Local": "Quadra Poliesportiva",
     "TipoCampo": "Quadra Polietano (PU)",
     "JogadoresPorTime": 5,
+    "LimiteTimes": 6,
+    "LimiteJogadores": 30,
+    "Data": "2025-06-19T19:00:00-03:00"
+  },
+  {
+    "Codigo": 26062025,
+    "Interessados": [],
+    "Local": "Quadra Poliesportiva",
+    "TipoCampo": "Quadra Polietano (PU)",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": 6,
+    "LimiteJogadores": 30,
+    "Data": "2025-06-26T19:00:00-03:00"
+  },
+  {
+    "Codigo": 3072025,
+    "Interessados": [],
+    "Local": "Campo Unasp",
+    "TipoCampo": "Grama Sint\u00E9tica",
+    "JogadoresPorTime": 6,
     "LimiteTimes": 5,
-    "LimiteJogadores": 25,
-    "Data": "2025-06-19T00:00:00-03:00"
+    "LimiteJogadores": 30,
+    "Data": "2025-07-03T19:00:00-03:00"
   }
 ]

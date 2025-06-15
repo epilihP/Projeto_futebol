@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Jogoss;
 using GerenciadorJogos;
@@ -33,28 +34,28 @@ public class JogoController
     {
         Console.Clear();
         Console.WriteLine("--- Agendar Novo Jogo ---");
-        DateTime data;
-        string local;
-        string tipoCampo;
-        int jogadoresPorTime = 5; // fixo
-        int limiteTimes = 6; // fixo
-        int limiteJogadores = jogadoresPorTime * limiteTimes; // fixo
-
-        int daysUntilThursday = ((int)DayOfWeek.Thursday - (int)DateTime.Now.DayOfWeek + 7) % 7;
-        if (daysUntilThursday == 0) daysUntilThursday = 7;
-        data = DateTime.Now.Date.AddDays(daysUntilThursday);
-
-        Console.WriteLine("(Deixe em branco para usar valores padrão:)");
-        Console.WriteLine("(Jogadores por time: 5 | Limite de times: 6 | Limite de jogadores: 30)");
-
+        // Sempre próxima quinta-feira às 19h
+        DateTime data = ProximaQuintaDisponivel();
+        string codigo = data.ToString("ddMMyyyy");
+        if (listaDeJogos.Exists(j => j.Data.Date == data.Date))
+        {
+            DateTime sugestao = ProximaQuintaDisponivel(data.AddDays(7));
+            Console.WriteLine($"Já existe um jogo agendado para {data:dd/MM/yyyy}. Próxima quinta-feira disponível: {sugestao:dd/MM/yyyy}");
+            Console.WriteLine("Pressione qualquer tecla para voltar...");
+            Console.ReadKey();
+            return;
+        }
+        int jogadoresPorTime = 5;
+        int limiteTimes = 6;
+        int limiteJogadores = jogadoresPorTime * limiteTimes;
+        Console.WriteLine($"Data do jogo: {data:dd/MM/yyyy} às 19h");
+        Console.WriteLine($"Código do jogo: {codigo}");
         Console.Write("Local do jogo (padrão: Quadra Poliesportiva): ");
-        local = Console.ReadLine() ?? string.Empty;
+        string local = Console.ReadLine() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(local)) local = "Quadra Poliesportiva";
-
-        Console.Write("Tipo de campo (padrão: Quadra Poliuetano (PU)): ");
-        tipoCampo = Console.ReadLine() ?? string.Empty;
+        Console.Write("Tipo de campo (padrão: Quadra Polietano (PU)): ");
+        string tipoCampo = Console.ReadLine() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(tipoCampo)) tipoCampo = "Quadra Polietano (PU)";
-
         GerenciadorDeJogos novoJogo = new GerenciadorDeJogos(
             data,
             local,
@@ -63,31 +64,52 @@ public class JogoController
             limiteTimes,
             limiteJogadores
         );
-        novoJogo.Codigo = DateTime.Now.Ticks;
+        // novoJogo.Codigo = DataTime.Now.Ticks;
+        novoJogo.Codigo = long.Parse(codigo); // substituido acima, pois, gerava um cpodigo muito longo
         listaDeJogos.Add(novoJogo);
         SalvarNoArquivo();
-
         Console.WriteLine($"\nLimite de times: {limiteTimes}");
         Console.WriteLine($"Limite de jogadores: {limiteJogadores}");
         Console.WriteLine("\nJogo agendado com sucesso!");
+        Console.WriteLine("Pressione qualquer tecla para voltar...");
         Console.ReadKey();
+    }
+
+    private DateTime ProximaQuintaDisponivel(DateTime? inicio = null)
+    {
+        DateTime data = inicio ?? DateTime.Now;
+        // Ajusta para próxima quinta-feira
+        int daysUntilThursday = ((int)DayOfWeek.Thursday - (int)data.DayOfWeek + 7) % 7;
+        if (daysUntilThursday == 0) daysUntilThursday = 7;
+        DateTime quinta = data.Date.AddDays(daysUntilThursday).AddHours(19); // 19h
+        while (listaDeJogos.Exists(j => j.Data.Date == quinta.Date))
+        {
+            quinta = quinta.AddDays(7); // próxima quinta
+        }
+        return quinta;
     }
 
     public void ListarJogos()
     {
         Console.Clear();
         Console.WriteLine("--- Lista de Jogos Agendados ---");
-        if (listaDeJogos.Count == 0)
+        var jogosFuturos = listaDeJogos
+            .Where(j => j.Data >= DateTime.Now)
+            .OrderBy(j => j.Data)
+            .ToList();
+        if (jogosFuturos.Count == 0)
         {
             Console.WriteLine("Nenhum jogo agendado.");
         }
         else
         {
-            foreach (var jogo in listaDeJogos)
+            foreach (var jogo in jogosFuturos)
             {
-                Console.WriteLine($"ID: {jogo.Codigo} | Dia: {DiaDaSemanaEmPortugues(jogo.Data.DayOfWeek)} | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {jogo.JogadoresPorTime} por time");
+                string codigo = jogo.Data.ToString("ddMMyyyy");
+                Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
             }
         }
+        Console.WriteLine("\nPressione qualquer tecla para voltar...");
         Console.ReadKey();
     }
 
