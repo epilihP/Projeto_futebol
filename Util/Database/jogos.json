@@ -60,5 +60,15 @@
     "LimiteTimes": 2,
     "LimiteJogadores": 10,
     "Data": "2025-06-12T00:00:00-03:00"
+  },
+  {
+    "Codigo": 638855920752985588,
+    "Interessados": [],
+    "Local": "Quadra Poliesportiva",
+    "TipoCampo": "Quadra Polietano (PU)",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": 5,
+    "LimiteJogadores": 25,
+    "Data": "2025-06-19T00:00:00-03:00"
   }
 ]

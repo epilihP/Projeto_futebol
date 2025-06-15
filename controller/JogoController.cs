@@ -33,38 +33,27 @@ public class JogoController
     {
         Console.Clear();
         Console.WriteLine("--- Agendar Novo Jogo ---");
-
         DateTime data;
         string local;
         string tipoCampo;
-        int jogadoresPorTime;
-        int? limiteTimes;
-        int? limiteJogadores;
+        int jogadoresPorTime = 5; // fixo
+        int limiteTimes = 6; // fixo
+        int limiteJogadores = jogadoresPorTime * limiteTimes; // fixo
 
         int daysUntilThursday = ((int)DayOfWeek.Thursday - (int)DateTime.Now.DayOfWeek + 7) % 7;
-        if (daysUntilThursday == 0) daysUntilThursday = 7; // Se hoje já é quinta, usar próxima quinta
+        if (daysUntilThursday == 0) daysUntilThursday = 7;
         data = DateTime.Now.Date.AddDays(daysUntilThursday);
 
-        Console.WriteLine("(Deixe em branco para usar o valor padrão)");
+        Console.WriteLine("(Deixe em branco para usar valores padrão:)");
+        Console.WriteLine("(Jogadores por time: 5 | Limite de times: 6 | Limite de jogadores: 30)");
 
-        Console.Write("Local do jogo: ");
-        local = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(local)) local = "Quadra Poliesportiva"; // valor padrão
+        Console.Write("Local do jogo (padrão: Quadra Poliesportiva): ");
+        local = Console.ReadLine() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(local)) local = "Quadra Poliesportiva";
 
-        Console.Write("Tipo de campo: ");
-        tipoCampo = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(tipoCampo)) tipoCampo = "Quadra Polietano (PU)"; // valor padrão
-
-        Console.Write("Jogadores por time: ");
-        int.TryParse(Console.ReadLine(), out jogadoresPorTime);
-
-        Console.Write("Limite de times (opcional): ");
-        string inputTimes = Console.ReadLine();
-        limiteTimes = string.IsNullOrWhiteSpace(inputTimes) ? null : int.Parse(inputTimes);
-
-        Console.Write("Limite de jogadores (opcional): ");
-        string inputJogadores = Console.ReadLine();
-        limiteJogadores = string.IsNullOrWhiteSpace(inputJogadores) ? null : int.Parse(inputJogadores);
+        Console.Write("Tipo de campo (padrão: Quadra Poliuetano (PU)): ");
+        tipoCampo = Console.ReadLine() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(tipoCampo)) tipoCampo = "Quadra Polietano (PU)";
 
         GerenciadorDeJogos novoJogo = new GerenciadorDeJogos(
             data,
@@ -74,12 +63,12 @@ public class JogoController
             limiteTimes,
             limiteJogadores
         );
-
         novoJogo.Codigo = DateTime.Now.Ticks;
-
         listaDeJogos.Add(novoJogo);
         SalvarNoArquivo();
 
+        Console.WriteLine($"\nLimite de times: {limiteTimes}");
+        Console.WriteLine($"Limite de jogadores: {limiteJogadores}");
         Console.WriteLine("\nJogo agendado com sucesso!");
         Console.ReadKey();
     }
@@ -164,49 +153,49 @@ public class JogoController
     }
 
     public void GerenciarInteressados()
-{
-    Console.Clear();
-    Console.WriteLine("--- Gerenciar Interessados no Jogo ---");
-    Console.Write("Digite o código do jogo: ");
-    long.TryParse(Console.ReadLine(), out long codigo);
-
-    var jogo = listaDeJogos.Find(j => j.Codigo == codigo);
-    if (jogo == null)
     {
-        Console.WriteLine("Jogo não encontrado!");
-        Console.ReadKey();
-        return;
-    }
+        Console.Clear();
+        Console.WriteLine("--- Gerenciar Interessados no Jogo ---");
+        Console.Write("Digite o código do jogo: ");
+        long.TryParse(Console.ReadLine(), out long codigo);
 
-    // verifica se existe o RA
-    string caminhoAssociados = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\associados.json";
-    List<int> raValidos = new List<int>();
-    if (File.Exists(caminhoAssociados))
-    {
-        string jsonAssociados = File.ReadAllText(caminhoAssociados);
-        var associados = JsonSerializer.Deserialize<List<Associacao.Associados>>(jsonAssociados);
-        raValidos = associados.Select(a => a.Id).ToList();
-    }
-
-    Console.WriteLine("Digite o código do jogador interessado (ou 0 para sair):");
-    while (true)
-    {
-        long.TryParse(Console.ReadLine(), out long jogadorId);
-        if (jogadorId == 0) break;
-        if (!raValidos.Contains((int)jogadorId))
+        var jogo = listaDeJogos.Find(j => j.Codigo == codigo);
+        if (jogo == null)
         {
-            Console.WriteLine("RA não encontrado nos associados. Tente novamente.");
-            continue;
+            Console.WriteLine("Jogo não encontrado!");
+            Console.ReadKey();
+            return;
         }
-        if (!jogo.Interessados.Contains((int)jogadorId))
-            jogo.Interessados.Add((int)jogadorId);
-        Console.WriteLine("Adicionado! Próximo código ou 0 para sair:");
-    }
 
-    SalvarNoArquivo();
-    Console.WriteLine("Interessados atualizados!");
-    Console.ReadKey();
-}
+        // verifica se existe o RA
+        string caminhoAssociados = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\associados.json";
+        List<int> raValidos = new List<int>();
+        if (File.Exists(caminhoAssociados))
+        {
+            string jsonAssociados = File.ReadAllText(caminhoAssociados);
+            var associados = JsonSerializer.Deserialize<List<Associacao.Associados>>(jsonAssociados);
+            raValidos = associados.Select(a => a.Id).ToList();
+        }
+
+        Console.WriteLine("Digite o código do jogador interessado (ou 0 para sair):");
+        while (true)
+        {
+            long.TryParse(Console.ReadLine(), out long jogadorId);
+            if (jogadorId == 0) break;
+            if (!raValidos.Contains((int)jogadorId))
+            {
+                Console.WriteLine("RA não encontrado nos associados. Tente novamente.");
+                continue;
+            }
+            if (!jogo.Interessados.Contains((int)jogadorId))
+                jogo.Interessados.Add((int)jogadorId);
+            Console.WriteLine("Adicionado! Próximo código ou 0 para sair:");
+        }
+
+        SalvarNoArquivo();
+        Console.WriteLine("Interessados atualizados!");
+        Console.ReadKey();
+    }
     private void SalvarNoArquivo()
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
