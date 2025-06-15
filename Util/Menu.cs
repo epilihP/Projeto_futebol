@@ -13,7 +13,7 @@ public class Menu
         {
             Console.Clear();
             Console.WriteLine("===== SISTEMA DE ORGANIZAÇÃO DE JOGOS DE FUTEBOL =====");
-            Console.WriteLine("1 - Gestão de Jogadores");
+            Console.WriteLine("1 - Gestão de Associados");
             Console.WriteLine("2 - Gestão de Jogos");
             Console.WriteLine("3 - Gestão de Times");
             Console.WriteLine("4 - Gestão de Partidas");
@@ -24,7 +24,7 @@ public class Menu
             switch (opcao)
             {
                 case "1":
-                    ExibirMenuJogadores();
+                    ExibirMenuAssociados();
                     break;
                 case "2":
                     ExibirMenuJogos();
@@ -46,19 +46,19 @@ public class Menu
         }
     }
 
-    private void ExibirMenuJogadores()
+    private void ExibirMenuAssociados()
     {
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("--- Gestão de Jogadores ---");
-            Console.WriteLine("1 - Cadastrar Jogador");
-            Console.WriteLine("2 - Listar Jogadores");
-            Console.WriteLine("3 - Atualizar Jogador");
-            Console.WriteLine("4 - Excluir Jogador");
+            Console.WriteLine("--- Gestão de Associados ---");
+            Console.WriteLine("1 - Cadastrar Associado");
+            Console.WriteLine("2 - Listar Associados");
+            Console.WriteLine("3 - Atualizar Associado");
+            Console.WriteLine("4 - Excluir Associado");
             Console.WriteLine("0 - Voltar");
             Console.Write("Escolha uma opção: ");
-            string opcao = Console.ReadLine();
+            string? opcao = Console.ReadLine();
 
             switch (opcao)
             {
@@ -97,7 +97,7 @@ public class Menu
             Console.WriteLine("5 - Gerenciar Interessados");
             Console.WriteLine("0 - Voltar");
             Console.Write("Escolha uma opção: ");
-            string opcao = Console.ReadLine();
+            string? opcao = Console.ReadLine();
 
             switch (opcao)
             {
@@ -144,7 +144,7 @@ public class Menu
             Console.WriteLine("3 - Gerar Times pelo Critério do Grupo");
             Console.WriteLine("0 - Voltar");
             Console.Write("Escolha uma opção: ");
-            string opcao = Console.ReadLine();
+            string? opcao = Console.ReadLine();
 
             switch (opcao)
             {
@@ -161,13 +161,8 @@ public class Menu
                     }
                     break;
                 case "3":
-                    if (MetodoExiste(timeController, "GerarTimesPeloCriterioDoGrupo"))
-                        timeController.GerarTimesPeloCriterioDoGrupo();
-                    else
-                    {
-                        Console.WriteLine("Função ainda não implementada!");
-                        Console.ReadKey();
-                    }
+                    Console.WriteLine("Função ainda não implementada!");
+                    Console.ReadKey();
                     break;
                 case "0":
                     return; // Sai do menu

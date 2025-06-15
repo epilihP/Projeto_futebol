@@ -27,10 +27,15 @@ namespace PROJETO_FUTEBOL.controller
             Console.Write("Idade do Associado: ");
             int.TryParse(Console.ReadLine(), out int idade);
 
-            Console.Write("Posição (Goleiro, Defesa, Ataque): ");
-            string posicaoStr = Console.ReadLine();
-            Posicao posicao;
-            Enum.TryParse(posicaoStr, true, out posicao);
+            Console.WriteLine("Posição: 1 - Atacante, 2 - Defesa, 3 - Goleiro");
+            Console.Write("Digite o número correspondente à posição: ");
+            if (!int.TryParse(Console.ReadLine(), out int posicaoInt) || posicaoInt < 1 || posicaoInt > 3)
+            {
+                Console.WriteLine("Posição inválida! Cadastro cancelado. Pressione qualquer tecla para voltar...");
+                Console.ReadKey();
+                return;
+            }
+            Posicao posicao = (Posicao)posicaoInt;
 
             int novoId = new Associados().GerarCodigoUnico(new HashSet<int>(listaDeAssociados.Select(a => a.Id)));
 
@@ -46,6 +51,7 @@ namespace PROJETO_FUTEBOL.controller
             SalvarNoArquivo();
 
             Console.WriteLine("\nAssociado cadastrado com sucesso!");
+            Console.WriteLine("Pressione qualquer tecla para voltar...");
             Console.ReadKey();
         }
 
@@ -73,7 +79,22 @@ namespace PROJETO_FUTEBOL.controller
         {
             Console.Clear();
             Console.WriteLine("--- Atualizar Associado ---");
-            ListarJogadoresSemPausa();
+            if (listaDeAssociados.Count == 0)
+            {
+                Console.WriteLine("Nenhum associado cadastrado.");
+                Console.WriteLine("Pressione qualquer tecla para voltar...");
+                Console.ReadKey();
+                return;
+            }
+            else
+            {
+                foreach (var associado in listaDeAssociados)
+                {
+                    Console.WriteLine($"ID: {associado.Id} | Nome: {associado.nome}");
+                }
+                Console.WriteLine("\nPressione qualquer tecla para seguir para a alteração...");
+                Console.ReadKey();
+            }
 
             Console.Write("\nDigite o ID do associado que deseja atualizar: ");
             if (!int.TryParse(Console.ReadLine(), out int idParaAtualizar))
@@ -106,13 +127,13 @@ namespace PROJETO_FUTEBOL.controller
                     associadoParaAtualizar.idade = idade;
                 }
 
+                Console.WriteLine("Nova posição (1 - Atacante, 2 - Defesa, 3 - Goleiro) (Atual: {0}): ", associadoParaAtualizar.posicao);
                 string posicaoStr = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(posicaoStr))
                 {
-                    Posicao novaPosicao;
-                    if (Enum.TryParse(posicaoStr, true, out novaPosicao))
+                    if (int.TryParse(posicaoStr, out int posicaoInt) && posicaoInt >= 1 && posicaoInt <= 3)
                     {
-                        associadoParaAtualizar.posicao = novaPosicao;
+                        associadoParaAtualizar.posicao = (Posicao)posicaoInt;
                     }
                     else
                     {
@@ -130,7 +151,7 @@ namespace PROJETO_FUTEBOL.controller
         {
             Console.Clear();
             Console.WriteLine("--- Excluir Associado ---");
-            ListarJogadoresSemPausa();
+            ListarJogadores();
 
             Console.Write("\nDigite o ID do associado que você deseja excluir: ");
             if (!int.TryParse(Console.ReadLine(), out int idParaExcluir))
@@ -153,21 +174,6 @@ namespace PROJETO_FUTEBOL.controller
                 Console.WriteLine("Associado excluído com sucesso!");
             }
             Console.ReadKey();
-        }
-
-        private void ListarJogadoresSemPausa()
-        {
-            if (listaDeAssociados.Count == 0)
-            {
-                Console.WriteLine("Nenhum associado cadastrado.");
-            }
-            else
-            {
-                foreach (var associado in listaDeAssociados)
-                {
-                    Console.WriteLine($"ID: {associado.Id} | Nome: {associado.nome} | Posição: {associado.posicao}");
-                }
-            }
         }
 
         private void SalvarNoArquivo()
