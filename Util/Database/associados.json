@@ -56,13 +56,6 @@
     "posicao": 2
   },
   {
-    "Id": 675410,
-    "Pontos": 0,
-    "nome": "Alisson",
-    "idade": 22,
-    "posicao": 2
-  },
-  {
     "Id": 675411,
     "Pontos": 0,
     "nome": "Marina",
@@ -158,6 +151,20 @@
     "Pontos": 0,
     "nome": "Philipe Gonçalves",
     "idade": 19,
+    "posicao": 1
+  },
+  {
+    "Id": 542835,
+    "Pontos": 0,
+    "nome": "Alisson",
+    "idade": 22,
+    "posicao": 2
+  },
+  {
+    "Id": 919556,
+    "Pontos": 0,
+    "nome": "gabrielly",
+    "idade": 16,
     "posicao": 1
   }
 ]

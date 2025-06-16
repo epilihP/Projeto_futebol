@@ -7,7 +7,7 @@
         {
             Menu menuPrincipal = new Menu();
 
-            menuPrincipal.ExibirMenuPrincipal();
+            menuPrincipal.ExibirMenu();
         }
     }
 }
