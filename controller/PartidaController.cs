@@ -241,4 +241,36 @@ public class PartidaController
         var lista = JsonSerializer.Deserialize<List<HistoricoRodada>>(json);
         return lista ?? new List<HistoricoRodada>();
     }
+
+    public void ExibirClassificacaoAssociados()
+    {
+        string caminhoAssociados = @"c:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Util\\Database\\associados.json";
+        if (!File.Exists(caminhoAssociados))
+        {
+            Console.WriteLine("Nenhum associado cadastrado.");
+            Console.ReadKey();
+            return;
+        }
+        var json = File.ReadAllText(caminhoAssociados);
+        var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json);
+        if (associados == null || associados.Count == 0)
+        {
+            Console.WriteLine("Nenhum associado cadastrado.");
+            Console.ReadKey();
+            return;
+        }
+        var ranking = associados.OrderByDescending(a => a.Pontos).ThenBy(a => a.nome).ToList();
+        Console.Clear();
+        Console.WriteLine("--- Classificação de Associados ---");
+        Console.WriteLine("Posição | Nome                | Pontos");
+        Console.WriteLine("--------------------------------------");
+        int pos = 1;
+        foreach (var a in ranking)
+        {
+            Console.WriteLine($"{pos,6} | {a.nome,-20} | {a.Pontos,6}");
+            pos++;
+        }
+        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Console.ReadKey();
+    }
 }

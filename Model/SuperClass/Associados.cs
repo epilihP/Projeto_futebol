@@ -1,4 +1,5 @@
 namespace Associacao;
+
 using ICodigos;
 using System.Collections.Generic;
 
@@ -13,10 +14,11 @@ public enum Posicao
 public class Associados : ICodigos<int>
 {
     // Atributs encapsulados
-    protected string Nome;
+    protected string Nome = string.Empty;
     protected int Idade;
     protected Posicao Posicao;
     public int Id { get; set; }
+    public int Pontos { get; set; } // Pontuação do associado
 
     public string nome { get => Nome; set => Nome = value; }
 

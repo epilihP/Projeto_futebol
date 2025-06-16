@@ -209,6 +209,7 @@ public class Menu
             Console.WriteLine("--- Gestão de Partidas ---");
             Console.WriteLine("1 - Registrar Nova Partida");
             Console.WriteLine("2 - Listar Partidas");
+            Console.WriteLine("3 - Classificação de Associados");
             Console.WriteLine("0 - Voltar");
             Console.Write("Escolha uma opção: ");
             string? opcao = Console.ReadLine();
@@ -219,6 +220,9 @@ public class Menu
                     break;
                 case "2":
                     partidaController.ListarPartidas();
+                    break;
+                case "3":
+                    partidaController.ExibirClassificacaoAssociados();
                     break;
                 case "0":
                     return;
