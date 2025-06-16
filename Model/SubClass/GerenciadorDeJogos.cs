@@ -1,11 +1,15 @@
 namespace GerenciadorJogos;
+
 using Jogoss;
 using System.Collections.Generic;
 using PROJETO_FUTEBOL.controller;
 using Players;
+using TimeFutebol;
 
 public class GerenciadorDeJogos : Jogos
 {
+    public List<Times> TimesGerados { get; set; } = new List<Times>();
+
     public GerenciadorDeJogos(DateTime data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = 20)
     {
         Data = data;

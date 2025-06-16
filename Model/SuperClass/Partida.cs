@@ -1,9 +1,11 @@
 namespace Partidas;
+
 using System;
 using System.Collections.Generic;
 // Classe para registrar o histórico de cada rodada
 public class HistoricoRodada
 {
+    public long codigoJogo { get; set; } // Código do jogo
     public int rodada { get; set; }
     public int reiAntes { get; set; }
     public int desafiante { get; set; }
@@ -72,6 +74,7 @@ public class Partida
                 // Adiciona ao histórico
                 historico.Add(new HistoricoRodada
                 {
+                    codigoJogo = 0, // Atribua o código do jogo aqui, se disponível
                     rodada = rodada,
                     reiAntes = reiAntes,
                     desafiante = contagemDoDesafiante,

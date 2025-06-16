@@ -1,0 +1,174 @@
+[
+  {
+    "Jogadores": [
+      {
+        "Id": 472488,
+        "nome": "Junior Mota",
+        "idade": 21,
+        "posicao": 3
+      },
+      {
+        "Id": 990655,
+        "nome": "Muca Kugel",
+        "idade": 21,
+        "posicao": 2
+      },
+      {
+        "Id": 727132,
+        "nome": "Claudio Perez",
+        "idade": 65,
+        "posicao": 2
+      },
+      {
+        "Id": 221851,
+        "nome": "Antonia Silva",
+        "idade": 57,
+        "posicao": 1
+      },
+      {
+        "Id": 822645,
+        "nome": "Antonia",
+        "idade": 57,
+        "posicao": 2
+      }
+    ],
+    "Nome": "Time 1",
+    "Codigo": 0,
+    "Interessados": [],
+    "Local": "Quadra Cosmópolis",
+    "TipoCampo": "Grama Sintética",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": null,
+    "LimiteJogadores": 20,
+    "Data": "2025-06-26T19:00:00-03:00"
+  },
+  {
+    "Jogadores": [
+      {
+        "Id": 675414,
+        "nome": "Thiago",
+        "idade": 25,
+        "posicao": 3
+      },
+      {
+        "Id": 675418,
+        "nome": "Gabriel Done",
+        "idade": 20,
+        "posicao": 2
+      },
+      {
+        "Id": 675415,
+        "nome": "Juliana",
+        "idade": 22,
+        "posicao": 2
+      },
+      {
+        "Id": 675416,
+        "nome": "Rafael",
+        "idade": 27,
+        "posicao": 1
+      },
+      {
+        "Id": 675410,
+        "nome": "Alisson",
+        "idade": 22,
+        "posicao": 2
+      }
+    ],
+    "Nome": "Time 2",
+    "Codigo": 0,
+    "Interessados": [],
+    "Local": "Quadra Cosmópolis",
+    "TipoCampo": "Grama Sintética",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": null,
+    "LimiteJogadores": 20,
+    "Data": "2025-06-26T19:00:00-03:00"
+  },
+  {
+    "Jogadores": [
+      {
+        "Id": 675411,
+        "nome": "Marina",
+        "idade": 21,
+        "posicao": 3
+      },
+      {
+        "Id": 675412,
+        "nome": "Bruno",
+        "idade": 23,
+        "posicao": 2
+      },
+      {
+        "Id": 675403,
+        "nome": "Leo",
+        "idade": 20,
+        "posicao": 2
+      },
+      {
+        "Id": 675404,
+        "nome": "Gigi",
+        "idade": 19,
+        "posicao": 1
+      },
+      {
+        "Id": 675406,
+        "nome": "Pedro",
+        "idade": 18,
+        "posicao": 1
+      }
+    ],
+    "Nome": "Time 3",
+    "Codigo": 0,
+    "Interessados": [],
+    "Local": "Quadra Cosmópolis",
+    "TipoCampo": "Grama Sintética",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": null,
+    "LimiteJogadores": 20,
+    "Data": "2025-06-26T19:00:00-03:00"
+  },
+  {
+    "Jogadores": [
+      {
+        "Id": 675401,
+        "nome": "Carlos Silva",
+        "idade": 26,
+        "posicao": 3
+      },
+      {
+        "Id": 675407,
+        "nome": "Duda",
+        "idade": 40,
+        "posicao": 1
+      },
+      {
+        "Id": 675409,
+        "nome": "Renan",
+        "idade": 20,
+        "posicao": 2
+      },
+      {
+        "Id": 675402,
+        "nome": "Luisa",
+        "idade": 18,
+        "posicao": 3
+      },
+      {
+        "Id": 675405,
+        "nome": "Lucas",
+        "idade": 19,
+        "posicao": 3
+      }
+    ],
+    "Nome": "Time 4",
+    "Codigo": 0,
+    "Interessados": [],
+    "Local": "Quadra Cosmópolis",
+    "TipoCampo": "Grama Sintética",
+    "JogadoresPorTime": 5,
+    "LimiteTimes": null,
+    "LimiteJogadores": 20,
+    "Data": "2025-06-26T19:00:00-03:00"
+  }
+]

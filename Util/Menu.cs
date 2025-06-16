@@ -4,8 +4,8 @@ public class Menu
 {
     private JogadorController jogadorController = new JogadorController();
     private JogoController jogoController = new JogoController();
-    //private TimeController timeController = new TimeController();
-    //private PartidaController partidaController = new PartidaController();
+    private TimeController timeController = new TimeController();
+    private PartidaController partidaController = new PartidaController();
 
     public void ExibirMenuPrincipal()
     {
@@ -33,7 +33,7 @@ public class Menu
                     ExibirMenuTimes();
                     break;
                 case "4":
-                    //ExibirMenuPartidas();
+                    ExibirMenuPartidas();
                     break;
                 case "0":
                     Console.WriteLine("\nObrigado por usar o sistema!");
@@ -144,6 +144,8 @@ public class Menu
             Console.WriteLine("1 - Gerar Times por Ordem de Chegada");
             Console.WriteLine("2 - Gerar Times por Posição Equilibrada");
             Console.WriteLine("3 - Gerar Times pelo Critério do Grupo");
+            Console.WriteLine("4 - Desfazer Times do Jogo");
+            Console.WriteLine("5 - Ver Jogos e Times Formados");
             Console.WriteLine("0 - Voltar");
             Console.Write("Escolha uma opção: ");
             string? opcao = Console.ReadLine();
@@ -163,8 +165,31 @@ public class Menu
                     }
                     break;
                 case "3":
-                    Console.WriteLine("Função ainda não implementada!");
-                    Console.ReadKey();
+                    if (MetodoExiste(timeController, "GerarTimesPorCriterioDoGrupo"))
+                        timeController.GerarTimesPorCriterioDoGrupo();
+                    else
+                    {
+                        Console.WriteLine("Função ainda não implementada!");
+                        Console.ReadKey();
+                    }
+                    break;
+                case "4":
+                    if (MetodoExiste(timeController, "DesfazerTimesDoJogo"))
+                        timeController.DesfazerTimesDoJogo();
+                    else
+                    {
+                        Console.WriteLine("Função ainda não implementada!");
+                        Console.ReadKey();
+                    }
+                    break;
+                case "5":
+                    if (MetodoExiste(timeController, "ExibirTimesFormados"))
+                        timeController.ExibirTimesFormados();
+                    else
+                    {
+                        Console.WriteLine("Função ainda não implementada!");
+                        Console.ReadKey();
+                    }
                     break;
                 case "0":
                     return; // Sai do menu
@@ -175,39 +200,33 @@ public class Menu
             }
         }
     }
+
+    private void ExibirMenuPartidas()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("--- Gestão de Partidas ---");
+            Console.WriteLine("1 - Registrar Nova Partida");
+            Console.WriteLine("2 - Listar Partidas");
+            Console.WriteLine("0 - Voltar");
+            Console.Write("Escolha uma opção: ");
+            string? opcao = Console.ReadLine();
+            switch (opcao)
+            {
+                case "1":
+                    partidaController.RegistrarPartida();
+                    break;
+                case "2":
+                    partidaController.ListarPartidas();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
 }
-
-//     private void ExibirMenuPartidas()
-//     {
-//         while (true)
-//         {
-//             Console.Clear();
-//             Console.WriteLine("--- Gestão de Partidas ---");
-//             Console.WriteLine("1 - Registrar Nova Partida");
-//             Console.WriteLine("2 - Listar Partidas");
-//             Console.WriteLine("3 - Registrar Resultado");
-//             Console.WriteLine("0 - Voltar");
-//             Console.Write("Escolha uma opção: ");
-//             string opcao = Console.ReadLine();
-
-//             switch (opcao)
-//             {
-//                 case "1":
-//                     partidaController.RegistrarPartida();
-//                     break;
-//                 case "2":
-//                     partidaController.ListarPartidas();
-//                     break;
-//                 case "3":
-//                     partidaController.RegistrarResultado();
-//                     break;
-//                 case "0":
-//                     return;
-//                 default:
-//                     Console.WriteLine("Opção inválida!");
-//                     Console.ReadKey();
-//                     break;
-//             }
-//         }
-//     }
-// }

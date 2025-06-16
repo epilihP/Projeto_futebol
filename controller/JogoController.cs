@@ -107,7 +107,9 @@ public class JogoController
             foreach (var jogo in jogosFuturos)
             {
                 string codigo = jogo.Data.ToString("ddMMyyyy");
-                Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
+                int timesGerados = jogo.TimesGerados?.Count ?? 0;
+                int limiteTimes = jogo.LimiteTimes ?? 0;
+                Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | Times gerados: {timesGerados}/{limiteTimes}");
             }
         }
         Console.WriteLine("\nPressione qualquer tecla para voltar...");
