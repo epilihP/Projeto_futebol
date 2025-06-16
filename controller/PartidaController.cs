@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text.Json;
 using Partidas;
 using TimeFutebol;
+using Util.Database;
+
+namespace PROJETO_FUTEBOL.controller;
 
 public class PartidaController
 {
-    private readonly string caminhoHistorico = @"c:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Util\\Database\\historico_partidas.json";
+    private readonly string caminhoHistorico = Database.GetDatabaseFilePath("historico_partidas.json");
 
     public void RegistrarPartida()
     {
@@ -244,7 +247,7 @@ public class PartidaController
 
     public void ExibirClassificacaoAssociados()
     {
-        string caminhoAssociados = @"c:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Util\\Database\\associados.json";
+        string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
         if (!File.Exists(caminhoAssociados))
         {
             Console.WriteLine("Nenhum associado cadastrado.");
@@ -252,8 +255,8 @@ public class PartidaController
             return;
         }
         var json = File.ReadAllText(caminhoAssociados);
-        var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json);
-        if (associados == null || associados.Count == 0)
+        var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json) ?? new List<Associacao.Associados>();
+        if (associados.Count == 0)
         {
             Console.WriteLine("Nenhum associado cadastrado.");
             Console.ReadKey();

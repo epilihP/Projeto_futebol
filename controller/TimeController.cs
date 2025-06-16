@@ -8,6 +8,7 @@ using System.Text.Unicode;
 using Associacao;
 using TimeFutebol;
 using GerenciadorJogos;
+using Util.Database;
 
 namespace PROJETO_FUTEBOL.controller;
 
@@ -444,27 +445,27 @@ public class TimeController
 
     private List<Associados> CarregarJogadoresDoArquivo()
     {
-        string caminho = @"c:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Util\\Database\\associados.json";
+        string caminho = Database.GetDatabaseFilePath("associados.json");
         if (!File.Exists(caminho))
             return new List<Associados>();
         string jsonString = File.ReadAllText(caminho);
-        var lista = JsonSerializer.Deserialize<List<Associados>>(jsonString);
-        return lista ?? new List<Associados>();
+        var lista = JsonSerializer.Deserialize<List<Associados>>(jsonString) ?? new List<Associados>();
+        return lista;
     }
 
     private List<GerenciadorDeJogos> CarregarJogosDoArquivo()
     {
-        string caminho = @"c:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Util\\Database\\jogos.json";
+        string caminho = Database.GetDatabaseFilePath("jogos.json");
         if (!File.Exists(caminho))
             return new List<GerenciadorDeJogos>();
         string jsonString = File.ReadAllText(caminho);
-        var lista = JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(jsonString);
-        return lista ?? new List<GerenciadorDeJogos>();
+        var lista = JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(jsonString) ?? new List<GerenciadorDeJogos>();
+        return lista;
     }
 
     private void SalvarJogosNoArquivo(List<GerenciadorDeJogos> jogos)
     {
-        string caminho = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\jogos.json";
+        string caminho = Database.GetDatabaseFilePath("jogos.json");
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,

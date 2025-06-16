@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text.Json;
 using Jogoss;
 using GerenciadorJogos;
+using Util.Database;
+
+namespace PROJETO_FUTEBOL.controller;
 
 public class JogoController
 {
     private List<GerenciadorDeJogos> listaDeJogos = new List<GerenciadorDeJogos>();
-    private readonly string caminhoArquivo = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\jogos.json";
+    private readonly string caminhoArquivo = Database.GetDatabaseFilePath("jogos.json");
     public JogoController()
     {
         CarregarDoArquivo();
@@ -266,12 +269,12 @@ public class JogoController
         }
 
         // Carrega associados
-        string caminhoAssociados = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\associados.json";
+        string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
         List<Associacao.Associados> associados = new List<Associacao.Associados>();
         if (File.Exists(caminhoAssociados))
         {
             string jsonAssociados = File.ReadAllText(caminhoAssociados);
-            associados = JsonSerializer.Deserialize<List<Associacao.Associados>>(jsonAssociados);
+            associados = JsonSerializer.Deserialize<List<Associacao.Associados>>(jsonAssociados) ?? new List<Associacao.Associados>();
         }
 
         // Exibe interessados

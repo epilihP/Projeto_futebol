@@ -2,6 +2,9 @@ using System.Text.Json;
 using Players;
 using GerenciadorJogos;
 using Partidas;
+using System.IO;
+
+namespace Util.Database;
 
 // SalvarJogo (Create)
 // ListarJogos (Read)
@@ -10,40 +13,32 @@ using Partidas;
 
 public class Database
 {
-    internal static readonly string FilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\associados.json";
+    internal static readonly string FilePath = GetDatabaseFilePath("associados.json");
 
     public static void SalvarJogador(Jogador jogador)
     {
         List<Jogador> jogadores;
-
-        if (File.Exists(FilePath))  // Arquivo existe?
+        if (File.Exists(FilePath))
         {
-            // Lê o arquivo
             string json = File.ReadAllText(FilePath);
-            jogadores = string.IsNullOrWhiteSpace(json) ? new List<Jogador>() : JsonSerializer.Deserialize<List<Jogador>>(json);
+            jogadores = string.IsNullOrWhiteSpace(json) ? new List<Jogador>() : JsonSerializer.Deserialize<List<Jogador>>(json) ?? new List<Jogador>();
         }
         else
         {
-            // Cria uma nova lista se o arquivo não existir
             jogadores = new List<Jogador>();
         }
-
-        // Adc o jogador
         jogadores.Add(jogador);
-
-        // Devolve a lista de volta para o JSON
         string novoJson = JsonSerializer.Serialize(jogadores, new JsonSerializerOptions { WriteIndented = true });
-
-        File.WriteAllText(FilePath, novoJson); // Para salvar no aqrquivo
+        File.WriteAllText(FilePath, novoJson);
     }
-    
+
     public static void AtualizarArquivo(List<Jogador> jogadores)
     {
         string novoJson = JsonSerializer.Serialize(jogadores, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(FilePath, novoJson);
     }
 
-    internal static readonly string JogosFilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\jogos.json";
+    internal static readonly string JogosFilePath = GetDatabaseFilePath("jogos.json");
 
     // CREATE
     public static void SalvarJogo(GerenciadorDeJogos jogo)
@@ -52,7 +47,7 @@ public class Database
         if (File.Exists(JogosFilePath))
         {
             string json = File.ReadAllText(JogosFilePath);
-            jogos = string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
+            jogos = string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json) ?? new List<GerenciadorDeJogos>();
         }
         else
         {
@@ -68,7 +63,7 @@ public class Database
     {
         if (!File.Exists(JogosFilePath)) return new List<GerenciadorDeJogos>();
         string json = File.ReadAllText(JogosFilePath);
-        return string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
+        return string.IsNullOrWhiteSpace(json) ? new List<GerenciadorDeJogos>() : JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json) ?? new List<GerenciadorDeJogos>();
     }
 
     // UPDATE
@@ -94,7 +89,7 @@ public class Database
     }
 
 
-    private static readonly string HistoricoFilePath = @"c:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\Util\Database\historico_partidas.json";
+    private static readonly string HistoricoFilePath = GetDatabaseFilePath("historico_partidas.json");
 
     public static void SalvarHistorico(List<HistoricoRodada> historico)
     {
@@ -106,8 +101,14 @@ public class Database
     {
         if (!File.Exists(HistoricoFilePath))
             return new List<HistoricoRodada>();
-
         var json = File.ReadAllText(HistoricoFilePath);
-        return string.IsNullOrWhiteSpace(json) ? new List<HistoricoRodada>() : JsonSerializer.Deserialize<List<HistoricoRodada>>(json);
+        return string.IsNullOrWhiteSpace(json) ? new List<HistoricoRodada>() : JsonSerializer.Deserialize<List<HistoricoRodada>>(json) ?? new List<HistoricoRodada>();
+    }
+
+    public static string GetDatabaseFilePath(string fileName)
+    {
+        // Caminho absoluto a partir da raiz do projeto
+        string projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
+        return Path.Combine(projectRoot, "Util", "Database", fileName);
     }
 }
