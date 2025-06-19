@@ -6,6 +6,7 @@ using System.Text.Json;
 using Jogoss;
 using GerenciadorJogos;
 using Util.Database;
+using Projeto_futebol.Util;
 
 namespace PROJETO_FUTEBOL.controller;
 
@@ -37,7 +38,6 @@ public class JogoController
     {
         Console.Clear();
         Console.WriteLine("--- Agendar Novo Jogo ---");
-        // Sempre próxima quinta-feira às 19h
         DateTime data = ProximaQuintaDisponivel();
         string codigo = data.ToString("ddMMyyyy");
         if (listaDeJogos.Exists(j => j.Data.Date == data.Date))
@@ -67,8 +67,7 @@ public class JogoController
             limiteTimes,
             limiteJogadores
         );
-        // novoJogo.Codigo = DataTime.Now.Ticks;
-        novoJogo.Codigo = long.Parse(codigo); // substituido acima, pois, gerava um cpodigo muito longo
+        novoJogo.Codigo = long.Parse(codigo);
         listaDeJogos.Add(novoJogo);
         SalvarNoArquivo();
         Console.WriteLine($"\nJogadores por time: {jogadoresPorTime}");
@@ -96,25 +95,18 @@ public class JogoController
     public void ListarJogos()
     {
         Console.Clear();
-        Console.WriteLine("--- Lista de Jogos Agendados ---");
         var jogosFuturos = listaDeJogos
             .Where(j => j.Data >= DateTime.Now)
             .OrderBy(j => j.Data)
-            .ToList();
-        if (jogosFuturos.Count == 0)
-        {
-            Console.WriteLine("Nenhum jogo agendado.");
-        }
-        else
-        {
-            foreach (var jogo in jogosFuturos)
+            .Select(jogo =>
             {
                 string codigo = jogo.Data.ToString("ddMMyyyy");
                 int timesGerados = jogo.TimesGerados?.Count ?? 0;
                 int limiteTimes = jogo.LimiteTimes ?? 0;
-                Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | Times gerados: {timesGerados}/{limiteTimes}");
-            }
-        }
+                return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | Times gerados: {timesGerados}/{limiteTimes}";
+            })
+            .ToList();
+        Utils.ExibirLista(jogosFuturos, "Lista de Jogos Agendados");
         Console.WriteLine("\nPressione qualquer tecla para voltar...");
         Console.ReadKey();
     }
@@ -123,36 +115,27 @@ public class JogoController
     {
         Console.Clear();
         Console.WriteLine("--- Atualizar Jogo ---");
-        // Exibe a lista de jogos disponíveis
-        var jogosFuturos = listaDeJogos
-            .OrderBy(j => j.Data)
-            .ToList();
+        var jogosFuturos = listaDeJogos.OrderBy(j => j.Data).ToList();
         if (jogosFuturos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo agendado.");
-            Console.WriteLine("Pressione qualquer tecla para voltar...");
+            Utils.MensagemRetornoMenu("Nenhum jogo agendado. Pressione qualquer tecla para voltar...");
             Console.ReadKey();
             return;
         }
-        Console.WriteLine("\nLista de Jogos Disponíveis:");
-        foreach (var jogoItem in jogosFuturos)
-        {
-            string codigoJogo = jogoItem.Data.ToString("ddMMyyyy");
-            Console.WriteLine($"ID: {codigoJogo} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}");
-        }
+        Utils.ExibirLista(jogosFuturos.Select(jogoItem => $"ID: {jogoItem.Data:ddMMyyyy} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}"), "Jogos Disponíveis");
         Console.WriteLine("\nPara manter os valores padrão, basta deixar em branco.");
         Console.Write("\nDigite o código do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigo))
         {
-            Console.WriteLine("Código inválido!");
+            Utils.MensagemErro("Código inválido, voltando ao menu.");
             Console.ReadKey();
             return;
         }
         var jogoSel = listaDeJogos.Find(j => j.Codigo == codigo);
         if (jogoSel == null)
         {
-            Console.WriteLine("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado, voltando ao menu.");
             Console.ReadKey();
             return;
         }
@@ -201,37 +184,33 @@ public class JogoController
     public void ExcluirJogo()
     {
         Console.Clear();
-        // Exibe a lista de jogos disponíveis
-        var jogosFuturos = listaDeJogos
-            .OrderBy(j => j.Data)
-            .ToList();
-        Console.WriteLine("Lista de Jogos Disponíveis:");
+        var jogosFuturos = listaDeJogos.OrderBy(j => j.Data).ToList();
+        Utils.ExibirLista(jogosFuturos.Select(jogoItem => $"ID: {jogoItem.Data:ddMMyyyy} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}"), "Jogos Disponíveis");
         if (jogosFuturos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo agendado.");
-            Console.WriteLine("Pressione qualquer tecla para voltar...");
+            Utils.MensagemRetornoMenu("Nenhum jogo agendado. Pressione qualquer tecla para voltar...");
             Console.ReadKey();
             return;
         }
-        foreach (var jogoItem in jogosFuturos)
-        {
-            string codigoJogo = jogoItem.Data.ToString("ddMMyyyy");
-            Console.WriteLine($"ID: {codigoJogo} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}");
-        }
         Console.WriteLine("--- Excluir Jogo ---");
         Console.Write("Digite o código do jogo: ");
-        long.TryParse(Console.ReadLine(), out long codigo);
-
+        string? codigoStr = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigo))
+        {
+            Utils.MensagemErro("Código inválido, voltando ao menu.");
+            Console.ReadKey();
+            return;
+        }
         var jogo = listaDeJogos.Find(j => j.Codigo == codigo);
         if (jogo == null)
         {
-            Console.WriteLine("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!");
         }
         else
         {
             listaDeJogos.Remove(jogo);
             SalvarNoArquivo();
-            Console.WriteLine("Jogo removido!");
+            Utils.MensagemSucesso("Jogo removido!");
         }
         Console.ReadKey();
     }
@@ -255,7 +234,10 @@ public class JogoController
         foreach (var jogoItem in jogosFuturos)
         {
             string codigoJogo = jogoItem.Data.ToString("ddMMyyyy");
-            Console.WriteLine($"ID: {codigoJogo} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}");
+            int interessados = jogoItem.Interessados?.Count ?? 0;
+            int limite = jogoItem.LimiteJogadores ?? 0;
+            string interessadosStr = limite > 0 ? $"{interessados}/{limite} interessados" : $"{interessados} interessados";
+            Console.WriteLine($"ID: {codigoJogo} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo} | {interessadosStr}");
         }
         Console.Write("Digite o código do jogo: ");
         long.TryParse(Console.ReadLine(), out long codigo);
@@ -311,6 +293,11 @@ public class JogoController
             Console.WriteLine("0 - Sair");
             Console.Write("Opção: ");
             string op = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(op))
+            {
+                Utils.MensagemErro("Opção inválida!");
+                continue;
+            }
             if (op == "0") break;
             if (op == "1")
             {
@@ -384,7 +371,9 @@ public class JogoController
     {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string json = JsonSerializer.Serialize(listaDeJogos, options);
-        Directory.CreateDirectory(Path.GetDirectoryName(caminhoArquivo));
+        var dir = Path.GetDirectoryName(caminhoArquivo);
+        if (!string.IsNullOrEmpty(dir))
+            Directory.CreateDirectory(dir);
         File.WriteAllText(caminhoArquivo, json);
     }
 

@@ -1,214 +1,6 @@
 [
   {
     "TimesGerados": [],
-    "Codigo": 3072025,
-    "Interessados": [],
-    "Local": "Campo Unasp",
-    "TipoCampo": "Grama Sint\u00E9tica",
-    "JogadoresPorTime": 6,
-    "LimiteTimes": 5,
-    "LimiteJogadores": 30,
-    "Data": "2025-07-03T19:00:00-03:00"
-  },
-  {
-    "TimesGerados": [
-      {
-        "Jogadores": [
-          {
-            "Id": 472488,
-            "Pontos": 0,
-            "nome": "Junior Mota",
-            "idade": 21,
-            "posicao": 3
-          },
-          {
-            "Id": 990655,
-            "Pontos": 0,
-            "nome": "Muca Kugel",
-            "idade": 21,
-            "posicao": 2
-          },
-          {
-            "Id": 221851,
-            "Pontos": 0,
-            "nome": "Antonia Silva",
-            "idade": 57,
-            "posicao": 1
-          },
-          {
-            "Id": 675414,
-            "Pontos": 0,
-            "nome": "Thiago",
-            "idade": 25,
-            "posicao": 3
-          },
-          {
-            "Id": 675411,
-            "Pontos": 0,
-            "nome": "Marina",
-            "idade": 21,
-            "posicao": 3
-          }
-        ],
-        "Nome": "Time 1",
-        "TimesGerados": [],
-        "Codigo": 0,
-        "Interessados": [],
-        "Local": "Quadra Central de Artur Nogueira",
-        "TipoCampo": "Areia",
-        "JogadoresPorTime": 5,
-        "LimiteTimes": null,
-        "LimiteJogadores": 20,
-        "Data": "2025-07-10T19:00:00-03:00"
-      },
-      {
-        "Jogadores": [
-          {
-            "Id": 675401,
-            "Pontos": 0,
-            "nome": "Carlos Silva",
-            "idade": 26,
-            "posicao": 3
-          },
-          {
-            "Id": 727132,
-            "Pontos": 0,
-            "nome": "Claudio Perez",
-            "idade": 65,
-            "posicao": 2
-          },
-          {
-            "Id": 675416,
-            "Pontos": 0,
-            "nome": "Rafael",
-            "idade": 27,
-            "posicao": 1
-          },
-          {
-            "Id": 675402,
-            "Pontos": 0,
-            "nome": "Luisa",
-            "idade": 18,
-            "posicao": 3
-          },
-          {
-            "Id": 675405,
-            "Pontos": 0,
-            "nome": "Lucas",
-            "idade": 19,
-            "posicao": 3
-          }
-        ],
-        "Nome": "Time 2",
-        "TimesGerados": [],
-        "Codigo": 0,
-        "Interessados": [],
-        "Local": "Quadra Central de Artur Nogueira",
-        "TipoCampo": "Areia",
-        "JogadoresPorTime": 5,
-        "LimiteTimes": null,
-        "LimiteJogadores": 20,
-        "Data": "2025-07-10T19:00:00-03:00"
-      },
-      {
-        "Jogadores": [
-          {
-            "Id": 822645,
-            "Pontos": 0,
-            "nome": "Antonia",
-            "idade": 57,
-            "posicao": 2
-          },
-          {
-            "Id": 675404,
-            "Pontos": 0,
-            "nome": "Gigi",
-            "idade": 19,
-            "posicao": 1
-          },
-          {
-            "Id": 675418,
-            "Pontos": 0,
-            "nome": "Gabriel Done",
-            "idade": 20,
-            "posicao": 2
-          },
-          {
-            "Id": 675415,
-            "Pontos": 0,
-            "nome": "Juliana",
-            "idade": 22,
-            "posicao": 2
-          },
-          {
-            "Id": 675410,
-            "Pontos": 0,
-            "nome": "Alisson",
-            "idade": 22,
-            "posicao": 2
-          }
-        ],
-        "Nome": "Time 3",
-        "TimesGerados": [],
-        "Codigo": 0,
-        "Interessados": [],
-        "Local": "Quadra Central de Artur Nogueira",
-        "TipoCampo": "Areia",
-        "JogadoresPorTime": 5,
-        "LimiteTimes": null,
-        "LimiteJogadores": 20,
-        "Data": "2025-07-10T19:00:00-03:00"
-      },
-      {
-        "Jogadores": [
-          {
-            "Id": 675412,
-            "Pontos": 0,
-            "nome": "Bruno",
-            "idade": 23,
-            "posicao": 2
-          },
-          {
-            "Id": 675406,
-            "Pontos": 0,
-            "nome": "Pedro",
-            "idade": 18,
-            "posicao": 1
-          },
-          {
-            "Id": 675403,
-            "Pontos": 0,
-            "nome": "Leo",
-            "idade": 20,
-            "posicao": 2
-          },
-          {
-            "Id": 675409,
-            "Pontos": 0,
-            "nome": "Renan",
-            "idade": 20,
-            "posicao": 2
-          },
-          {
-            "Id": 675407,
-            "Pontos": 0,
-            "nome": "Duda",
-            "idade": 40,
-            "posicao": 1
-          }
-        ],
-        "Nome": "Time 4",
-        "TimesGerados": [],
-        "Codigo": 0,
-        "Interessados": [],
-        "Local": "Quadra Central de Artur Nogueira",
-        "TipoCampo": "Areia",
-        "JogadoresPorTime": 5,
-        "LimiteTimes": null,
-        "LimiteJogadores": 20,
-        "Data": "2025-07-10T19:00:00-03:00"
-      }
-    ],
     "Codigo": 10072025,
     "Interessados": [
       990655,
@@ -283,8 +75,8 @@
         "TimesGerados": [],
         "Codigo": 0,
         "Interessados": [],
-        "Local": "Quadra Cosm\u00F3polis",
-        "TipoCampo": "Grama Sint\u00E9tica",
+        "Local": "Quadra Cosmópolis",
+        "TipoCampo": "Grama Sintética",
         "JogadoresPorTime": 5,
         "LimiteTimes": null,
         "LimiteJogadores": 20,
@@ -332,8 +124,8 @@
         "TimesGerados": [],
         "Codigo": 0,
         "Interessados": [],
-        "Local": "Quadra Cosm\u00F3polis",
-        "TipoCampo": "Grama Sint\u00E9tica",
+        "Local": "Quadra Cosmópolis",
+        "TipoCampo": "Grama Sintética",
         "JogadoresPorTime": 5,
         "LimiteTimes": null,
         "LimiteJogadores": 20,
@@ -381,8 +173,8 @@
         "TimesGerados": [],
         "Codigo": 0,
         "Interessados": [],
-        "Local": "Quadra Cosm\u00F3polis",
-        "TipoCampo": "Grama Sint\u00E9tica",
+        "Local": "Quadra Cosmópolis",
+        "TipoCampo": "Grama Sintética",
         "JogadoresPorTime": 5,
         "LimiteTimes": null,
         "LimiteJogadores": 20,
@@ -430,8 +222,8 @@
         "TimesGerados": [],
         "Codigo": 0,
         "Interessados": [],
-        "Local": "Quadra Cosm\u00F3polis",
-        "TipoCampo": "Grama Sint\u00E9tica",
+        "Local": "Quadra Cosmópolis",
+        "TipoCampo": "Grama Sintética",
         "JogadoresPorTime": 5,
         "LimiteTimes": null,
         "LimiteJogadores": 20,
@@ -461,8 +253,8 @@
       675407,
       675409
     ],
-    "Local": "Quadra Cosm\u00F3polis",
-    "TipoCampo": "Grama Sint\u00E9tica",
+    "Local": "Quadra Cosmópolis",
+    "TipoCampo": "Grama Sintética",
     "JogadoresPorTime": 5,
     "LimiteTimes": 4,
     "LimiteJogadores": 20,
@@ -484,7 +276,32 @@
   {
     "TimesGerados": [],
     "Codigo": 17072025,
-    "Interessados": [],
+    "Interessados": [
+      675401,
+      675402,
+      675403,
+      675405,
+      675406,
+      675407,
+      675409,
+      675411,
+      675412,
+      675413,
+      675414,
+      675415,
+      675416,
+      675417,
+      675418,
+      822645,
+      472488,
+      727132,
+      990655,
+      665184,
+      542835,
+      919556,
+      955666,
+      742201
+    ],
     "Local": "Quadra Poliesportiva",
     "TipoCampo": "Quadra Polietano (PU)",
     "JogadoresPorTime": 5,

@@ -1,70 +1,63 @@
 [
   {
     "Id": 675401,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Carlos Silva",
     "idade": 26,
     "posicao": 3
   },
   {
     "Id": 675402,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Luisa",
     "idade": 18,
     "posicao": 3
   },
   {
     "Id": 675403,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Leo",
     "idade": 20,
     "posicao": 2
   },
   {
-    "Id": 675404,
-    "Pontos": 0,
-    "nome": "Gigi",
-    "idade": 19,
-    "posicao": 1
-  },
-  {
     "Id": 675405,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Lucas",
     "idade": 19,
     "posicao": 3
   },
   {
     "Id": 675406,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Pedro",
     "idade": 18,
     "posicao": 1
   },
   {
     "Id": 675407,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Duda",
     "idade": 40,
     "posicao": 1
   },
   {
     "Id": 675409,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Renan",
     "idade": 20,
     "posicao": 2
   },
   {
     "Id": 675411,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Marina",
     "idade": 21,
     "posicao": 3
   },
   {
     "Id": 675412,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Bruno",
     "idade": 23,
     "posicao": 2
@@ -113,35 +106,35 @@
   },
   {
     "Id": 822645,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Antonia",
     "idade": 57,
     "posicao": 2
   },
   {
     "Id": 221851,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Antonia Silva",
     "idade": 57,
     "posicao": 1
   },
   {
     "Id": 472488,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Junior Mota",
     "idade": 21,
     "posicao": 3
   },
   {
     "Id": 727132,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Claudio Perez",
     "idade": 65,
     "posicao": 2
   },
   {
     "Id": 990655,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Muca Kugel",
     "idade": 21,
     "posicao": 2
@@ -149,7 +142,7 @@
   {
     "Id": 665184,
     "Pontos": 0,
-    "nome": "Philipe Gonçalves",
+    "nome": "Philipe Gon\u00E7alves",
     "idade": 19,
     "posicao": 1
   },
@@ -163,8 +156,22 @@
   {
     "Id": 919556,
     "Pontos": 0,
-    "nome": "gabrielly",
+    "nome": "Gabrielly",
     "idade": 16,
     "posicao": 1
+  },
+  {
+    "Id": 955666,
+    "Pontos": 0,
+    "nome": "Giovanna P\u00E3o",
+    "idade": 52,
+    "posicao": 2
+  },
+  {
+    "Id": 742201,
+    "Pontos": 0,
+    "nome": "Luis Inacio da Silva",
+    "idade": 68,
+    "posicao": 3
   }
 ]

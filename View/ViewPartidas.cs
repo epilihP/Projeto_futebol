@@ -3,6 +3,7 @@ using View.Jogos;
 using View.Associados;
 using View.Times;
 using View.Principal;
+using Projeto_futebol.Util;
 
 namespace View.Partidas;
 
@@ -35,7 +36,7 @@ public class ViewMenuPartidas
                 case "0":
                     return;
                 default:
-                    Console.WriteLine("Opção inválida!");
+                    Utils.MensagemErro("Opção inválida!");
                     Console.ReadKey();
                     break;
             }

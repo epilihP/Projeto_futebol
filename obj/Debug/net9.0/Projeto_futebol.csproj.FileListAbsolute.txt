@@ -13,9 +13,6 @@ C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Fut
 C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.pdb
 C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.genruntimeconfig.cache
 C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\ref\Projeto_futebol.dll
-C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\bin\Debug\net9.0\Newtonsoft.Json.dll
-C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_futebol.csproj.AssemblyReference.cache
-C:\Users\aliss\Documents\Faculdade\Programação Orientada a Objetos\Projeto Futebol\Projeto_futebol\obj\Debug\net9.0\Projeto_.D60BE969.Up2Date
 C:\Users\Pass\Desktop\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.exe
 C:\Users\Pass\Desktop\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.deps.json
 C:\Users\Pass\Desktop\Projeto_futebol\bin\Debug\net9.0\Projeto_futebol.runtimeconfig.json

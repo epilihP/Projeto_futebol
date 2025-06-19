@@ -3,15 +3,12 @@ using View.Jogos;
 using View.Partidas;
 using View.Associados;
 using View.Principal;
+using Projeto_futebol.Util;
 
 namespace View.Times;
 
 public class ViewMenuTimes
 {
-     public bool MetodoExiste(object obj, string nomeMetodo)
-    {
-        return obj.GetType().GetMethod(nomeMetodo) != null;
-    }
     public TimeController timeController = new TimeController();
     public void ExibirMenuTimes()
     {
@@ -36,45 +33,21 @@ public class ViewMenuTimes
                     timeController.GerarTimesPorOrdemDeChegada();
                     break;
                 case "2":
-                    if (MetodoExiste(timeController, "GerarTimesPorPosicaoEquilibrada"))
-                        timeController.GerarTimesPorPosicaoEquilibrada();
-                    else
-                    {
-                        Console.WriteLine("Função ainda não implementada!");
-                        Console.ReadKey();
-                    }
+                    timeController.GerarTimesPorPosicaoEquilibrada();
                     break;
                 case "3":
-                    if (MetodoExiste(timeController, "GerarTimesPorCriterioDoGrupo"))
-                        timeController.GerarTimesPorCriterioDoGrupo();
-                    else
-                    {
-                        Console.WriteLine("Função ainda não implementada!");
-                        Console.ReadKey();
-                    }
+                    timeController.GerarTimesPorCriterioDoGrupo();
                     break;
                 case "4":
-                    if (MetodoExiste(timeController, "DesfazerTimesDoJogo"))
-                        timeController.DesfazerTimesDoJogo();
-                    else
-                    {
-                        Console.WriteLine("Função ainda não implementada!");
-                        Console.ReadKey();
-                    }
+                    timeController.DesfazerTimesDoJogo();
                     break;
                 case "5":
-                    if (MetodoExiste(timeController, "ExibirTimesFormados"))
-                        timeController.ExibirTimesFormados();
-                    else
-                    {
-                        Console.WriteLine("Função ainda não implementada!");
-                        Console.ReadKey();
-                    }
+                    timeController.ExibirTimesFormados();
                     break;
                 case "0":
                     return; // Sai do menu
                 default:
-                    Console.WriteLine("Opção inválida! Pressione qualquer tecla para tentar novamente.");
+                    Utils.MensagemErro("Opção inválida! Pressione qualquer tecla para tentar novamente.");
                     Console.ReadKey();
                     break;
             }

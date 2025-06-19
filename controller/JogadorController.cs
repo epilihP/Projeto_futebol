@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Util.Database;
+using Projeto_futebol.Util;
 
 namespace PROJETO_FUTEBOL.controller;
 
@@ -23,7 +24,13 @@ public class JogadorController
 
 
         Console.Write("Nome do Associado: ");
-        string nome = Console.ReadLine();
+        string? nome = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(nome))
+        {
+            Utils.MensagemErro("Nome não pode ser vazio. Cadastro cancelado.");
+            Console.ReadKey();
+            return;
+        }
 
         Console.Write("Idade do Associado: ");
         int.TryParse(Console.ReadLine(), out int idade);
@@ -43,7 +50,7 @@ public class JogadorController
         Associados novoAssociado = new Associados
         {
             Id = novoId,
-            nome = nome,
+            nome = nome!,
             idade = idade,
             posicao = posicao
         };
@@ -59,19 +66,7 @@ public class JogadorController
     public void ListarJogadores()
     {
         Console.Clear();
-        Console.WriteLine("--- Lista de Associados Cadastrados ---");
-
-        if (listaDeAssociados.Count == 0)
-        {
-            Console.WriteLine("Nenhum associado cadastrado.");
-        }
-        else
-        {
-            foreach (var associado in listaDeAssociados)
-            {
-                Console.WriteLine($"ID: {associado.Id} | Nome: {associado.nome} | Idade: {associado.idade} | Posição: {associado.posicao}");
-            }
-        }
+        Utils.ExibirLista(listaDeAssociados.Select(a => $"ID: {a.Id} | Nome: {a.nome} | Idade: {a.idade} | Posição: {a.posicao}"), "Lista de Associados Cadastrados");
         Console.WriteLine("\nPressione qualquer tecla para voltar...");
         Console.ReadKey();
     }
@@ -82,54 +77,50 @@ public class JogadorController
         Console.WriteLine("--- Atualizar Associado ---");
         if (listaDeAssociados.Count == 0)
         {
-            Console.WriteLine("Nenhum associado cadastrado.");
-            Console.WriteLine("Pressione qualquer tecla para voltar...");
+            Utils.MensagemRetornoMenu("Nenhum associado cadastrado. Pressione qualquer tecla para voltar...");
             Console.ReadKey();
             return;
         }
         else
         {
-            foreach (var associado in listaDeAssociados)
-            {
-                Console.WriteLine($"ID: {associado.Id} | Nome: {associado.nome}");
-            }
+            Utils.ExibirLista(listaDeAssociados.Select(a => $"ID: {a.Id} | Nome: {a.nome}"), "Associados");
             Console.WriteLine("\nPressione qualquer tecla para seguir para a alteração...");
             Console.ReadKey();
         }
 
         Console.Write("\nDigite o ID do associado que deseja atualizar: ");
-        if (!int.TryParse(Console.ReadLine(), out int idParaAtualizar))
+        string? inputId = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(inputId) || !Utils.ValidarId(inputId, out int idParaAtualizar))
         {
-            Console.WriteLine("ID inválido.");
             Console.ReadKey();
             return;
         }
 
-        Associados associadoParaAtualizar = listaDeAssociados.Find(j => j.Id == idParaAtualizar);
+        Associados? associadoParaAtualizar = listaDeAssociados.Find(j => j.Id == idParaAtualizar);
 
         if (associadoParaAtualizar == null)
         {
-            Console.WriteLine("Associado não encontrado.");
+            Utils.MensagemErro("Associado não encontrado.");
         }
         else
         {
             Console.WriteLine("\nDeixe em branco para não alterar.");
             Console.Write($"Novo nome (Atual: {associadoParaAtualizar.nome}): ");
-            string nome = Console.ReadLine();
+            string? nome = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(nome))
             {
                 associadoParaAtualizar.nome = nome;
             }
 
             Console.Write($"Nova idade (Atual: {associadoParaAtualizar.idade}): ");
-            string idadeStr = Console.ReadLine();
-            if (int.TryParse(idadeStr, out int idade))
+            string? idadeStr = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(idadeStr) && int.TryParse(idadeStr, out int idade))
             {
                 associadoParaAtualizar.idade = idade;
             }
 
-            Console.WriteLine("Nova posição (1 - Atacante, 2 - Defesa, 3 - Goleiro) (Atual: {0}): ", associadoParaAtualizar.posicao);
-            string posicaoStr = Console.ReadLine();
+            Console.WriteLine($"Nova posição (1 - Atacante, 2 - Defesa, 3 - Goleiro) (Atual: {associadoParaAtualizar.posicao}): ");
+            string? posicaoStr = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(posicaoStr))
             {
                 if (int.TryParse(posicaoStr, out int posicaoInt) && posicaoInt >= 1 && posicaoInt <= 3)
@@ -138,12 +129,12 @@ public class JogadorController
                 }
                 else
                 {
-                    Console.WriteLine("Posição inválida! Valor não alterado.");
+                    Utils.MensagemErro("Posição inválida! Valor não alterado.");
                 }
             }
 
             SalvarNoArquivo();
-            Console.WriteLine("\nAssociado atualizado com sucesso!");
+            Utils.MensagemSucesso("Associado atualizado com sucesso!");
         }
         Console.ReadKey();
     }
@@ -152,27 +143,38 @@ public class JogadorController
     {
         Console.Clear();
         Console.WriteLine("--- Excluir Associado ---");
-        ListarJogadores();
+        if (listaDeAssociados.Count == 0)
+        {
+            Utils.MensagemRetornoMenu("Nenhum associado cadastrado. Pressione qualquer tecla para voltar...");
+            Console.ReadKey();
+            return;
+        }
+        else
+        {
+            Utils.ExibirLista(listaDeAssociados.Select(a => $"ID: {a.Id} | Nome: {a.nome} | Idade: {a.idade} | Posição: {a.posicao}"), "Associados");
+            Console.WriteLine("\nPressione qualquer tecla para seguir com a exclusão...");
+            Console.ReadKey();
+        }
 
         Console.Write("\nDigite o ID do associado que você deseja excluir: ");
-        if (!int.TryParse(Console.ReadLine(), out int idParaExcluir))
+        string? inputId = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(inputId) || !Utils.ValidarId(inputId, out int idParaExcluir))
         {
-            Console.WriteLine("ID inválido.");
             Console.ReadKey();
             return;
         }
 
-        Associados associadoParaExcluir = listaDeAssociados.Find(j => j.Id == idParaExcluir);
+        Associados? associadoParaExcluir = listaDeAssociados.Find(j => j.Id == idParaExcluir);
 
         if (associadoParaExcluir == null)
         {
-            Console.WriteLine("Associado não encontrado.");
+            Utils.MensagemErro("Associado não encontrado.");
         }
         else
         {
             listaDeAssociados.Remove(associadoParaExcluir);
             SalvarNoArquivo();
-            Console.WriteLine("Associado excluído com sucesso!");
+            Utils.MensagemSucesso("Associado excluído com sucesso!");
         }
         Console.ReadKey();
     }
@@ -195,6 +197,7 @@ public class JogadorController
             return new List<Associados>();
         }
         string jsonString = File.ReadAllText(caminhoArquivoJson);
-        return JsonSerializer.Deserialize<List<Associados>>(jsonString);
+        var result = JsonSerializer.Deserialize<List<Associados>>(jsonString);
+        return result ?? new List<Associados>();
     }
 }

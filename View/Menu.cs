@@ -4,6 +4,8 @@ using View.Associados;
 using View.Times;
 using View.Principal;
 using View.Partidas;
+using Projeto_futebol.Util;
+
 public class Menu
 {
     private ViewMenuPrincial viewPrincipal = new ViewMenuPrincial();
@@ -37,7 +39,7 @@ public class Menu
                     Console.WriteLine("\nObrigado por usar o sistema!");
                     return;
                 default:
-                    Console.WriteLine("Opção inválida! Pressione qualquer tecla para tentar novamente.");
+                    Utils.MensagemErro("Opção inválida! Pressione qualquer tecla para tentar novamente.");
                     Console.ReadKey();
                     break;
             }

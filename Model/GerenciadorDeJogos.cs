@@ -8,7 +8,7 @@ using TimeFutebol;
 
 public class GerenciadorDeJogos : Jogos
 {
-    public List<Times> TimesGerados { get; set; } = new List<Times>();
+    public List<Time> TimesGerados { get; set; } = new List<Time>();
 
     public GerenciadorDeJogos(DateTime data, string local, string tipoCampo, int jogadoresPorTime, int? limiteTimes = null, int? limiteJogadores = 20)
     {

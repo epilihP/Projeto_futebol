@@ -6,6 +6,7 @@ using System.Text.Json;
 using Partidas;
 using TimeFutebol;
 using Util.Database;
+using Projeto_futebol.Util;
 
 namespace PROJETO_FUTEBOL.controller;
 
@@ -21,28 +22,23 @@ public class PartidaController
         var jogos = CarregarJogosComTimes();
         if (jogos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo com times formados encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo com times formados encontrado.");
             Console.ReadKey();
             return;
         }
-        Console.WriteLine("Selecione o jogo pelo ID:");
-        foreach (var jogo in jogos)
-        {
-            string codigo = jogo.Data.ToString("ddMMyyyy");
-            Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Times: {jogo.TimesGerados.Count}");
-        }
+        Utils.ExibirLista(jogos.Select(jogo => $"ID: {jogo.Data:ddMMyyyy} | Data: {jogo.Data:dd/MM/yyyy} | Times: {jogo.TimesGerados.Count}"), "Jogos com Times Formados");
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Console.WriteLine("ID inválido!");
+            Utils.MensagemErro("ID inválido, voltando ao menu.");
             Console.ReadKey();
             return;
         }
         var jogoSelecionado = jogos.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null || jogoSelecionado.TimesGerados == null || jogoSelecionado.TimesGerados.Count < 2)
         {
-            Console.WriteLine("Jogo não encontrado ou não há times suficientes.");
+            Utils.MensagemErro("Jogo não encontrado ou não há times suficientes.");
             Console.ReadKey();
             return;
         }
@@ -57,7 +53,7 @@ public class PartidaController
             RegistrarPartidaDoisJogosPorTime(jogoSelecionado);
         else
         {
-            Console.WriteLine("Modo inválido!");
+            Utils.MensagemErro("Modo inválido!");
             Console.ReadKey();
         }
     }
@@ -70,6 +66,129 @@ public class PartidaController
         string jsonString = File.ReadAllText(caminho);
         var lista = JsonSerializer.Deserialize<List<GerenciadorJogos.GerenciadorDeJogos>>(jsonString);
         return lista?.Where(j => j.TimesGerados != null && j.TimesGerados.Count >= 2).ToList() ?? new List<GerenciadorJogos.GerenciadorDeJogos>();
+    }
+
+    private void SalvarHistorico(List<Partidas.HistoricoRodada> historico)
+    {
+        var historicoAntigo = CarregarHistorico();
+        historicoAntigo.AddRange(historico);
+        string json = JsonSerializer.Serialize(historicoAntigo, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(caminhoHistorico, json);
+    }
+
+    public void ListarPartidas()
+    {
+        var historico = CarregarHistorico();
+        var jogos = CarregarJogosComTimes();
+        if (historico.Count == 0)
+        {
+            Utils.MensagemRetornoMenu("Nenhuma partida registrada.");
+        }
+        else
+        {
+            foreach (var jogo in jogos.OrderBy(j => j.Data))
+            {
+                string codigo = jogo.Data.ToString("ddMMyyyy");
+                Console.WriteLine($"\nJogo ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
+                var rodadasDoJogo = historico.Where(h => h.codigoJogo == jogo.Codigo).ToList();
+                if (rodadasDoJogo.Count == 0)
+                {
+                    Console.WriteLine("  Nenhuma partida registrada para este jogo.");
+                }
+                else
+                {
+                    foreach (var partida in rodadasDoJogo)
+                    {
+                        string nomeRei = (jogo.TimesGerados != null && partida.reiAntes < jogo.TimesGerados.Count) ? jogo.TimesGerados[partida.reiAntes].Nome : $"Time {partida.reiAntes + 1}";
+                        string nomeDesafiante = (jogo.TimesGerados != null && partida.desafiante < jogo.TimesGerados.Count) ? jogo.TimesGerados[partida.desafiante].Nome : $"Time {partida.desafiante + 1}";
+                        string nomeVencedor = (jogo.TimesGerados != null && partida.vencedor < jogo.TimesGerados.Count && partida.vencedor >= 0) ? jogo.TimesGerados[partida.vencedor].Nome : (partida.vencedor == -1 ? "Empate" : $"Time {partida.vencedor + 1}");
+                        Console.WriteLine($"  Rodada {partida.rodada}: {nomeRei} x {nomeDesafiante} | Vencedor: {nomeVencedor}");
+                    }
+                    // Exibe o vencedor geral do jogo
+                    var ultimaRodada = rodadasDoJogo.LastOrDefault();
+                    if (ultimaRodada != null && jogo.TimesGerados != null && ultimaRodada.vencedor < jogo.TimesGerados.Count && ultimaRodada.vencedor >= 0)
+                    {
+                        Console.WriteLine($"  Vencedor do jogo: {jogo.TimesGerados[ultimaRodada.vencedor].Nome}");
+                    }
+                    else if (ultimaRodada != null && ultimaRodada.vencedor == -1)
+                    {
+                        Console.WriteLine("  O jogo terminou empatado.");
+                    }
+                }
+            }
+        }
+        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Console.ReadKey();
+    }
+
+    private List<HistoricoRodada> CarregarHistorico()
+    {
+        if (!File.Exists(caminhoHistorico))
+            return new List<HistoricoRodada>();
+        string json = File.ReadAllText(caminhoHistorico);
+        var lista = JsonSerializer.Deserialize<List<HistoricoRodada>>(json);
+        return lista ?? new List<HistoricoRodada>();
+    }
+
+    public void ExibirClassificacaoAssociados()
+    {
+        string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
+        if (!File.Exists(caminhoAssociados))
+        {
+            Console.WriteLine("Nenhum associado cadastrado.");
+            Console.ReadKey();
+            return;
+        }
+        var json = File.ReadAllText(caminhoAssociados);
+        var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json) ?? new List<Associacao.Associados>();
+        if (associados.Count == 0)
+        {
+            Console.WriteLine("Nenhum associado cadastrado.");
+            Console.ReadKey();
+            return;
+        }
+        var ranking = associados.OrderByDescending(a => a.Pontos).ThenBy(a => a.nome).ToList();
+        Console.Clear();
+        Console.WriteLine("--- Classificação de Associados ---");
+        Console.WriteLine("Posição | Nome                | Pontos");
+        Console.WriteLine("--------------------------------------");
+        int pos = 1;
+        foreach (var a in ranking)
+        {
+            Console.WriteLine($"{pos,6} | {a.nome,-20} | {a.Pontos,6}");
+            pos++;
+        }
+        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Console.ReadKey();
+    }
+
+    private void AtualizarPontuacaoJogadores(GerenciadorJogos.GerenciadorDeJogos jogo, List<Partidas.HistoricoRodada> historico)
+    {
+        string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
+        if (!File.Exists(caminhoAssociados)) return;
+        var json = File.ReadAllText(caminhoAssociados);
+        var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json) ?? new List<Associacao.Associados>();
+
+        // Zera pontos dos jogadores dos times do jogo
+        foreach (var time in jogo.TimesGerados)
+            foreach (var jogador in time.Jogadores)
+                if (jogador != null)
+                    associados.FirstOrDefault(a => a.Id == jogador.Id)!.Pontos = 0;
+
+        // Soma pontos por rodada
+        foreach (var rodada in historico)
+        {
+            var timeVencedor = jogo.TimesGerados[rodada.vencedor];
+            var timePerdedor = jogo.TimesGerados[rodada.vencedor == rodada.reiAntes ? rodada.desafiante : rodada.reiAntes];
+            foreach (var jogador in timeVencedor.Jogadores)
+                if (jogador != null)
+                    associados.FirstOrDefault(a => a.Id == jogador.Id)!.Pontos += 3;
+            foreach (var jogador in timePerdedor.Jogadores)
+                if (jogador != null)
+                    associados.FirstOrDefault(a => a.Id == jogador.Id)!.Pontos += 0;
+        }
+        // Salva
+        File.WriteAllText(caminhoAssociados, System.Text.Json.JsonSerializer.Serialize(associados, new JsonSerializerOptions { WriteIndented = true }));
     }
 
     private void RegistrarPartidaQuemGanhaFica(GerenciadorJogos.GerenciadorDeJogos jogo)
@@ -86,26 +205,66 @@ public class PartidaController
             Console.WriteLine($"\nRodada {rodada}: {times[idxRei].Nome} x {times[idxDesafiante].Nome}");
             Console.WriteLine($"1 - {times[idxRei].Nome}");
             Console.WriteLine($"2 - {times[idxDesafiante].Nome}");
-            Console.Write("Quem venceu? ");
+            Console.Write("Quem venceu? (1, 2 ou E para empate): ");
             string? vencedor = Console.ReadLine();
-            int idxVencedor = vencedor == "1" ? idxRei : idxDesafiante;
-            int idxPerdedor = vencedor == "1" ? idxDesafiante : idxRei;
-            historico.Add(new Partidas.HistoricoRodada
+            if (vencedor?.ToUpper() == "E")
             {
-                codigoJogo = jogo.Codigo,
-                rodada = rodada,
-                reiAntes = idxRei,
-                desafiante = idxDesafiante,
-                vencedor = idxVencedor
-            });
-            times.RemoveAt(idxPerdedor);
-            if (idxVencedor == 1) idxRei = 0; // desafiante vira rei
-            idxDesafiante = (idxRei + 1) % times.Count;
+                historico.Add(new Partidas.HistoricoRodada
+                {
+                    codigoJogo = jogo.Codigo,
+                    rodada = rodada,
+                    reiAntes = idxRei,
+                    desafiante = idxDesafiante,
+                    vencedor = -1 // empate
+                });
+                foreach (var jogador in times[idxRei].Jogadores)
+                    if (jogador != null)
+                        AtualizarPontosJogador(jogador.Id, 1);
+                foreach (var jogador in times[idxDesafiante].Jogadores)
+                    if (jogador != null)
+                        AtualizarPontosJogador(jogador.Id, 1);
+            }
+            else
+            {
+                int idxVencedor = vencedor == "1" ? idxRei : idxDesafiante;
+                int idxPerdedor = vencedor == "1" ? idxDesafiante : idxRei;
+                historico.Add(new Partidas.HistoricoRodada
+                {
+                    codigoJogo = jogo.Codigo,
+                    rodada = rodada,
+                    reiAntes = idxRei,
+                    desafiante = idxDesafiante,
+                    vencedor = idxVencedor
+                });
+                foreach (var jogador in times[idxVencedor].Jogadores)
+                    if (jogador != null)
+                        AtualizarPontosJogador(jogador.Id, 3);
+                foreach (var jogador in times[idxPerdedor].Jogadores)
+                    if (jogador != null)
+                        AtualizarPontosJogador(jogador.Id, 0);
+                times.RemoveAt(idxPerdedor);
+                if (idxVencedor == 1) idxRei = 0;
+                idxDesafiante = (idxRei + 1) % times.Count;
+            }
             rodada++;
         }
         SalvarHistorico(historico);
         Console.WriteLine("Partida registrada!");
         Console.ReadKey();
+    }
+
+    private void AtualizarPontosJogador(int id, int pontos)
+    {
+        string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
+        if (!File.Exists(caminhoAssociados)) return;
+        var json = File.ReadAllText(caminhoAssociados);
+        var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json) ?? new List<Associacao.Associados>();
+        var jogador = associados.FirstOrDefault(a => a.Id == id);
+        if (jogador != null)
+        {
+            jogador.Pontos += pontos;
+            File.WriteAllText(caminhoAssociados, System.Text.Json.JsonSerializer.Serialize(associados, new JsonSerializerOptions { WriteIndented = true }));
+        }
     }
 
     private void RegistrarPartidaDoisJogosPorTime(GerenciadorJogos.GerenciadorDeJogos jogo)
@@ -184,96 +343,6 @@ public class PartidaController
             Console.WriteLine($"\nVencedor final: {times[idxTimesAtivos[0]].Nome}");
         SalvarHistorico(historico);
         Console.WriteLine("Partida registrada!");
-        Console.ReadKey();
-    }
-
-    private void SalvarHistorico(List<Partidas.HistoricoRodada> historico)
-    {
-        var historicoAntigo = CarregarHistorico();
-        historicoAntigo.AddRange(historico);
-        string json = JsonSerializer.Serialize(historicoAntigo, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(caminhoHistorico, json);
-    }
-
-    public void ListarPartidas()
-    {
-        var historico = CarregarHistorico();
-        var jogos = CarregarJogosComTimes();
-        if (historico.Count == 0)
-        {
-            Console.WriteLine("Nenhuma partida registrada.");
-        }
-        else
-        {
-            foreach (var jogo in jogos.OrderBy(j => j.Data))
-            {
-                string codigo = jogo.Data.ToString("ddMMyyyy");
-                Console.WriteLine($"\nJogo ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
-                var rodadasDoJogo = historico.Where(h => h.codigoJogo == jogo.Codigo).ToList();
-                if (rodadasDoJogo.Count == 0)
-                {
-                    Console.WriteLine("  Nenhuma partida registrada para este jogo.");
-                }
-                else
-                {
-                    foreach (var partida in rodadasDoJogo)
-                    {
-                        string nomeRei = (jogo.TimesGerados != null && partida.reiAntes < jogo.TimesGerados.Count) ? jogo.TimesGerados[partida.reiAntes].Nome : $"Time {partida.reiAntes + 1}";
-                        string nomeDesafiante = (jogo.TimesGerados != null && partida.desafiante < jogo.TimesGerados.Count) ? jogo.TimesGerados[partida.desafiante].Nome : $"Time {partida.desafiante + 1}";
-                        string nomeVencedor = (jogo.TimesGerados != null && partida.vencedor < jogo.TimesGerados.Count) ? jogo.TimesGerados[partida.vencedor].Nome : $"Time {partida.vencedor + 1}";
-                        Console.WriteLine($"  Rodada {partida.rodada}: {nomeRei} x {nomeDesafiante} | Vencedor: {nomeVencedor}");
-                    }
-                    // Exibe o vencedor geral do jogo
-                    var ultimaRodada = rodadasDoJogo.LastOrDefault();
-                    if (ultimaRodada != null && jogo.TimesGerados != null && ultimaRodada.vencedor < jogo.TimesGerados.Count)
-                    {
-                        Console.WriteLine($"  Vencedor do jogo: {jogo.TimesGerados[ultimaRodada.vencedor].Nome}");
-                    }
-                }
-            }
-        }
-        Console.WriteLine("\nPressione qualquer tecla para voltar...");
-        Console.ReadKey();
-    }
-
-    private List<HistoricoRodada> CarregarHistorico()
-    {
-        if (!File.Exists(caminhoHistorico))
-            return new List<HistoricoRodada>();
-        string json = File.ReadAllText(caminhoHistorico);
-        var lista = JsonSerializer.Deserialize<List<HistoricoRodada>>(json);
-        return lista ?? new List<HistoricoRodada>();
-    }
-
-    public void ExibirClassificacaoAssociados()
-    {
-        string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
-        if (!File.Exists(caminhoAssociados))
-        {
-            Console.WriteLine("Nenhum associado cadastrado.");
-            Console.ReadKey();
-            return;
-        }
-        var json = File.ReadAllText(caminhoAssociados);
-        var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json) ?? new List<Associacao.Associados>();
-        if (associados.Count == 0)
-        {
-            Console.WriteLine("Nenhum associado cadastrado.");
-            Console.ReadKey();
-            return;
-        }
-        var ranking = associados.OrderByDescending(a => a.Pontos).ThenBy(a => a.nome).ToList();
-        Console.Clear();
-        Console.WriteLine("--- Classificação de Associados ---");
-        Console.WriteLine("Posição | Nome                | Pontos");
-        Console.WriteLine("--------------------------------------");
-        int pos = 1;
-        foreach (var a in ranking)
-        {
-            Console.WriteLine($"{pos,6} | {a.nome,-20} | {a.Pontos,6}");
-            pos++;
-        }
-        Console.WriteLine("\nPressione qualquer tecla para voltar...");
         Console.ReadKey();
     }
 }

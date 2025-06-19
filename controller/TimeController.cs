@@ -9,6 +9,7 @@ using Associacao;
 using TimeFutebol;
 using GerenciadorJogos;
 using Util.Database;
+using Projeto_futebol.Util;
 
 namespace PROJETO_FUTEBOL.controller;
 
@@ -25,39 +26,40 @@ public class TimeController
     {
         Console.Clear();
         Console.WriteLine("--- Gerar Times por Ordem de Chegada ---");
-
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
             Console.ReadKey();
             return;
         }
-
-        // Exibe a lista de jogos com ID (código)
-        Console.WriteLine("Selecione o jogo pelo ID:");
-        foreach (var jogo in jogos)
+        Utils.ExibirLista(jogos.OrderBy(j => j.Data).Select(jogo =>
         {
             string codigo = jogo.Data.ToString("ddMMyyyy");
-            Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
-        }
+            int timesGerados = jogo.TimesGerados?.Count ?? 0;
+            int limiteTimes = jogo.LimiteTimes ?? 0;
+            int interessados = jogo.Interessados?.Count ?? 0;
+            int limiteInteressados = jogo.LimiteJogadores ?? 0;
+            string timesStr = limiteTimes > 0 ? $"{timesGerados}/{limiteTimes} Times" : $"{timesGerados} Times";
+            string interessadosStr = limiteInteressados > 0 ? $"{interessados}/{limiteInteressados} interessados" : $"{interessados} interessados";
+            return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {timesStr} | {interessadosStr}";
+        }), "Jogos Disponíveis");
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Console.WriteLine("ID inválido!");
+            Utils.MensagemErro("ID inválido!");
             Console.ReadKey();
             return;
         }
         var jogoSelecionado = jogos.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null)
         {
-            Console.WriteLine("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!");
             Console.ReadKey();
             return;
         }
 
-        // NOVO: Verifica se já existem times gerados
         if (jogoSelecionado.TimesGerados != null && jogoSelecionado.TimesGerados.Count > 0)
         {
             Console.WriteLine("Já existem times gerados para este jogo. Não é possível gerar novamente.");
@@ -94,10 +96,10 @@ public class TimeController
         }
 
         int totalTimes = associadosInteressados.Count / jogadoresPorTime;
-        List<Times> timesFormados = new List<Times>();
+        List<Time> timesFormados = new List<Time>();
         for (int t = 0; t < totalTimes; t++)
         {
-            Times novoTime = new Times(jogoSelecionado.Data, jogoSelecionado.Local, jogoSelecionado.TipoCampo, jogadoresPorTime)
+            Time novoTime = new Time(jogoSelecionado.Data, jogoSelecionado.Local, jogoSelecionado.TipoCampo, jogadoresPorTime)
             {
                 Nome = $"Time {t + 1}"
             };
@@ -110,7 +112,7 @@ public class TimeController
         for (int t = 0; t < totalTimes && idxGoleiro < goleiros.Count; t++)
         {
             if (goleiros[idxGoleiro] != null)
-                timesFormados[t].Jogadores.Add(goleiros[idxGoleiro]);
+                timesFormados[t].Jogadores.Add(goleiros[idxGoleiro]!);
             idxGoleiro++;
         }
         // Remove goleiros já alocados
@@ -122,7 +124,7 @@ public class TimeController
             while (timesFormados[t].Jogadores.Count < jogadoresPorTime && idxFila < filaRestante.Count)
             {
                 if (filaRestante[idxFila] != null)
-                    timesFormados[t].Jogadores.Add(filaRestante[idxFila]);
+                    timesFormados[t].Jogadores.Add(filaRestante[idxFila]!);
                 idxFila++;
             }
         }
@@ -137,33 +139,36 @@ public class TimeController
     {
         Console.Clear();
         Console.WriteLine("--- Gerar Times por Posição Equilibrada ---");
-
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
             Console.ReadKey();
             return;
         }
-
-        Console.WriteLine("Selecione o jogo pelo ID:");
-        foreach (var jogo in jogos)
+        Utils.ExibirLista(jogos.OrderBy(j => j.Data).Select(jogo =>
         {
             string codigo = jogo.Data.ToString("ddMMyyyy");
-            Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
-        }
+            int timesGerados = jogo.TimesGerados?.Count ?? 0;
+            int limiteTimes = jogo.LimiteTimes ?? 0;
+            int interessados = jogo.Interessados?.Count ?? 0;
+            int limiteInteressados = jogo.LimiteJogadores ?? 0;
+            string timesStr = limiteTimes > 0 ? $"{timesGerados}/{limiteTimes} Times" : $"{timesGerados} Times";
+            string interessadosStr = limiteInteressados > 0 ? $"{interessados}/{limiteInteressados} interessados" : $"{interessados} interessados";
+            return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {timesStr} | {interessadosStr}";
+        }), "Jogos Disponíveis");
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Console.WriteLine("ID inválido!");
+            Utils.MensagemErro("ID inválido!");
             Console.ReadKey();
             return;
         }
         var jogoSelecionado = jogos.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null)
         {
-            Console.WriteLine("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!");
             Console.ReadKey();
             return;
         }
@@ -201,32 +206,32 @@ public class TimeController
         var defensores = associadosInteressados.Where(j => j != null && j.posicao == Posicao.Defesa).ToList();
         var atacantes = associadosInteressados.Where(j => j != null && j.posicao == Posicao.Atacante).ToList();
         int totalTimes = associadosInteressados.Count / jogadoresPorTime;
-        List<Times> timesFormados = new List<Times>();
+        List<Time> timesFormados = new List<Time>();
         int idxGoleiro = 0, idxDefesa = 0, idxAtacante = 0;
         for (int t = 0; t < totalTimes; t++)
         {
-            Times novoTime = new Times(jogoSelecionado.Data, jogoSelecionado.Local, jogoSelecionado.TipoCampo, jogadoresPorTime)
+            Time novoTime = new Time(jogoSelecionado.Data, jogoSelecionado.Local, jogoSelecionado.TipoCampo, jogadoresPorTime)
             {
                 Nome = $"Time {t + 1}"
             };
             // 1 goleiro por time se possível
             if (idxGoleiro < goleiros.Count)
-                novoTime.Jogadores.Add(goleiros[idxGoleiro++]);
+                novoTime.Jogadores.Add(goleiros[idxGoleiro++]!);
             // 1 defensor por time se possível
             if (idxDefesa < defensores.Count && defensores[idxDefesa] != null)
-                novoTime.Jogadores.Add(defensores[idxDefesa++]);
+                novoTime.Jogadores.Add(defensores[idxDefesa++]!);
             // 1 atacante por time se possível
             if (idxAtacante < atacantes.Count && atacantes[idxAtacante] != null)
-                novoTime.Jogadores.Add(atacantes[idxAtacante++]);
+                novoTime.Jogadores.Add(atacantes[idxAtacante++]!);
             // Preencher o restante equilibrando as posições
             while (novoTime.Jogadores.Count < jogadoresPorTime)
             {
                 if (idxGoleiro < goleiros.Count && goleiros[idxGoleiro] != null)
-                    novoTime.Jogadores.Add(goleiros[idxGoleiro++]);
+                    novoTime.Jogadores.Add(goleiros[idxGoleiro++]!);
                 else if (idxDefesa < defensores.Count && defensores[idxDefesa] != null)
-                    novoTime.Jogadores.Add(defensores[idxDefesa++]);
+                    novoTime.Jogadores.Add(defensores[idxDefesa++]!);
                 else if (idxAtacante < atacantes.Count && atacantes[idxAtacante] != null)
-                    novoTime.Jogadores.Add(atacantes[idxAtacante++]);
+                    novoTime.Jogadores.Add(atacantes[idxAtacante++]!);
                 else
                     break;
             }
@@ -258,25 +263,29 @@ public class TimeController
     {
         Console.Clear();
         Console.WriteLine("--- Gerar Times pelo Critério do Grupo (Idade) ---");
-
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
             Console.ReadKey();
             return;
         }
-        Console.WriteLine("Selecione o jogo pelo ID:");
-        foreach (var jogo in jogos)
+        Utils.ExibirLista(jogos.OrderBy(j => j.Data).Select(jogo =>
         {
             string codigo = jogo.Data.ToString("ddMMyyyy");
-            Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
-        }
+            int timesGerados = jogo.TimesGerados?.Count ?? 0;
+            int limiteTimes = jogo.LimiteTimes ?? 0;
+            int interessados = jogo.Interessados?.Count ?? 0;
+            int limiteInteressados = jogo.LimiteJogadores ?? 0;
+            string timesStr = limiteTimes > 0 ? $"{timesGerados}/{limiteTimes} Times" : $"{timesGerados} Times";
+            string interessadosStr = limiteInteressados > 0 ? $"{interessados}/{limiteInteressados} interessados" : $"{interessados} interessados";
+            return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {timesStr} | {interessadosStr}";
+        }), "Jogos Disponíveis");
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Console.WriteLine("ID inválido!");
+            Utils.MensagemErro("ID inválido!");
             Console.ReadKey();
             return;
         }
@@ -284,7 +293,7 @@ public class TimeController
         var jogoSelecionado = jogosList.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null)
         {
-            Console.WriteLine("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!");
             Console.ReadKey();
             return;
         }
@@ -310,7 +319,7 @@ public class TimeController
         var associadosInteressados = jogoSelecionado.Interessados
             .Select(id => listaDeAssociados.FirstOrDefault(a => a.Id == id))
             .Where(a => a != null)
-            .OrderByDescending(a => a.idade)
+            .OrderByDescending(a => a!.idade)
             .ToList();
         if (associadosInteressados.Count < jogadoresPorTime)
         {
@@ -319,10 +328,10 @@ public class TimeController
             return;
         }
         int totalTimes = associadosInteressados.Count / jogadoresPorTime;
-        List<Times> timesFormados = new List<Times>();
+        List<Time> timesFormados = new List<Time>();
         for (int t = 0; t < totalTimes; t++)
         {
-            Times novoTime = new Times(jogoSelecionado.Data, jogoSelecionado.Local, jogoSelecionado.TipoCampo, jogadoresPorTime)
+            Time novoTime = new Time(jogoSelecionado.Data, jogoSelecionado.Local, jogoSelecionado.TipoCampo, jogadoresPorTime)
             {
                 Nome = $"Time {t + 1}"
             };
@@ -334,7 +343,7 @@ public class TimeController
         for (int t = 0; t < totalTimes && idxGoleiro < goleiros.Count; t++)
         {
             if (goleiros[idxGoleiro] != null)
-                timesFormados[t].Jogadores.Add(goleiros[idxGoleiro]);
+                timesFormados[t].Jogadores.Add(goleiros[idxGoleiro]!);
             idxGoleiro++;
         }
         // Remove goleiros já alocados
@@ -361,30 +370,29 @@ public class TimeController
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
             Console.ReadKey();
             return;
         }
-        Console.WriteLine("Selecione o jogo pelo ID:");
-        foreach (var jogo in jogos.OrderBy(j => j.Data))
+        Utils.ExibirLista(jogos.OrderBy(j => j.Data).Select(jogo =>
         {
             string codigo = jogo.Data.ToString("ddMMyyyy");
             int timesGerados = jogo.TimesGerados?.Count ?? 0;
             int limiteTimes = jogo.LimiteTimes ?? 0;
-            Console.WriteLine($"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Times gerados: {timesGerados}/{limiteTimes}");
-        }
+            return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Times gerados: {timesGerados}/{limiteTimes}";
+        }), "Jogos Disponíveis");
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoLong))
         {
-            Console.WriteLine("ID inválido!");
+            Utils.MensagemErro("ID inválido!");
             Console.ReadKey();
             return;
         }
         var jogoSel = jogos.FirstOrDefault(j => j.Codigo == codigoLong);
         if (jogoSel == null)
         {
-            Console.WriteLine("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!");
             Console.ReadKey();
             return;
         }
@@ -407,7 +415,7 @@ public class TimeController
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
             Console.ReadKey();
             return;
         }
