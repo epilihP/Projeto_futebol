@@ -37,22 +37,22 @@ public class JogoController
     public void AgendarJogo()
     {
         Console.Clear();
-        Console.WriteLine("--- Agendar Novo Jogo ---");
+        Utils.ExibirJanela("Agendar Novo Jogo", Array.Empty<string>(), ConsoleColor.Yellow, 70);
         DateTime data = ProximaQuintaDisponivel();
         string codigo = data.ToString("ddMMyyyy");
         if (listaDeJogos.Exists(j => j.Data.Date == data.Date))
         {
             DateTime sugestao = ProximaQuintaDisponivel(data.AddDays(7));
-            Console.WriteLine($"Já existe um jogo agendado para {data:dd/MM/yyyy}. Próxima quinta-feira disponível: {sugestao:dd/MM/yyyy}");
-            Console.WriteLine("Pressione qualquer tecla para voltar...");
+            Utils.ExibirJanela($"Já existe um jogo agendado para {data:dd/MM/yyyy}. Próxima quinta-feira disponível: {sugestao:dd/MM/yyyy}", Array.Empty<string>(), ConsoleColor.Red, 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
             return;
         }
         int jogadoresPorTime = 5;
         int limiteTimes = 6;
         int limiteJogadores = jogadoresPorTime * limiteTimes;
-        Console.WriteLine($"Data do jogo: {data:dd/MM/yyyy} às 19h");
-        Console.WriteLine($"Código do jogo: {codigo}");
+        Utils.ExibirJanela($"Data do jogo: {data:dd/MM/yyyy} às 19h", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela($"Código do jogo: {codigo}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
         Console.Write("Local do jogo (padrão: Quadra Poliesportiva): ");
         string local = Console.ReadLine() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(local)) local = "Quadra Poliesportiva";
@@ -70,11 +70,11 @@ public class JogoController
         novoJogo.Codigo = long.Parse(codigo);
         listaDeJogos.Add(novoJogo);
         SalvarNoArquivo();
-        Console.WriteLine($"\nJogadores por time: {jogadoresPorTime}");
-        Console.WriteLine($"Limite de times: {limiteTimes}");
-        Console.WriteLine($"Limite de jogadores: {limiteJogadores}");
-        Console.WriteLine("\nJogo agendado com sucesso!");
-        Console.WriteLine("Pressione qualquer tecla para voltar...");
+        Utils.ExibirJanela($"Jogadores por time: {jogadoresPorTime}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela($"Limite de times: {limiteTimes}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela($"Limite de jogadores: {limiteJogadores}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+        Utils.MensagemSucesso("Jogo agendado com sucesso!", 70);
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
@@ -106,36 +106,36 @@ public class JogoController
                 return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | Times gerados: {timesGerados}/{limiteTimes}";
             })
             .ToList();
-        Utils.ExibirLista(jogosFuturos, "Lista de Jogos Agendados");
-        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Utils.ExibirLista(jogosFuturos, "Lista de Jogos Agendados", ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
     public void AtualizarJogo()
     {
         Console.Clear();
-        Console.WriteLine("--- Atualizar Jogo ---");
+        Utils.ExibirJanela("Atualizar Jogo", Array.Empty<string>(), ConsoleColor.Yellow, 70);
         var jogosFuturos = listaDeJogos.OrderBy(j => j.Data).ToList();
         if (jogosFuturos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo agendado. Pressione qualquer tecla para voltar...");
+            Utils.MensagemRetornoMenu("Nenhum jogo agendado. Pressione qualquer tecla para voltar...", 70);
             Console.ReadKey();
             return;
         }
-        Utils.ExibirLista(jogosFuturos.Select(jogoItem => $"ID: {jogoItem.Data:ddMMyyyy} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}"), "Jogos Disponíveis");
-        Console.WriteLine("\nPara manter os valores padrão, basta deixar em branco.");
+        Utils.ExibirLista(jogosFuturos.Select(jogoItem => $"ID: {jogoItem.Data:ddMMyyyy} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}"), "Jogos Disponíveis", ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela("Para manter os valores padrão, basta deixar em branco.", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.Write("\nDigite o código do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigo))
         {
-            Utils.MensagemErro("Código inválido, voltando ao menu.");
+            Utils.MensagemErro("Código inválido, voltando ao menu.", 70);
             Console.ReadKey();
             return;
         }
         var jogoSel = listaDeJogos.Find(j => j.Codigo == codigo);
         if (jogoSel == null)
         {
-            Utils.MensagemErro("Jogo não encontrado, voltando ao menu.");
+            Utils.MensagemErro("Jogo não encontrado, voltando ao menu.", 70);
             Console.ReadKey();
             return;
         }
@@ -155,7 +155,7 @@ public class JogoController
             if (int.TryParse(jogadoresStr, out int jogadores) && jogadores > 0)
                 jogoSel.JogadoresPorTime = jogadores;
             else
-                Console.WriteLine("Valor inválido. Mantido valor anterior.");
+                Utils.MensagemErro("Valor inválido. Mantido valor anterior.", 70);
         }
 
         Console.Write($"Limite de times ({jogoSel.LimiteTimes}): ");
@@ -165,19 +165,18 @@ public class JogoController
             if (int.TryParse(limiteTimesStr, out int limiteTimes) && limiteTimes > 0)
                 jogoSel.LimiteTimes = limiteTimes;
             else
-                Console.WriteLine("Valor inválido. Mantido valor anterior.");
+                Utils.MensagemErro("Valor inválido. Mantido valor anterior.", 70);
         }
 
         // Limite de jogadores sempre alinhado ao produto
         jogoSel.LimiteJogadores = jogoSel.JogadoresPorTime * (jogoSel.LimiteTimes ?? 1);
 
-        Console.WriteLine("Recalculando:");
-        Console.WriteLine($"\nJogadores por time: {jogoSel.JogadoresPorTime}");
-        Console.WriteLine($"Limite de times: {jogoSel.LimiteTimes}");
-        Console.WriteLine($"Limite de jogadores: {jogoSel.LimiteJogadores}");
-
+        Utils.ExibirJanela($"Jogadores por time: {jogoSel.JogadoresPorTime}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela($"Limite de times: {jogoSel.LimiteTimes}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela($"Limite de jogadores: {jogoSel.LimiteJogadores}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
         SalvarNoArquivo();
-        Console.WriteLine("Jogo atualizado!");
+        Utils.MensagemSucesso("Jogo atualizado!", 70);
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
@@ -185,72 +184,59 @@ public class JogoController
     {
         Console.Clear();
         var jogosFuturos = listaDeJogos.OrderBy(j => j.Data).ToList();
-        Utils.ExibirLista(jogosFuturos.Select(jogoItem => $"ID: {jogoItem.Data:ddMMyyyy} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}"), "Jogos Disponíveis");
+        Utils.ExibirLista(jogosFuturos.Select(jogoItem => $"ID: {jogoItem.Data:ddMMyyyy} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}"), "Jogos Disponíveis", ConsoleColor.Yellow, 70);
         if (jogosFuturos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo agendado. Pressione qualquer tecla para voltar...");
+            Utils.MensagemRetornoMenu("Nenhum jogo agendado. Pressione qualquer tecla para voltar...", 70);
             Console.ReadKey();
             return;
         }
-        Console.WriteLine("--- Excluir Jogo ---");
+        Utils.ExibirJanela("Excluir Jogo", Array.Empty<string>(), ConsoleColor.Yellow, 70);
         Console.Write("Digite o código do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigo))
         {
-            Utils.MensagemErro("Código inválido, voltando ao menu.");
+            Utils.MensagemErro("Código inválido, voltando ao menu.", 70);
             Console.ReadKey();
             return;
         }
         var jogo = listaDeJogos.Find(j => j.Codigo == codigo);
         if (jogo == null)
         {
-            Utils.MensagemErro("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!", 70);
         }
         else
         {
             listaDeJogos.Remove(jogo);
             SalvarNoArquivo();
-            Utils.MensagemSucesso("Jogo removido!");
+            Utils.MensagemSucesso("Jogo removido!", 70);
         }
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
     public void GerenciarInteressados()
     {
         Console.Clear();
-        Console.WriteLine("--- Gerenciar Interessados no Jogo ---");
-        // Exibe a lista de jogos disponíveis
-        var jogosFuturos = listaDeJogos
-            .OrderBy(j => j.Data)
-            .ToList();
-        Console.WriteLine("Lista de Jogos Disponíveis:");
+        Utils.ExibirJanela("Gerenciar Interessados no Jogo", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+        var jogosFuturos = listaDeJogos.OrderBy(j => j.Data).ToList();
         if (jogosFuturos.Count == 0)
         {
-            Console.WriteLine("Nenhum jogo agendado.");
-            Console.WriteLine("Pressione qualquer tecla para voltar...");
+            Utils.MensagemRetornoMenu("Nenhum jogo agendado. Pressione qualquer tecla para voltar...", 70);
             Console.ReadKey();
             return;
         }
-        foreach (var jogoItem in jogosFuturos)
-        {
-            string codigoJogo = jogoItem.Data.ToString("ddMMyyyy");
-            int interessados = jogoItem.Interessados?.Count ?? 0;
-            int limite = jogoItem.LimiteJogadores ?? 0;
-            string interessadosStr = limite > 0 ? $"{interessados}/{limite} interessados" : $"{interessados} interessados";
-            Console.WriteLine($"ID: {codigoJogo} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo} | {interessadosStr}");
-        }
+        Utils.ExibirLista(jogosFuturos.Select(jogoItem => $"ID: {jogoItem.Data:ddMMyyyy} | Data: {jogoItem.Data:dd/MM/yyyy} às 19h | Local: {jogoItem.Local} | Campo: {jogoItem.TipoCampo}"), "Jogos Disponíveis", ConsoleColor.Yellow, 70);
+        Utils.ExibirJanela("Digite o código do jogo para gerenciar interessados:", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.Write("Digite o código do jogo: ");
         long.TryParse(Console.ReadLine(), out long codigo);
-
         var jogoSel = listaDeJogos.Find(j => j.Codigo == codigo);
         if (jogoSel == null)
         {
-            Console.WriteLine("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!", 70);
             Console.ReadKey();
             return;
         }
-
-        // Carrega associados
         string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
         List<Associacao.Associados> associados = new List<Associacao.Associados>();
         if (File.Exists(caminhoAssociados))
@@ -258,44 +244,36 @@ public class JogoController
             string jsonAssociados = File.ReadAllText(caminhoAssociados);
             associados = JsonSerializer.Deserialize<List<Associacao.Associados>>(jsonAssociados) ?? new List<Associacao.Associados>();
         }
-
-        // Exibe interessados
-        Console.WriteLine("\nInteressados neste jogo:");
-        int goleiros = 0;
-        foreach (var id in jogoSel.Interessados)
-        {
-            var assoc = associados.FirstOrDefault(a => a.Id == id);
-            if (assoc != null)
-            {
-                string pos = assoc.posicao == (Associacao.Posicao)3 ? "Goleiro" : assoc.posicao.ToString();
-                Console.WriteLine($"- {assoc.nome} (RA: {assoc.Id}) | Posição: {pos}");
-                if (assoc.posicao == (Associacao.Posicao)3) goleiros++;
-            }
-        }
-        int limiteTimes = jogoSel.LimiteTimes ?? 1;
-        int limiteJogadores = jogoSel.LimiteJogadores ?? 0;
-        int faltamGoleiros = limiteTimes - goleiros;
-        if (faltamGoleiros > 0)
-            Console.WriteLine($"\nAtenção: Faltam {faltamGoleiros} goleiro(s) para completar todos os times!");
-        else
-            Console.WriteLine("\nQuantidade de goleiros suficiente para os times.");
-        Console.WriteLine($"\nTotal de interessados: {jogoSel.Interessados.Count}/{limiteJogadores}");
-        if (jogoSel.Interessados.Count >= limiteJogadores)
-        {
-            Console.WriteLine("Limite de interessados atingido! Não é possível adicionar mais.");
-        }
-        // Menu de opções
         while (true)
         {
-            Console.WriteLine("\nEscolha uma opção:");
-            Console.WriteLine("1 - Adicionar novo interessado");
-            Console.WriteLine("2 - Remover interesse de um jogador");
-            Console.WriteLine("0 - Sair");
+            var interessados = jogoSel.Interessados.Select(id =>
+            {
+                var assoc = associados.FirstOrDefault(a => a.Id == id);
+                if (assoc != null)
+                {
+                    string pos = assoc.posicao == (Associacao.Posicao)3 ? "Goleiro" : assoc.posicao.ToString();
+                    return $"- {assoc.nome} (RA: {assoc.Id}) | Posição: {pos}";
+                }
+                return null;
+            }).Where(x => x != null).ToList();
+            Utils.ExibirLista(interessados, "Interessados neste jogo", ConsoleColor.Yellow, 70);
+            int goleiros = jogoSel.Interessados.Select(id => associados.FirstOrDefault(a => a.Id == id)).Count(a => a != null && a.posicao == (Associacao.Posicao)3);
+            int limiteTimes = jogoSel.LimiteTimes ?? 1;
+            int limiteJogadores = jogoSel.LimiteJogadores ?? 0;
+            int faltamGoleiros = limiteTimes - goleiros;
+            if (faltamGoleiros > 0)
+                Utils.ExibirJanela($"Atenção: Faltam {faltamGoleiros} goleiro(s) para completar todos os times!", Array.Empty<string>(), ConsoleColor.Red, 70);
+            else
+                Utils.ExibirJanela("Quantidade de goleiros suficiente para os times.", Array.Empty<string>(), ConsoleColor.Green, 70);
+            Utils.ExibirJanela($"Total de interessados: {jogoSel.Interessados.Count}/{limiteJogadores}", Array.Empty<string>(), ConsoleColor.Yellow, 70);
+            if (jogoSel.Interessados.Count >= limiteJogadores)
+                Utils.ExibirJanela("Limite de interessados atingido! Não é possível adicionar mais.", Array.Empty<string>(), ConsoleColor.Red, 70);
+            Utils.ExibirJanela("Escolha uma opção:", new[] { "1 - Adicionar novo interessado", "2 - Remover interesse de um jogador", "0 - Sair" }, ConsoleColor.DarkGray, 70);
             Console.Write("Opção: ");
-            string op = Console.ReadLine();
+            string? op = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(op))
             {
-                Utils.MensagemErro("Opção inválida!");
+                Utils.MensagemErro("Opção inválida!", 70);
                 continue;
             }
             if (op == "0") break;
@@ -303,68 +281,48 @@ public class JogoController
             {
                 if (jogoSel.Interessados.Count >= limiteJogadores)
                 {
-                    Console.WriteLine("Limite de interessados atingido!");
+                    Utils.MensagemErro("Limite de interessados atingido!", 70);
                     continue;
                 }
-                Console.Write("Digite o código do jogador interessado: ");
+                Utils.ExibirJanela("Digite o código do jogador interessado:", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
                 long.TryParse(Console.ReadLine(), out long jogadorId);
                 if (!associados.Any(a => a.Id == jogadorId))
                 {
-                    Console.WriteLine("RA não encontrado nos associados.");
+                    Utils.MensagemErro("RA não encontrado nos associados.", 70);
                     continue;
                 }
                 if (!jogoSel.Interessados.Contains((int)jogadorId))
                 {
                     jogoSel.Interessados.Add((int)jogadorId);
-                    Console.WriteLine("Adicionado!");
+                    Utils.MensagemSucesso("Adicionado!", 70);
                 }
                 else
                 {
-                    Console.WriteLine("Jogador já está na lista de interessados.");
+                    Utils.MensagemErro("Jogador já está na lista de interessados.", 70);
                 }
             }
             else if (op == "2")
             {
-                Console.Write("Digite o código do jogador para remover: ");
+                Utils.ExibirJanela("Digite o código do jogador para remover:", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
                 long.TryParse(Console.ReadLine(), out long jogadorId);
                 if (jogoSel.Interessados.Contains((int)jogadorId))
                 {
                     jogoSel.Interessados.Remove((int)jogadorId);
-                    Console.WriteLine("Removido!");
+                    Utils.MensagemSucesso("Removido!", 70);
                 }
                 else
                 {
-                    Console.WriteLine("Jogador não está na lista de interessados.");
+                    Utils.MensagemErro("Jogador não está na lista de interessados.", 70);
                 }
             }
             else
             {
-                Console.WriteLine("Opção inválida!");
+                Utils.MensagemErro("Opção inválida!", 70);
             }
-            // Atualiza exibição após cada ação
-            Console.WriteLine("\nInteressados neste jogo:");
-            goleiros = 0;
-            foreach (var id in jogoSel.Interessados)
-            {
-                var assoc = associados.FirstOrDefault(a => a.Id == id);
-                if (assoc != null)
-                {
-                    string pos = assoc.posicao == (Associacao.Posicao)3 ? "Goleiro" : assoc.posicao.ToString();
-                    Console.WriteLine($"- {assoc.nome} (RA: {assoc.Id}) | Posição: {pos}");
-                    if (assoc.posicao == (Associacao.Posicao)3) goleiros++;
-                }
-            }
-            faltamGoleiros = limiteTimes - goleiros;
-            if (faltamGoleiros > 0)
-                Console.WriteLine($"\nAtenção: Faltam {faltamGoleiros} goleiro(s) para completar todos os times!");
-            else
-                Console.WriteLine("\nQuantidade de goleiros suficiente para os times.");
-            Console.WriteLine($"\nTotal de interessados: {jogoSel.Interessados.Count}/{limiteJogadores}");
-            if (jogoSel.Interessados.Count >= limiteJogadores)
-                Console.WriteLine("Limite de interessados atingido! Não é possível adicionar mais.");
         }
         SalvarNoArquivo();
-        Console.WriteLine("Interessados atualizados!");
+        Utils.MensagemSucesso("Interessados atualizados!", 70);
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
     private void SalvarNoArquivo()
@@ -383,7 +341,10 @@ public class JogoController
         {
             string json = File.ReadAllText(caminhoArquivo);
             if (!string.IsNullOrWhiteSpace(json))
-                listaDeJogos = JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
+            {
+                var tempList = JsonSerializer.Deserialize<List<GerenciadorDeJogos>>(json);
+                listaDeJogos = tempList ?? new List<GerenciadorDeJogos>();
+            }
             else
                 listaDeJogos = new List<GerenciadorDeJogos>();
         }

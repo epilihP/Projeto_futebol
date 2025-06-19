@@ -3,24 +3,23 @@ using View.Associados;
 using View.Jogos;
 using View.Partidas;
 using View.Times;
+using Projeto_futebol.Util;
 
 namespace View.Principal;
-
 
 public class ViewMenuPrincial
 {
     public void ExibirMenuPrincipal()
     {
-       
-        Console.Clear();
-        Console.WriteLine("===== SISTEMA DE ORGANIZAÇÃO DE JOGOS DE FUTEBOL =====");
-        Console.WriteLine("1 - Gestão de Associados");
-        Console.WriteLine("2 - Gestão de Jogos");
-        Console.WriteLine("3 - Gestão de Times");
-        Console.WriteLine("4 - Gestão de Partidas");
-        Console.WriteLine("0 - Sair");
-        Console.Write("Escolha uma opção: ");
-            
-    
+        string titulo = "FUTEBOL DO BABA";
+        string[] opcoes = {
+            "1 - Gestão de Associados",
+            "2 - Gestão de Jogos",
+            "3 - Gestão de Times",
+            "4 - Gestão de Partidas",
+            "0 - Sair"
+        };
+        Utils.ExibirJanela(titulo, opcoes, ConsoleColor.Cyan, 70);
+        Utils.ExibirJanela("Escolha uma opção:", Array.Empty<string>(), ConsoleColor.Cyan, 70);
     }
 }

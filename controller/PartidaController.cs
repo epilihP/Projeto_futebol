@@ -17,35 +17,36 @@ public class PartidaController
     public void RegistrarPartida()
     {
         Console.Clear();
-        Console.WriteLine("--- Registrar Nova Partida ---");
+        Utils.ExibirJanela("Registrar Nova Partida", Array.Empty<string>(), ConsoleColor.Green, 70);
         // Carregar jogos e times formados
         var jogos = CarregarJogosComTimes();
         if (jogos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo com times formados encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo com times formados encontrado.", 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
             return;
         }
-        Utils.ExibirLista(jogos.Select(jogo => $"ID: {jogo.Data:ddMMyyyy} | Data: {jogo.Data:dd/MM/yyyy} | Times: {jogo.TimesGerados.Count}"), "Jogos com Times Formados");
-        Console.Write("Digite o ID do jogo: ");
+        Utils.ExibirLista(jogos.Select(jogo => $"ID: {jogo.Data:ddMMyyyy} | Data: {jogo.Data:dd/MM/yyyy} | Times: {jogo.TimesGerados.Count}"), "Jogos com Times Formados", ConsoleColor.Green, 70);
+        Utils.ExibirJanela("Digite o ID do jogo:", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Utils.MensagemErro("ID inválido, voltando ao menu.");
+            Utils.MensagemErro("ID inválido, voltando ao menu.", 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
             return;
         }
         var jogoSelecionado = jogos.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null || jogoSelecionado.TimesGerados == null || jogoSelecionado.TimesGerados.Count < 2)
         {
-            Utils.MensagemErro("Jogo não encontrado ou não há times suficientes.");
+            Utils.MensagemErro("Jogo não encontrado ou não há times suficientes.", 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
             return;
         }
-        Console.WriteLine("Escolha o modo de disputa:");
-        Console.WriteLine("1 - Quem ganha fica");
-        Console.WriteLine("2 - Cada time joga duas vezes (exceto a primeira partida)");
-        Console.Write("Modo: ");
+        Utils.ExibirJanela("Escolha o modo de disputa:", new[] { "1 - Quem ganha fica", "2 - Cada time joga duas vezes (exceto a primeira partida)" }, ConsoleColor.Green, 70);
+        Utils.ExibirJanela("Modo:", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         string? modo = Console.ReadLine();
         if (modo == "1")
             RegistrarPartidaQuemGanhaFica(jogoSelecionado);
@@ -53,14 +54,15 @@ public class PartidaController
             RegistrarPartidaDoisJogosPorTime(jogoSelecionado);
         else
         {
-            Utils.MensagemErro("Modo inválido!");
+            Utils.MensagemErro("Modo inválido!", 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
         }
     }
 
     private List<GerenciadorJogos.GerenciadorDeJogos> CarregarJogosComTimes()
     {
-        string caminho = @"c:\\Users\\aliss\\Documents\\Faculdade\\Programação Orientada a Objetos\\Projeto Futebol\\Projeto_futebol\\Util\\Database\\jogos.json";
+        string caminho = Database.GetDatabaseFilePath("jogos.json");
         if (!File.Exists(caminho))
             return new List<GerenciadorJogos.GerenciadorDeJogos>();
         string jsonString = File.ReadAllText(caminho);
@@ -82,18 +84,19 @@ public class PartidaController
         var jogos = CarregarJogosComTimes();
         if (historico.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhuma partida registrada.");
+            Utils.MensagemRetornoMenu("Nenhuma partida registrada.", 70);
         }
         else
         {
             foreach (var jogo in jogos.OrderBy(j => j.Data))
             {
                 string codigo = jogo.Data.ToString("ddMMyyyy");
-                Console.WriteLine($"\nJogo ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
                 var rodadasDoJogo = historico.Where(h => h.codigoJogo == jogo.Codigo).ToList();
+                var linhas = new List<string>();
+                linhas.Add($"Jogo ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
                 if (rodadasDoJogo.Count == 0)
                 {
-                    Console.WriteLine("  Nenhuma partida registrada para este jogo.");
+                    linhas.Add("Nenhuma partida registrada para este jogo.");
                 }
                 else
                 {
@@ -102,22 +105,23 @@ public class PartidaController
                         string nomeRei = (jogo.TimesGerados != null && partida.reiAntes < jogo.TimesGerados.Count) ? jogo.TimesGerados[partida.reiAntes].Nome : $"Time {partida.reiAntes + 1}";
                         string nomeDesafiante = (jogo.TimesGerados != null && partida.desafiante < jogo.TimesGerados.Count) ? jogo.TimesGerados[partida.desafiante].Nome : $"Time {partida.desafiante + 1}";
                         string nomeVencedor = (jogo.TimesGerados != null && partida.vencedor < jogo.TimesGerados.Count && partida.vencedor >= 0) ? jogo.TimesGerados[partida.vencedor].Nome : (partida.vencedor == -1 ? "Empate" : $"Time {partida.vencedor + 1}");
-                        Console.WriteLine($"  Rodada {partida.rodada}: {nomeRei} x {nomeDesafiante} | Vencedor: {nomeVencedor}");
+                        linhas.Add($"Rodada {partida.rodada}: {nomeRei} x {nomeDesafiante} | Vencedor: {nomeVencedor}");
                     }
                     // Exibe o vencedor geral do jogo
                     var ultimaRodada = rodadasDoJogo.LastOrDefault();
                     if (ultimaRodada != null && jogo.TimesGerados != null && ultimaRodada.vencedor < jogo.TimesGerados.Count && ultimaRodada.vencedor >= 0)
                     {
-                        Console.WriteLine($"  Vencedor do jogo: {jogo.TimesGerados[ultimaRodada.vencedor].Nome}");
+                        linhas.Add($"Vencedor do jogo: {jogo.TimesGerados[ultimaRodada.vencedor].Nome}");
                     }
                     else if (ultimaRodada != null && ultimaRodada.vencedor == -1)
                     {
-                        Console.WriteLine("  O jogo terminou empatado.");
+                        linhas.Add("O jogo terminou empatado.");
                     }
                 }
+                Utils.ExibirJanela($"Partidas do Jogo {codigo}", linhas.ToArray(), ConsoleColor.Green, 70);
             }
         }
-        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
@@ -135,7 +139,7 @@ public class PartidaController
         string caminhoAssociados = Database.GetDatabaseFilePath("associados.json");
         if (!File.Exists(caminhoAssociados))
         {
-            Console.WriteLine("Nenhum associado cadastrado.");
+            Utils.MensagemRetornoMenu("Nenhum associado cadastrado.", 70);
             Console.ReadKey();
             return;
         }
@@ -143,22 +147,23 @@ public class PartidaController
         var associados = System.Text.Json.JsonSerializer.Deserialize<List<Associacao.Associados>>(json) ?? new List<Associacao.Associados>();
         if (associados.Count == 0)
         {
-            Console.WriteLine("Nenhum associado cadastrado.");
+            Utils.MensagemRetornoMenu("Nenhum associado cadastrado.", 70);
             Console.ReadKey();
             return;
         }
         var ranking = associados.OrderByDescending(a => a.Pontos).ThenBy(a => a.nome).ToList();
         Console.Clear();
-        Console.WriteLine("--- Classificação de Associados ---");
-        Console.WriteLine("Posição | Nome                | Pontos");
-        Console.WriteLine("--------------------------------------");
+        var linhas = new List<string>();
+        linhas.Add("Posição | Nome                | Pontos");
+        linhas.Add("--------------------------------------");
         int pos = 1;
         foreach (var a in ranking)
         {
-            Console.WriteLine($"{pos,6} | {a.nome,-20} | {a.Pontos,6}");
+            linhas.Add($"{pos,6} | {a.nome,-20} | {a.Pontos,6}");
             pos++;
         }
-        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Utils.ExibirJanela("Classificação de Associados", linhas.ToArray(), ConsoleColor.Magenta, 70);
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
@@ -194,7 +199,7 @@ public class PartidaController
     private void RegistrarPartidaQuemGanhaFica(GerenciadorJogos.GerenciadorDeJogos jogo)
     {
         Console.Clear();
-        Console.WriteLine("--- Modo: Quem Ganha Fica ---");
+        Utils.ExibirJanela("Modo: Quem Ganha Fica", Array.Empty<string>(), ConsoleColor.Green, 70);
         var times = jogo.TimesGerados.ToList();
         int rodada = 1;
         int idxRei = 0;
@@ -202,10 +207,14 @@ public class PartidaController
         var historico = new List<Partidas.HistoricoRodada>();
         while (times.Count > 1)
         {
-            Console.WriteLine($"\nRodada {rodada}: {times[idxRei].Nome} x {times[idxDesafiante].Nome}");
-            Console.WriteLine($"1 - {times[idxRei].Nome}");
-            Console.WriteLine($"2 - {times[idxDesafiante].Nome}");
-            Console.Write("Quem venceu? (1, 2 ou E para empate): ");
+            var linhas = new List<string>
+            {
+                $"Rodada {rodada}: {times[idxRei].Nome} x {times[idxDesafiante].Nome}",
+                $"1 - {times[idxRei].Nome}",
+                $"2 - {times[idxDesafiante].Nome}"
+            };
+            Utils.ExibirJanela("Disputa", linhas.ToArray(), ConsoleColor.Green, 70);
+            Utils.ExibirJanela("Quem venceu? (1, 2 ou E para empate):", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             string? vencedor = Console.ReadLine();
             if (vencedor?.ToUpper() == "E")
             {
@@ -249,7 +258,8 @@ public class PartidaController
             rodada++;
         }
         SalvarHistorico(historico);
-        Console.WriteLine("Partida registrada!");
+        Utils.MensagemSucesso("Partida registrada!", 70);
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
@@ -270,7 +280,7 @@ public class PartidaController
     private void RegistrarPartidaDoisJogosPorTime(GerenciadorJogos.GerenciadorDeJogos jogo)
     {
         Console.Clear();
-        Console.WriteLine("--- Modo: Chaveamento Duas Rodadas e Eliminação ---");
+        Utils.ExibirJanela("Modo: Chaveamento Duas Rodadas e Eliminação", Array.Empty<string>(), ConsoleColor.Green, 70);
         var times = jogo.TimesGerados.ToList();
         int n = times.Count;
         var derrotas = new int[n];
@@ -283,10 +293,14 @@ public class PartidaController
         {
             int t1 = idxTimesAtivos[i];
             int t2 = idxTimesAtivos[i + 1];
-            Console.WriteLine($"Rodada {rodada}: {times[t1].Nome} x {times[t2].Nome}");
-            Console.WriteLine($"1 - {times[t1].Nome}");
-            Console.WriteLine($"2 - {times[t2].Nome}");
-            Console.Write("Quem venceu? ");
+            var linhas = new List<string>
+            {
+                $"Rodada {rodada}: {times[t1].Nome} x {times[t2].Nome}",
+                $"1 - {times[t1].Nome}",
+                $"2 - {times[t2].Nome}"
+            };
+            Utils.ExibirJanela("Disputa", linhas.ToArray(), ConsoleColor.Green, 70);
+            Utils.ExibirJanela("Quem venceu? (1 ou 2):", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             string? vencedor = Console.ReadLine();
             int idxVencedor = vencedor == "1" ? t1 : t2;
             int idxPerdedor = vencedor == "1" ? t2 : t1;
@@ -317,10 +331,14 @@ public class PartidaController
             if (novaRodada.Count == 0) break;
             foreach (var (t1, t2) in novaRodada)
             {
-                Console.WriteLine($"Rodada {rodada}: {times[t1].Nome} x {times[t2].Nome}");
-                Console.WriteLine($"1 - {times[t1].Nome}");
-                Console.WriteLine($"2 - {times[t2].Nome}");
-                Console.Write("Quem venceu? ");
+                var linhas = new List<string>
+                {
+                    $"Rodada {rodada}: {times[t1].Nome} x {times[t2].Nome}",
+                    $"1 - {times[t1].Nome}",
+                    $"2 - {times[t2].Nome}"
+                };
+                Utils.ExibirJanela("Disputa", linhas.ToArray(), ConsoleColor.Green, 70);
+                Utils.ExibirJanela("Quem venceu? (1 ou 2):", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
                 string? vencedor = Console.ReadLine();
                 int idxVencedor = vencedor == "1" ? t1 : t2;
                 int idxPerdedor = vencedor == "1" ? t2 : t1;
@@ -340,9 +358,13 @@ public class PartidaController
         }
         // Exibe vencedor final
         if (idxTimesAtivos.Count == 1)
-            Console.WriteLine($"\nVencedor final: {times[idxTimesAtivos[0]].Nome}");
+        {
+            var vencedorFinal = times[idxTimesAtivos[0]].Nome;
+            Utils.ExibirJanela($"Vencedor final: {vencedorFinal}", Array.Empty<string>(), ConsoleColor.Green, 70);
+        }
         SalvarHistorico(historico);
-        Console.WriteLine("Partida registrada!");
+        Utils.MensagemSucesso("Partida registrada!", 70);
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 }

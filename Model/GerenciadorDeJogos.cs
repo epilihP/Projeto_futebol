@@ -26,18 +26,19 @@ public class GerenciadorDeJogos : Jogos
         if (LimiteJogadores.HasValue && Interessados.Count < LimiteJogadores.Value)
             Interessados.Add(idJogador);
         else
-            Console.WriteLine("Limite de jogadores atingido!");
+            Projeto_futebol.Util.Utils.ExibirJanela("Limite de jogadores atingido!", Array.Empty<string>(), ConsoleColor.Yellow, 70);
     }
 
     public void ExibirInteressados(List<Jogador> jogadores)
     {
-        Console.WriteLine("Interessados:");
+        var linhas = new List<string>();
         foreach (var codigo in Interessados)
         {
             var jogador = jogadores.FirstOrDefault(j => j.RA == codigo);
             if (jogador != null)
-                Console.WriteLine($"{jogador.nome} (Código: {jogador.RA})");
+                linhas.Add($"{jogador.nome} (Código: {jogador.RA})");
         }
+        Projeto_futebol.Util.Utils.ExibirJanela("Interessados:", linhas.ToArray(), ConsoleColor.Yellow, 70);
     }
 
     public bool PodeConfirmarPartida()
@@ -60,12 +61,12 @@ public class GerenciadorDeJogos : Jogos
         // Agora compara apenas o dia da semana
         if (DateTime.Now.DayOfWeek != Data.DayOfWeek)
         {
-            Console.WriteLine("Aberta!");
+            Projeto_futebol.Util.Utils.ExibirJanela("Aberta!", Array.Empty<string>(), ConsoleColor.Yellow, 70);
             return true;
         }
         else
         {
-            Console.WriteLine("Fechado");
+            Projeto_futebol.Util.Utils.ExibirJanela("Fechado", Array.Empty<string>(), ConsoleColor.Yellow, 70);
             return false;
         }
     }

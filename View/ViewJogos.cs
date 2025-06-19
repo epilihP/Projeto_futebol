@@ -14,15 +14,17 @@ public class ViewMenuJogos
     {
         while (true)
         {
-            Console.Clear();
-            Console.WriteLine("--- Gestão de Jogos ---");
-            Console.WriteLine("1 - Agendar Jogo");
-            Console.WriteLine("2 - Listar Jogos");
-            Console.WriteLine("3 - Atualizar Jogo");
-            Console.WriteLine("4 - Excluir Jogo");
-            Console.WriteLine("5 - Gerenciar Interessados");
-            Console.WriteLine("0 - Voltar");
-            Console.Write("Escolha uma opção: ");
+            string titulo = "GESTÃO DE JOGOS";
+            string[] opcoes = {
+                "1 - Agendar Jogo",
+                "2 - Listar Jogos",
+                "3 - Atualizar Jogo",
+                "4 - Excluir Jogo",
+                "5 - Gerenciar Interessados",
+                "0 - Voltar"
+            };
+            Utils.ExibirJanela(titulo, opcoes, ConsoleColor.Yellow, 70);
+            Utils.ExibirJanela("Escolha uma opção:", Array.Empty<string>(), ConsoleColor.Yellow, 70);
             string? opcao = Console.ReadLine();
 
             switch (opcao)
@@ -45,11 +47,10 @@ public class ViewMenuJogos
                 case "0":
                     return;
                 default:
-                    Utils.MensagemErro("Opção inválida! Pressione qualquer tecla para tentar novamente");
+                    Utils.MensagemErro("Opção inválida! Pressione qualquer tecla para tentar novamente", 70);
                     Console.ReadKey();
                     break;
             }
         }
     }
-
 }

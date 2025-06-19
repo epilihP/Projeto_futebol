@@ -36,7 +36,7 @@ public class Menu
                     viewPartidas.ExibirMenuPartidas();
                     break;
                 case "0":
-                    Console.WriteLine("\nObrigado por usar o sistema!");
+                    Utils.ExibirJanela("Obrigado por usar o sistema!", Array.Empty<string>(), ConsoleColor.Green, 70);
                     return;
                 default:
                     Utils.MensagemErro("Opção inválida! Pressione qualquer tecla para tentar novamente.");

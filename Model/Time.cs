@@ -7,6 +7,7 @@ using Partidas;
 using Players;
 using Associacao;
 using GerenciadorJogos;
+using Projeto_futebol.Util;
 
 public class Time : GerenciadorDeJogos
 {
@@ -24,10 +25,10 @@ public class Time : GerenciadorDeJogos
         var interessadosFila = new List<int>(Interessados);
         var goleiros = jogadores.Where(j => j.posicao == Posicao.Goleiro && interessadosFila.Contains(j.RA)).ToList();
         var jogadoresLinha = jogadores.Where(j => j.posicao != Posicao.Goleiro && interessadosFila.Contains(j.RA)).ToList();
-        Console.WriteLine("Goleiros:");
-        foreach (var g in goleiros) Console.WriteLine($"- {g.nome}");
-        Console.WriteLine("Jogadores de linha:");
-        foreach (var j in jogadoresLinha) Console.WriteLine($"- {j.nome}");
+        var linhasGoleiros = goleiros.Select(g => $"- {g.nome}").ToList();
+        var linhasJogadores = jogadoresLinha.Select(j => $"- {j.nome}").ToList();
+        Utils.ExibirJanela("Goleiros:", linhasGoleiros.ToArray(), ConsoleColor.Cyan, 70);
+        Utils.ExibirJanela("Jogadores de linha:", linhasJogadores.ToArray(), ConsoleColor.Cyan, 70);
         // Implemente aqui a lógica de formação de times conforme necessário
     }
 }

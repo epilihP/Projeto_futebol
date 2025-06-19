@@ -14,13 +14,15 @@ public class ViewMenuPartidas
     {
         while (true)
         {
-            Console.Clear();
-            Console.WriteLine("--- Gestão de Partidas ---");
-            Console.WriteLine("1 - Registrar Nova Partida");
-            Console.WriteLine("2 - Listar Partidas");
-            Console.WriteLine("3 - Classificação de Associados");
-            Console.WriteLine("0 - Voltar");
-            Console.Write("Escolha uma opção: ");
+            string titulo = "GESTÃO DE PARTIDAS";
+            string[] opcoes = {
+                "1 - Registrar Nova Partida",
+                "2 - Listar Partidas",
+                "3 - Classificação de Associados",
+                "0 - Voltar"
+            };
+            Utils.ExibirJanela(titulo, opcoes, ConsoleColor.Green, 70);
+            Utils.ExibirJanela("Escolha uma opção:", Array.Empty<string>(), ConsoleColor.Green, 70);
             string? opcao = Console.ReadLine();
             switch (opcao)
             {
@@ -36,7 +38,7 @@ public class ViewMenuPartidas
                 case "0":
                     return;
                 default:
-                    Utils.MensagemErro("Opção inválida!");
+                    Utils.MensagemErro("Opção inválida!", 70);
                     Console.ReadKey();
                     break;
             }

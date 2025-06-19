@@ -25,11 +25,12 @@ public class TimeController
     public void GerarTimesPorOrdemDeChegada()
     {
         Console.Clear();
-        Console.WriteLine("--- Gerar Times por Ordem de Chegada ---");
+        Utils.ExibirJanela("Gerar Times por Ordem de Chegada", Array.Empty<string>(), ConsoleColor.Cyan, 70);
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.", 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
             return;
         }
@@ -43,19 +44,21 @@ public class TimeController
             string timesStr = limiteTimes > 0 ? $"{timesGerados}/{limiteTimes} Times" : $"{timesGerados} Times";
             string interessadosStr = limiteInteressados > 0 ? $"{interessados}/{limiteInteressados} interessados" : $"{interessados} interessados";
             return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {timesStr} | {interessadosStr}";
-        }), "Jogos Disponíveis");
+        }), "Jogos Disponíveis", ConsoleColor.Cyan, 70);
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Utils.MensagemErro("ID inválido!");
+            Utils.MensagemErro("ID inválido!", 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
             return;
         }
         var jogoSelecionado = jogos.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null)
         {
-            Utils.MensagemErro("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!", 70);
+            Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             Console.ReadKey();
             return;
         }
@@ -88,11 +91,11 @@ public class TimeController
             .ToList();
 
         // Exibe os jogadores considerados
-        Console.WriteLine("\nJogadores considerados para formação dos times:");
+        Utils.ExibirJanela("Jogadores considerados para formação dos times:", Array.Empty<string>(), ConsoleColor.Cyan, 70);
         foreach (var jogador in associadosInteressados)
         {
             if (jogador != null)
-                Console.WriteLine($"- {jogador.nome} (ID: {jogador.Id}, Posição: {jogador.posicao})");
+                Utils.ExibirJanela($"- {jogador.nome} (ID: {jogador.Id}, Posição: {jogador.posicao})", Array.Empty<string>(), ConsoleColor.Cyan, 70);
         }
 
         int totalTimes = associadosInteressados.Count / jogadoresPorTime;
@@ -142,7 +145,7 @@ public class TimeController
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.", 70);
             Console.ReadKey();
             return;
         }
@@ -156,19 +159,19 @@ public class TimeController
             string timesStr = limiteTimes > 0 ? $"{timesGerados}/{limiteTimes} Times" : $"{timesGerados} Times";
             string interessadosStr = limiteInteressados > 0 ? $"{interessados}/{limiteInteressados} interessados" : $"{interessados} interessados";
             return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {timesStr} | {interessadosStr}";
-        }), "Jogos Disponíveis");
+        }), "Jogos Disponíveis", ConsoleColor.Cyan, 70);
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Utils.MensagemErro("ID inválido!");
+            Utils.MensagemErro("ID inválido!", 70);
             Console.ReadKey();
             return;
         }
         var jogoSelecionado = jogos.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null)
         {
-            Utils.MensagemErro("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!", 70);
             Console.ReadKey();
             return;
         }
@@ -266,7 +269,7 @@ public class TimeController
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.", 70);
             Console.ReadKey();
             return;
         }
@@ -280,12 +283,12 @@ public class TimeController
             string timesStr = limiteTimes > 0 ? $"{timesGerados}/{limiteTimes} Times" : $"{timesGerados} Times";
             string interessadosStr = limiteInteressados > 0 ? $"{interessados}/{limiteInteressados} interessados" : $"{interessados} interessados";
             return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo} | {timesStr} | {interessadosStr}";
-        }), "Jogos Disponíveis");
+        }), "Jogos Disponíveis", ConsoleColor.Cyan, 70);
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoBusca))
         {
-            Utils.MensagemErro("ID inválido!");
+            Utils.MensagemErro("ID inválido!", 70);
             Console.ReadKey();
             return;
         }
@@ -293,7 +296,7 @@ public class TimeController
         var jogoSelecionado = jogosList.FirstOrDefault(j => j.Codigo == codigoBusca);
         if (jogoSelecionado == null)
         {
-            Utils.MensagemErro("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!", 70);
             Console.ReadKey();
             return;
         }
@@ -370,7 +373,7 @@ public class TimeController
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.", 70);
             Console.ReadKey();
             return;
         }
@@ -380,19 +383,19 @@ public class TimeController
             int timesGerados = jogo.TimesGerados?.Count ?? 0;
             int limiteTimes = jogo.LimiteTimes ?? 0;
             return $"ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} | Times gerados: {timesGerados}/{limiteTimes}";
-        }), "Jogos Disponíveis");
+        }), "Jogos Disponíveis", ConsoleColor.Cyan, 70);
         Console.Write("Digite o ID do jogo: ");
         string? codigoStr = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(codigoStr) || !long.TryParse(codigoStr, out long codigoLong))
         {
-            Utils.MensagemErro("ID inválido!");
+            Utils.MensagemErro("ID inválido!", 70);
             Console.ReadKey();
             return;
         }
         var jogoSel = jogos.FirstOrDefault(j => j.Codigo == codigoLong);
         if (jogoSel == null)
         {
-            Utils.MensagemErro("Jogo não encontrado!");
+            Utils.MensagemErro("Jogo não encontrado!", 70);
             Console.ReadKey();
             return;
         }
@@ -411,11 +414,11 @@ public class TimeController
     public void ExibirTimesFormados()
     {
         Console.Clear();
-        Console.WriteLine("--- Jogos e Times Formados ---");
+        Utils.ExibirJanela("Jogos e Times Formados", Array.Empty<string>(), ConsoleColor.Cyan, 70);
         var jogos = CarregarJogosDoArquivo();
         if (jogos.Count == 0)
         {
-            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.");
+            Utils.MensagemRetornoMenu("Nenhum jogo encontrado.", 70);
             Console.ReadKey();
             return;
         }
@@ -424,30 +427,33 @@ public class TimeController
             string codigo = jogo.Data.ToString("ddMMyyyy");
             int timesGerados = jogo.TimesGerados?.Count ?? 0;
             int limiteTimes = jogo.LimiteTimes ?? 0;
-            Console.WriteLine($"\nJogo ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo}");
-            Console.WriteLine($"Times gerados: {timesGerados}/{limiteTimes}");
+            Utils.ExibirJanela($"Jogo ID: {codigo} | Data: {jogo.Data:dd/MM/yyyy} às 19h | Local: {jogo.Local} | Campo: {jogo.TipoCampo}", Array.Empty<string>(), ConsoleColor.Cyan, 70);
+            Utils.ExibirJanela($"Times gerados: {timesGerados}/{limiteTimes}", Array.Empty<string>(), ConsoleColor.Cyan, 70);
             if (jogo.TimesGerados != null && jogo.TimesGerados.Count > 0)
             {
+                var linhasTimes = new List<string>();
                 foreach (var time in jogo.TimesGerados)
                 {
-                    Console.Write($"  {time.Nome}: ");
+                    string timeHeader = $"{time.Nome}: ";
                     if (time.Jogadores != null && time.Jogadores.Count > 0)
                     {
                         var nomes = time.Jogadores.Where(j => j != null).Select(j => j.nome).ToList();
-                        Console.WriteLine(string.Join(", ", nomes));
+                        linhasTimes.Add(timeHeader + string.Join(", ", nomes));
                     }
                     else
                     {
-                        Console.WriteLine("(Nenhum jogador neste time)");
+                        linhasTimes.Add(timeHeader + "(Nenhum jogador neste time)");
                     }
                 }
+                // Corrigir: passar cada time como uma linha do array, não como string única com \n
+                Utils.ExibirJanela("Times Formados", linhasTimes.ToArray(), ConsoleColor.Cyan, 70);
             }
             else
             {
-                Console.WriteLine("  Nenhum time formado para este jogo.");
+                Utils.ExibirJanela("Nenhum time formado para este jogo.", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
             }
         }
-        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Utils.ExibirJanela("Pressione qualquer tecla para voltar...", Array.Empty<string>(), ConsoleColor.DarkGray, 70);
         Console.ReadKey();
     }
 
