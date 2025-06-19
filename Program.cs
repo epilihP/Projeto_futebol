@@ -5,6 +5,7 @@
     {
         static void Main(string[] args)
         {
+            Console.Clear();
             Menu menuPrincipal = new Menu();
 
             menuPrincipal.ExibirMenu();

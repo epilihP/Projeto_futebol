@@ -1,7 +1,7 @@
 [
   {
     "Id": 675401,
-    "Pontos": 3,
+    "Pontos": 9,
     "nome": "Carlos Silva",
     "idade": 26,
     "posicao": 3
@@ -15,21 +15,21 @@
   },
   {
     "Id": 675403,
-    "Pontos": 3,
+    "Pontos": 9,
     "nome": "Leo",
     "idade": 20,
     "posicao": 2
   },
   {
     "Id": 675405,
-    "Pontos": 3,
+    "Pontos": 9,
     "nome": "Lucas",
     "idade": 19,
     "posicao": 3
   },
   {
     "Id": 675406,
-    "Pontos": 3,
+    "Pontos": 6,
     "nome": "Pedro",
     "idade": 18,
     "posicao": 1
@@ -64,7 +64,7 @@
   },
   {
     "Id": 675413,
-    "Pontos": 0,
+    "Pontos": 6,
     "nome": "Fernanda",
     "idade": 24,
     "posicao": 1
@@ -85,7 +85,7 @@
   },
   {
     "Id": 675416,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Rafael",
     "idade": 27,
     "posicao": 1
@@ -99,7 +99,7 @@
   },
   {
     "Id": 675418,
-    "Pontos": 0,
+    "Pontos": 3,
     "nome": "Gabriel Done",
     "idade": 20,
     "posicao": 2
@@ -120,21 +120,21 @@
   },
   {
     "Id": 472488,
-    "Pontos": 3,
+    "Pontos": 6,
     "nome": "Junior Mota",
     "idade": 21,
     "posicao": 3
   },
   {
     "Id": 727132,
-    "Pontos": 3,
+    "Pontos": 9,
     "nome": "Claudio Perez",
     "idade": 65,
     "posicao": 2
   },
   {
     "Id": 990655,
-    "Pontos": 3,
+    "Pontos": 6,
     "nome": "Muca Kugel",
     "idade": 21,
     "posicao": 2
@@ -172,6 +172,20 @@
     "Pontos": 0,
     "nome": "Luis Inacio da Silva",
     "idade": 68,
+    "posicao": 3
+  },
+  {
+    "Id": 583394,
+    "Pontos": 0,
+    "nome": "Jose",
+    "idade": 25,
+    "posicao": 1
+  },
+  {
+    "Id": 472641,
+    "Pontos": 0,
+    "nome": "Joao",
+    "idade": 19,
     "posicao": 3
   }
 ]
